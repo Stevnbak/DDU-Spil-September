@@ -28,49 +28,39 @@ void updateCamLocation() {
 
  void keyPressed() {
    switch (key) {
-      case 'a': keyInputs[0] = true;
-      case 'd': keyInputs[1] = true;
-      case 'w': keyInputs[2] = true;
-      case 's': keyInputs[3] = true;
+      case 'a': {keyInputs[0] = true;break;}
+      case 'd': {keyInputs[1] = true;break;}
+      case 'w': {keyInputs[2] = true;break;}
+      case 's': {keyInputs[3] = true;break;}
+      default: {};
    }
   }
   
   void keyReleased() {
     switch (key) {
-      case 'a': keyInputs[0] = false;
-      case 'd': keyInputs[1] = false;
-      case 'w': keyInputs[2] = false;
-      case 's': keyInputs[3] = false;
+      case 'a': {keyInputs[0] = false;break;}
+      case 'd': {keyInputs[1] = false;break;}
+      case 'w': {keyInputs[2] = false;break;}
+      case 's': {keyInputs[3] = false;break;}
+      default: {};
    }
   }
 
 void draw() {
-  print(keyInputs);
+  //print("{"+keyInputs[0]+", "+keyInputs[1]+", "+keyInputs[2]+", "+keyInputs[3]+",]\n");
   player.update();
+  
   background(255);
   updateCamLocation();
+  translate(-camLocation.x, -camLocation.y);
+
   player.draw();
+
+
   noStroke();
   colorMode(RGB);
   fill(120,60,60);
-  /*if(keyPressed) {
-    if(key == CODED) {
-      if(keyCode == RIGHT) {
-        camLocation.x = camLocation.x + 5;
-      }
-      if(keyCode == LEFT) {
-        camLocation.x = camLocation.x - 5;
-      }
-      if(keyCode == UP) {
-        camLocation.y = camLocation.y - 5;
-      }
-      if(keyCode == DOWN) {
-        camLocation.y = camLocation.y + 5;
-      }
-    }
-  }*/
-  translate(-camLocation.x, -camLocation.y);
   
-  ellipse(width / 2 , height / 2,100,100);
+  ellipse(width / 2, height / 2,100,100);
   ellipse(200, 50 ,100,100);
 }

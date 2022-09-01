@@ -3,10 +3,10 @@ class Player {
 
   void update() {
     if (keyInputs[0]) {
-      location.x += 5;
+      location.x -= 5;
     }
     if (keyInputs[1]) {
-      location.x+= 5;
+      location.x += 5;
     }
     if (keyInputs[2]) {
       location.y -= 5;
@@ -19,12 +19,9 @@ class Player {
 
 
   void draw() {
-    //pushMatrix();
-    //translate(-camLocation.x, -camLocation.y);
     noStroke();
     colorMode(RGB);
     fill(60, 120, 60);
     ellipse(location.x, location.y, 100, 100);
-    //popMatrix();
   }
 }
