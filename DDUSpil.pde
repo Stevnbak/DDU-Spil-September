@@ -1,15 +1,18 @@
 PVector camLocation;
 float camSpeed = 20;
-Player player = new Player();
+public Player player = new Player();
 
 public HashMap<String,Boolean> inputs = new HashMap<String,Boolean>();
+
+staticObject[] objects = new staticObject[2];
 
 void setup() {
   size(1080,720);
   surface.setTitle("Test Title");
   surface.setResizable(true);
-  //surface.setLocation(width/2, height/2);
   camLocation = new PVector(0,0);
+  objects[0] = new staticObject(new PVector(0, height), new PVector(width * 2000, 50));
+  objects[1] = new staticObject(new PVector(width / 2, height - 50), new PVector(200, 100));
 }
 
 void updateCamLocation() {
@@ -48,19 +51,20 @@ void mouseReleased() {
 
 //Draw
 void draw() {
+  player.resetAccel();
+  for(int i = 0; i < objects.length; i++) {
+    objects[i].update();
+  }
   player.update();
 
   background(255);
   updateCamLocation();
+  rectMode(CENTER);
   translate(-camLocation.x, -camLocation.y);
 
+
+  for(int i = 0; i < objects.length; i++) {
+    objects[i].draw();
+  }
   player.draw();
-
-
-  noStroke();
-  colorMode(RGB);
-  fill(120,60,60);
-  
-  ellipse(width / 2, height / 2,100,100);
-  ellipse(200, 50 ,100,100);
 }

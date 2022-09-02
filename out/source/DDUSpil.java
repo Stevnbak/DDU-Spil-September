@@ -17,16 +17,19 @@ public class DDUSpil extends PApplet {
 
 PVector camLocation;
 float camSpeed = 20;
-Player player = new Player();
+public Player player = new Player();
 
 public HashMap<String,Boolean> inputs = new HashMap<String,Boolean>();
+
+staticObject[] objects = new staticObject[2];
 
  public void setup() {
   /* size commented out by preprocessor */;
   surface.setTitle("Test Title");
   surface.setResizable(true);
-  //surface.setLocation(width/2, height/2);
   camLocation = new PVector(0,0);
+  objects[0] = new staticObject(new PVector(0, height), new PVector(width * 2000, 50));
+  objects[1] = new staticObject(new PVector(width / 2, height - 50), new PVector(200, 100));
 }
 
  public void updateCamLocation() {
@@ -65,48 +68,182 @@ public Boolean getInput(String keyValue)
 
 //Draw
  public void draw() {
-  print(inputs + "\n");
+  player.resetAccel();
+  for(int i = 0; i < objects.length; i++) {
+    objects[i].update();
+  }
   player.update();
-  
+
   background(255);
   updateCamLocation();
+  rectMode(CENTER);
   translate(-camLocation.x, -camLocation.y);
 
+
+  for(int i = 0; i < objects.length; i++) {
+    objects[i].draw();
+  }
   player.draw();
-
-
-  noStroke();
-  colorMode(RGB);
-  fill(120,60,60);
-  
-  ellipse(width / 2, height / 2,100,100);
-  ellipse(200, 50 ,100,100);
 }
 class Player {
-  PVector location = new PVector(0, 0);
+  //Object definitions
+  float mass = 5;
+  float bounceFactor = random(0.850f, 0.950f);
+  float size = 50;
+  float standardAccel = 0.25f;
+  float jumpPower = 15;
+  float maxVelocity = 10;
+  boolean isTouchingGround = false;
+
+  //Color value
+  PVector colorValue = new PVector(2, 230, 36);
+
+  //Physics vectors
+  PVector location = new PVector(0,0);
+  PVector velocity = new PVector(0, 0);
+  PVector acceleration = new PVector(0, 0);
 
    public void update() {
+    //Gravity
+    PVector gravity = new PVector(0, 1);
+    addForce(gravity);
+
+    //Inputs
     if (getInput("a")) {
-      location.x -= 5;
+      addForce(new PVector(-standardAccel,0));
     }
     if (getInput("d")) {
-      location.x += 5;
+      addForce(new PVector(standardAccel,0));
     }
-    if (getInput("w")) {
-      location.y -= 5;
+    if (getInput("w") || getInput(" ")) {
+      if(isTouchingGround) addForce(new PVector(0,-jumpPower));
     }
-    if (getInput("s")) {
-      location.y += 5;
-    }
+    //Update location...
+    velocity.add(acceleration.mult(mass));
+    velocity.x = constrain(velocity.x, -maxVelocity, maxVelocity);
+    location.add(velocity);
+    isTouchingGround = false;
   }
-
-
 
    public void draw() {
     noStroke();
     colorMode(RGB);
     fill(60, 120, 60);
-    ellipse(location.x, location.y, 100, 100);
+    rect(location.x, location.y, size, size);
+  }
+
+  //Reset object acceleration
+   public void resetAccel() {
+    //print("Frame start \n");
+    acceleration = new PVector(0, 0);
+  }
+  //Add force to object function
+   public void addForce(PVector force) {
+    //print("Force added: " + force);
+    acceleration.add(new PVector(force.x / mass, force.y / mass));
+    //print("New total acceleration: " + acceleration + "\n");
+  }
+  //Friction function
+   public void friction(float frictionC, float axis) {
+    //print("Velocity (Friction): " + velocity + "\n");
+    float normal = 1;
+    float frictionMag = frictionC * normal;
+    PVector friction = velocity.get();
+    friction.mult(-1);
+    friction.normalize();
+    friction.mult(frictionMag);
+    if(axis == 0) friction.y = 0;
+    if(axis == 1) friction.x = 0;
+    //print("Friction: " + friction + "\n");
+    addForce(friction);
+  }
+  //Drag in liquid
+   public void drag(float dragConstant) {
+    PVector drag = velocity.get();
+    float speed = drag.mag();
+    float dragMag = dragConstant * speed * speed * (size / 10);
+    drag.mult(-1);
+    drag.normalize();
+    drag.mult(dragMag);
+    //print("Drag: " + drag + "\n");
+    addForce(drag);
+  }
+
+
+//Collisions...
+  //Bounce function
+   public void bounce(float locationValue, float axis) {
+    if(axis == 0) {
+      location.x = locationValue;
+      velocity.x = 0;
+      //velocity.x *= -bounceFactor;
+      //if(velocity.x > 1) velocity.x = round(velocity.x);
+    }
+    if(axis == 1) {
+      location.y = locationValue;
+      velocity.y = 0;
+      isTouchingGround = true;
+      //velocity.y *= -bounceFactor;
+      //if(velocity.y > 1) velocity.y = round(velocity.y);
+    }
+  }
+   public void boxCollision(float x,float y,float w,float h, float friction) {
+    //Y-Collision
+    if(location.x + (size / 2) >= x && location.x - (size / 2) <= x + w) {
+      //Bottom
+      if (location.y - (size / 2) <= y + h && location.y + (size / 2) >= y + h) {
+        bounce( y + h + (size / 2) + 1, 1);
+        friction(friction, 0);
+      } 
+      //Top
+      if (location.y + (size / 2) >= y && location.y - (size / 2) <= y) {
+        bounce(y - (size / 2), 1);
+        friction(friction, 0);
+      }
+    }
+    //X-Collision
+    if(location.y + (size / 2) >= y && location.y - (size / 2) <= y + h) {
+      //Left
+      if (location.x + (size / 2) >= x && location.x - (size / 2) <= x) {
+        bounce(x - (size / 2) - 1, 0);
+        friction(friction, 1);
+      }
+      //Right
+      if (location.x - (size / 2) <= x + w && location.x + (size / 2) >= x + w) {
+        bounce( x + w + (size / 2) + 1, 0);
+        friction(friction, 1);
+      }
+    }
+  }
+}
+class staticObject {
+  //Object definitions
+  PVector size;
+  float frictionC = 0.15f;
+  //Loction vector
+  PVector location = new PVector(0,0);
+  
+  //Constructor
+  staticObject(PVector startLocation, PVector newSize) {
+    location = startLocation.get();
+    size = newSize.get();
+  }
+  
+  //Update
+   public void update() {
+    //Collision check
+    collisionCheck();
+  }
+
+   public void collisionCheck() {
+    player.boxCollision(location.x - size.x / 2,location.y - size.y/2,size.x,size.y,frictionC);
+  }
+
+   public void draw() {
+    stroke(0);
+    colorMode(RGB);
+    fill(252, 61, 3);
+    rect(location.x, location.y, size.x, size.y);
   }
 }
 
