@@ -2,16 +2,16 @@ class Player {
   PVector location = new PVector(0, 0);
 
   void update() {
-    if (keyInputs[0]) {
+    if (getInput("a")) {
       location.x -= 5;
     }
-    if (keyInputs[1]) {
+    if (getInput("d")) {
       location.x += 5;
     }
-    if (keyInputs[2]) {
+    if (getInput("w")) {
       location.y -= 5;
     }
-    if (keyInputs[3]) {
+    if (getInput("s")) {
       location.y += 5;
     }
   }

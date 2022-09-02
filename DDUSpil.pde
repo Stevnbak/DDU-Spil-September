@@ -2,7 +2,7 @@ PVector camLocation;
 float camSpeed = 20;
 Player player = new Player();
 
-public boolean[] keyInputs;
+public HashMap<String,Boolean> inputs = new HashMap<String,Boolean>();
 
 void setup() {
   size(1080,720);
@@ -10,12 +10,6 @@ void setup() {
   surface.setResizable(true);
   //surface.setLocation(width/2, height/2);
   camLocation = new PVector(0,0);
-  
-    keyInputs = new boolean[4];
-    keyInputs[0] = false;
-    keyInputs[1] = false;
-    keyInputs[2] = false;
-    keyInputs[3] = false;
 }
 
 void updateCamLocation() {
@@ -26,30 +20,36 @@ void updateCamLocation() {
     camLocation.y -= yDistance / camSpeed;
 }
 
- void keyPressed() {
-   switch (key) {
-      case 'a': {keyInputs[0] = true;break;}
-      case 'd': {keyInputs[1] = true;break;}
-      case 'w': {keyInputs[2] = true;break;}
-      case 's': {keyInputs[3] = true;break;}
-      default: {};
-   }
+// Inputs
+public Boolean getInput(String keyValue) 
+{ 
+  return inputs.getOrDefault(keyValue, false); 
+}
+void keyPressed() {
+  inputs.put(key + "", true);
+}
+void keyReleased() {
+  inputs.put(key + "", false);
+}
+void mousePressed() {
+  switch (mouseButton) {
+    case 37: {inputs.put("MLeft", true); break;}
+    case 39: {inputs.put("MRight", true); break;}
+    case 3: {inputs.put("MMid", true); break;}
   }
-  
-  void keyReleased() {
-    switch (key) {
-      case 'a': {keyInputs[0] = false;break;}
-      case 'd': {keyInputs[1] = false;break;}
-      case 'w': {keyInputs[2] = false;break;}
-      case 's': {keyInputs[3] = false;break;}
-      default: {};
-   }
+}
+void mouseReleased() {
+  switch (mouseButton) {
+    case 37: {inputs.put("MLeft", false); break;}
+    case 39: {inputs.put("MRight", false); break;}
+    case 3: {inputs.put("MMid", false); break;}
   }
+}
 
+//Draw
 void draw() {
-  //print("{"+keyInputs[0]+", "+keyInputs[1]+", "+keyInputs[2]+", "+keyInputs[3]+",]\n");
   player.update();
-  
+
   background(255);
   updateCamLocation();
   translate(-camLocation.x, -camLocation.y);
