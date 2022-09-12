@@ -1,22 +1,26 @@
 PVector camLocation;
 float camSpeed = 20;
 public Player player = new Player();
-public level currentLevel = new level();
+public level currentLevel;
 
 public HashMap<String, Boolean> inputs = new HashMap<String, Boolean>();
 
-staticObject[] objects = new staticObject[2];
-dynamicObject[] dynamicObjects = new dynamicObject[1];
+public ArrayList<staticObject> objects = new ArrayList<staticObject>();
+public ArrayList<dynamicObject> dynamicObjects = new ArrayList<dynamicObject>();
 
 void setup() {
   size(1080, 720, P2D);
   surface.setTitle("Game Title");
   surface.setResizable(true);
   camLocation = new PVector(0, 0);
-  objects[0] = new staticObject(new PVector(0, height), new PVector(width * 2000, 50));
-  objects[1] = new staticObject(new PVector(width / 2, height - 50), new PVector(200, 500));
 
-  dynamicObjects[0] = new testObject();
+  //Set level
+  currentLevel = new level("test");
+
+  objects.add(new staticObject(new PVector(0, height), new PVector(width * 2000, 50)));
+  objects.add(new staticObject(new PVector(width / 2, height - 50), new PVector(200, 500)));
+
+  dynamicObjects.add(new testObject());
 }
 
 void updateCamLocation() {
@@ -79,22 +83,22 @@ void mouseReleased() {
 
 //Draw
 void draw() {
-  for (int i = 0; i < dynamicObjects.length; i++) {
-    dynamicObjects[i].physics();
+  for (int i = 0; i < dynamicObjects.size(); i++) {
+    dynamicObjects.get(i).physics();
   }
   player.update();
-  for (int i = 0; i < objects.length; i++) {
-    objects[i].update();
+  for (int i = 0; i < objects.size(); i++) {
+    objects.get(i).update();
   }
   background(255);
   updateCamLocation();
   rectMode(CENTER);
   translate(-camLocation.x, -camLocation.y);
-  for (int i = 0; i < dynamicObjects.length; i++) {
-    dynamicObjects[i].draw();
+  for (int i = 0; i < dynamicObjects.size(); i++) {
+    dynamicObjects.get(i).draw();
   }
-  for (int i = 0; i < objects.length; i++) {
-    objects[i].draw();
+  for (int i = 0; i < objects.size(); i++) {
+    objects.get(i).draw();
   }
   player.draw();
 }
