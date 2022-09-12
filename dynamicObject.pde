@@ -57,7 +57,7 @@ class dynamicObject {
   //Wind
   void wind() {
     PVector wind = currentLevel.wind;
-    print("\nWind:" + wind);
+    //print("\nWind:" + wind);
     addForce(wind.get());
   }
 

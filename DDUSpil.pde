@@ -86,7 +86,6 @@ void draw() {
   for (int i = 0; i < objects.length; i++) {
     objects[i].update();
   }
-
   background(255);
   updateCamLocation();
   rectMode(CENTER);
