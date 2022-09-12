@@ -7,7 +7,7 @@ class dynamicObject {
 
   void draw() {
     //Update location...
-    velocity.add(acceleration.mult(mass));
+    velocity.add(acceleration);
     if (maxVelocity > -1) {
       velocity.x = constrain(velocity.x, -maxVelocity, maxVelocity);
       velocity.y = constrain(velocity.y, -maxVelocity, maxVelocity);
@@ -38,6 +38,7 @@ class dynamicObject {
   //Gravity
   void gravity() {
     PVector gravity = new PVector(0, 1);
+    gravity=gravity.mult(mass);
     addForce(gravity);
   }
 
