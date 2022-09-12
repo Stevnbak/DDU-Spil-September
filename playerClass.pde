@@ -156,7 +156,7 @@ class Player extends dynamicObject {
       }
     }
     //X-Collision
-    if (location.y + (size.y / 2) - 5 >= y && location.y - (size.y / 2) + 5 <= y + h) {
+    if (location.y + (size.y / 2) - 1 >= y && location.y - (size.y / 2) + 1 <= y + h) {
       //Left
       if (location.x + (size.x / 2) >= x && location.x - (size.x / 2) <= x) {
         bounce(x - (size.x / 2), 0);
