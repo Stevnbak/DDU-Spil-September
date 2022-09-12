@@ -7,6 +7,7 @@ public HashMap<String, Boolean> inputs = new HashMap<String, Boolean>();
 
 public ArrayList<staticObject> objects = new ArrayList<staticObject>();
 public ArrayList<dynamicObject> dynamicObjects = new ArrayList<dynamicObject>();
+public ArrayList<Animal> animals = new ArrayList<Animal>();
 
 void setup() {
   size(1080, 720, P2D);
