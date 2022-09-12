@@ -1,6 +1,6 @@
 class Player extends dynamicObject {
   //Object definitions
-  float bounceFactor = random(0.850, 0.950), standardAccel = 0.25, jumpPower = 15, maxVelocity = 10;
+  float bounceFactor = random(0.850, 0.950), standardAccel = 0.25, jumpPower = 20, maxVelocity = 10;
   boolean isTouchingGround = false;
 
   //Textures
@@ -38,7 +38,17 @@ class Player extends dynamicObject {
   }
 
   void animations() {
-    playerTexture = loadImage("player.png");
+    if (isTouchingGround == false) {
+      if (velocity.y < 0) {
+        playerTexture = loadImage("player_jump.png");
+      }
+      else {
+        playerTexture = loadImage("player_fall.png");
+      }
+    }
+    else {
+      playerTexture = loadImage("player_stand.png");
+    }
   }
 
   float c1 = 0,c2 = 1,c3 = 1,c4 = 0;
