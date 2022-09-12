@@ -2,31 +2,31 @@ PVector camLocation;
 float camSpeed = 20;
 public Player player = new Player();
 
-public HashMap<String,Boolean> inputs = new HashMap<String,Boolean>();
+public HashMap<String, Boolean> inputs = new HashMap<String, Boolean>();
 
 staticObject[] objects = new staticObject[2];
 
 void setup() {
-  size(1080,720);
-  surface.setTitle("Test Title");
+  size(1080, 720);
+  surface.setTitle("Game Title");
   surface.setResizable(true);
-  camLocation = new PVector(0,0);
+  camLocation = new PVector(0, 0);
   objects[0] = new staticObject(new PVector(0, height), new PVector(width * 2000, 50));
-  objects[1] = new staticObject(new PVector(width / 2, height - 50), new PVector(200, 100));
+  objects[1] = new staticObject(new PVector(width / 2, height - 50), new PVector(200, 500));
 }
 
 void updateCamLocation() {
-    PVector centerLocation = new PVector(camLocation.x + width/2, camLocation.y + height /2);
-    float xDistance = centerLocation.x - player.location.x;
-    float yDistance = centerLocation.y - player.location.y;
-    camLocation.x -= xDistance / camSpeed;
-    camLocation.y -= yDistance / camSpeed;
+  PVector centerLocation = new PVector(camLocation.x + width/2, camLocation.y + height /2);
+  float xDistance = centerLocation.x - player.location.x;
+  float yDistance = centerLocation.y - player.location.y;
+  camLocation.x -= xDistance / camSpeed;
+  camLocation.y -= yDistance / camSpeed;
 }
 
 // Inputs
-public Boolean getInput(String keyValue) 
-{ 
-  return inputs.getOrDefault(keyValue, false); 
+public Boolean getInput(String keyValue)
+{
+  return inputs.getOrDefault(keyValue, false);
 }
 void keyPressed() {
   inputs.put(key + "", true);
@@ -36,23 +36,47 @@ void keyReleased() {
 }
 void mousePressed() {
   switch (mouseButton) {
-    case 37: {inputs.put("MLeft", true); break;}
-    case 39: {inputs.put("MRight", true); break;}
-    case 3: {inputs.put("MMid", true); break;}
+  case 37:
+    {
+      inputs.put("MLeft", true);
+      break;
+    }
+  case 39:
+    {
+      inputs.put("MRight", true);
+      break;
+    }
+  case 3:
+    {
+      inputs.put("MMid", true);
+      break;
+    }
   }
 }
 void mouseReleased() {
   switch (mouseButton) {
-    case 37: {inputs.put("MLeft", false); break;}
-    case 39: {inputs.put("MRight", false); break;}
-    case 3: {inputs.put("MMid", false); break;}
+  case 37:
+    {
+      inputs.put("MLeft", false);
+      break;
+    }
+  case 39:
+    {
+      inputs.put("MRight", false);
+      break;
+    }
+  case 3:
+    {
+      inputs.put("MMid", false);
+      break;
+    }
   }
 }
 
 //Draw
 void draw() {
   player.resetAccel();
-  for(int i = 0; i < objects.length; i++) {
+  for (int i = 0; i < objects.length; i++) {
     objects[i].update();
   }
   player.update();
@@ -63,7 +87,7 @@ void draw() {
   translate(-camLocation.x, -camLocation.y);
 
 
-  for(int i = 0; i < objects.length; i++) {
+  for (int i = 0; i < objects.length; i++) {
     objects[i].draw();
   }
   player.draw();

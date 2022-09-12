@@ -3,14 +3,14 @@ class staticObject {
   PVector size;
   float frictionC = 0.15;
   //Loction vector
-  PVector location = new PVector(0,0);
-  
+  PVector location = new PVector(0, 0);
+
   //Constructor
   staticObject(PVector startLocation, PVector newSize) {
     location = startLocation.get();
     size = newSize.get();
   }
-  
+
   //Update
   void update() {
     //Collision check
@@ -18,7 +18,7 @@ class staticObject {
   }
 
   void collisionCheck() {
-    player.boxCollision(location.x - size.x / 2,location.y - size.y/2,size.x,size.y,frictionC);
+    player.boxCollision(location.x - size.x / 2, location.y - size.y/2, size.x, size.y, frictionC);
   }
 
   void draw() {

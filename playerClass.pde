@@ -12,7 +12,7 @@ class Player {
   PVector colorValue = new PVector(2, 230, 36);
 
   //Physics vectors
-  PVector location = new PVector(0,0);
+  PVector location = new PVector(0, 0);
   PVector velocity = new PVector(0, 0);
   PVector acceleration = new PVector(0, 0);
 
@@ -23,14 +23,15 @@ class Player {
 
     //Inputs
     if (getInput("a")) {
-      addForce(new PVector(-standardAccel,0));
+      addForce(new PVector(-standardAccel, 0));
     }
     if (getInput("d")) {
-      addForce(new PVector(standardAccel,0));
+      addForce(new PVector(standardAccel, 0));
     }
     if (getInput("w") || getInput(" ")) {
-      if(isTouchingGround) addForce(new PVector(0,-jumpPower));
+      if (isTouchingGround) addForce(new PVector(0, -jumpPower));
     }
+    print("Acceleration: " + acceleration + "\n");
     //Update location...
     velocity.add(acceleration.mult(mass));
     velocity.x = constrain(velocity.x, -maxVelocity, maxVelocity);
@@ -57,6 +58,7 @@ class Player {
     //print("New total acceleration: " + acceleration + "\n");
   }
   //Friction function
+  PVector lastFriction = new PVector(0, 0, 0);
   void friction(float frictionC, float axis) {
     //print("Velocity (Friction): " + velocity + "\n");
     float normal = 1;
@@ -65,9 +67,17 @@ class Player {
     friction.mult(-1);
     friction.normalize();
     friction.mult(frictionMag);
-    if(axis == 0) friction.y = 0;
-    if(axis == 1) friction.x = 0;
-    //print("Friction: " + friction + "\n");
+    if (-lastFriction.x == friction.x) {
+      lastFriction = friction.get();
+      friction.x = 0;
+    }
+    if (-lastFriction.y == friction.y) {
+      lastFriction = friction.get();
+      friction.y = 0;
+    }
+    if (axis == 0) friction.y = 0;
+    if (axis == 1) friction.x = 0;
+    print("Friction: " + friction + "\n");
     addForce(friction);
   }
   //Drag in liquid
@@ -83,16 +93,16 @@ class Player {
   }
 
 
-//Collisions...
+  //Collisions...
   //Bounce function
   void bounce(float locationValue, float axis) {
-    if(axis == 0) {
+    if (axis == 0) {
       location.x = locationValue;
       velocity.x = 0;
       //velocity.x *= -bounceFactor;
       //if(velocity.x > 1) velocity.x = round(velocity.x);
     }
-    if(axis == 1) {
+    if (axis == 1) {
       location.y = locationValue;
       velocity.y = 0;
       isTouchingGround = true;
@@ -100,14 +110,14 @@ class Player {
       //if(velocity.y > 1) velocity.y = round(velocity.y);
     }
   }
-  void boxCollision(float x,float y,float w,float h, float friction) {
+  void boxCollision(float x, float y, float w, float h, float friction) {
     //Y-Collision
-    if(location.x + (size / 2) >= x && location.x - (size / 2) <= x + w) {
+    if (location.x + (size / 2) >= x && location.x - (size / 2) <= x + w) {
       //Bottom
       if (location.y - (size / 2) <= y + h && location.y + (size / 2) >= y + h) {
-        bounce( y + h + (size / 2) + 1, 1);
+        bounce( y + h + (size / 2), 1);
         friction(friction, 0);
-      } 
+      }
       //Top
       if (location.y + (size / 2) >= y && location.y - (size / 2) <= y) {
         bounce(y - (size / 2), 1);
@@ -115,15 +125,15 @@ class Player {
       }
     }
     //X-Collision
-    if(location.y + (size / 2) >= y && location.y - (size / 2) <= y + h) {
+    if (location.y + (size / 2) - 5 >= y && location.y - (size / 2) + 5 <= y + h) {
       //Left
       if (location.x + (size / 2) >= x && location.x - (size / 2) <= x) {
-        bounce(x - (size / 2) - 1, 0);
+        bounce(x - (size / 2), 0);
         friction(friction, 1);
       }
       //Right
       if (location.x - (size / 2) <= x + w && location.x + (size / 2) >= x + w) {
-        bounce( x + w + (size / 2) + 1, 0);
+        bounce( x + w + (size / 2), 0);
         friction(friction, 1);
       }
     }
