@@ -37,33 +37,40 @@ class Player extends dynamicObject {
     isTouchingGround = false;
   }
 
+  int frameTime = 0, anim = 2;
+
   void animations() {
     if (isTouchingGround == false) {
       if (velocity.y < 0) {
         playerTexture = loadImage("player_jump.png");
-      }
-      else {
+      } else {
         playerTexture = loadImage("player_fall.png");
       }
-    }
-    else {
+    } else if (velocity.x < -0.2 || velocity.x > 0.2) {
+      if (frameTime < millis()) {
+        if (anim == 1) anim = 2;
+        else if (anim == 2) anim =1;
+        playerTexture = loadImage("player_walk" + anim+ ".png");
+        frameTime = millis() + 100;
+      }
+    } else {
       playerTexture = loadImage("player_stand.png");
     }
   }
 
-  float c1 = 0,c2 = 1,c3 = 1,c4 = 0;
+  float c1 = 0, c2 = 1, c3 = 1, c4 = 0;
   void draw() {
     noStroke();
     colorMode(RGB);
     /*
     float dir = 1;
-    if (velocity.x > 0.1) {
-      dir = 1;
-      scale(1,1);
-    } else if (velocity.x < -0.1) {
-      dir = -1;
-      scale(-1,1);
-    }*/
+     if (velocity.x > 0.1) {
+     dir = 1;
+     scale(1,1);
+     } else if (velocity.x < -0.1) {
+     dir = -1;
+     scale(-1,1);
+     }*/
     //fill(60, 120, 60);
     //rect(location.x, location.y, size.x, size.y);
     textureMode(NORMAL);
@@ -74,8 +81,7 @@ class Player extends dynamicObject {
       c2 = 1;
       c3 = 1;
       c4 = 0;
-      
-    } else if(getInput("a")) {
+    } else if (getInput("a")) {
       c1 = 1;
       c2 = 0;
       c3 = 0;
