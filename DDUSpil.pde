@@ -11,15 +11,13 @@ public ArrayList<dynamicObject> dynamicObjects = new ArrayList<dynamicObject>();
 void setup() {
   size(1080, 720, P2D);
   surface.setTitle("Game Title");
-  surface.setResizable(true);
+  //surface.setResizable(false);
   camLocation = new PVector(0, 0);
 
   //Set level
   currentLevel = new level("test");
 
-  objects.add(new staticObject(new PVector(0, height), new PVector(width * 2000, 50)));
-  objects.add(new staticObject(new PVector(width / 2, height - 50), new PVector(200, 500)));
-
+  //Add test object (green square)
   dynamicObjects.add(new testObject());
 }
 

@@ -4,12 +4,13 @@ class staticObject {
   float frictionC = 0.15;
   //Loction vector
   PVector location = new PVector(0, 0);
-
+  PImage texture = loadImage("defaultTile.png");
   //Constructor
-  staticObject(PVector startLocation, PVector newSize) {
+  staticObject(PVector startLocation, PVector newSize, String newTexture) {
     //println("Static object initialized... Location: " + startLocation + " Size: " + newSize);
     location = startLocation.get();
     size = newSize.get();
+    if(newTexture != "") texture = loadImage(newTexture);
   }
 
   //Update
@@ -26,9 +27,13 @@ class staticObject {
   }
 
   void draw() {
-    stroke(0);
-    colorMode(RGB);
-    fill(252, 61, 3);
-    rect(location.x, location.y, size.x, size.y);
+    textureMode(NORMAL);
+    beginShape();
+    texture(texture);
+    vertex(location.x - size.x/2, location.y - size.y/2, 0, 0);
+    vertex(location.x + size.x/2, location.y - size.y/2, 1, 0);
+    vertex(location.x + size.x/2, location.y + size.y/2, 1, 1);
+    vertex(location.x - size.x/2, location.y + size.y/2, 0, 1);
+    endShape();
   }
 }
