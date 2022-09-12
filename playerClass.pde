@@ -3,6 +3,9 @@ class Player extends dynamicObject {
   float bounceFactor = random(0.850, 0.950), standardAccel = 0.25, jumpPower = 15, maxVelocity = 10;
   boolean isTouchingGround = false;
 
+  //Textures
+  PImage playerTexture;
+  
   Player() {
     mass = 5;
     airConstant = 1;
@@ -13,6 +16,9 @@ class Player extends dynamicObject {
   PVector colorValue = new PVector(2, 230, 36);
 
   void update() {
+    //Textures
+    animations();
+    
     //Inputs
     if (getInput("a")) {
       addForce(new PVector(-standardAccel, 0));
@@ -30,12 +36,24 @@ class Player extends dynamicObject {
     location.add(velocity);
     isTouchingGround = false;
   }
+  void animations() {
+    playerTexture = loadImage("Dansk_flag.jpeg");
+  }
+
 
   void draw() {
     noStroke();
     colorMode(RGB);
     fill(60, 120, 60);
     rect(location.x, location.y, size.x, size.y);
+    textureMode(NORMAL);
+    beginShape();
+    texture(playerTexture);
+    vertex(location.x - size.x/2, location.y - size.y/2, 0, 0);
+    vertex(location.x + size.x/2, location.y - size.y/2, 1, 0);
+    vertex(location.x + size.x/2, location.y + size.y/2, 1, 1);
+    vertex(location.x - size.x/2, location.y + size.y/2, 0, 1);
+    endShape();
   }
   
   //Friction function
