@@ -77,7 +77,7 @@ void mouseReleased() {
 void physics() {
   player.resetAccel();
   gravity(player);
-  //airResistance(player);
+  airResistance(player);
 }
 
 //Gravity
@@ -90,12 +90,12 @@ void gravity(dynamicObject object) {
 void airResistance(dynamicObject object) {
     PVector drag = object.velocity.get();
     float speed = drag.mag();
-    float area = object.size.x * object.size.y;
-    float magnitude = object.airConstant * speed * speed * (area / 100);
+    float area = object.size.y;
+    float magnitude = (speed * (area / 500)) * object.airConstant;
     drag.mult(-1);
     drag.normalize();
     drag.mult(magnitude);
-    //print("Luftmodstand: " + drag + "\n");
+    print("\nSpeed: " + speed + "\nArea:" + area + "\nMagnitude: " + magnitude + "\nLuftmodstand: " + drag);
     object.addForce(drag);
 }
 

@@ -5,7 +5,7 @@ class Player extends dynamicObject {
 
   Player() {
     mass = 5;
-    airConstant = 1;
+    airConstant = 0;
     size = new PVector(50,50);
   }
 

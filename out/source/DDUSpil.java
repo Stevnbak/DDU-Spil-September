@@ -94,7 +94,7 @@ public Boolean getInput(String keyValue)
  public void physics() {
   player.resetAccel();
   gravity(player);
-  //airResistance(player);
+  airResistance(player);
 }
 
 //Gravity
@@ -107,12 +107,12 @@ public Boolean getInput(String keyValue)
  public void airResistance(dynamicObject object) {
     PVector drag = object.velocity.get();
     float speed = drag.mag();
-    float area = object.size.x * object.size.y;
-    float magnitude = object.airConstant * speed * speed * (area / 100);
+    float area = object.size.y;
+    float magnitude = (speed * (area / 500)) * object.airConstant;
     drag.mult(-1);
     drag.normalize();
     drag.mult(magnitude);
-    //print("Luftmodstand: " + drag + "\n");
+    print("\nSpeed: " + speed + "\nArea:" + area + "\nMagnitude: " + magnitude + "\nLuftmodstand: " + drag);
     object.addForce(drag);
 }
 
@@ -167,7 +167,7 @@ class Player extends dynamicObject {
 
   Player() {
     mass = 5;
-    airConstant = 1;
+    airConstant = 0;
     size = new PVector(50,50);
   }
 
