@@ -38,7 +38,12 @@ class Player extends dynamicObject {
   }
 
   void animations() {
-    playerTexture = loadImage("player.png");
+    if (isTouchingGround) {
+      playerTexture = loadImage("player_stand.png");
+    }
+    else {
+      playerTexture = loadImage("player_jump.png");
+    }
   }
 
 
