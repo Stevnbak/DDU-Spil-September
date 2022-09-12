@@ -18,10 +18,12 @@ public class DDUSpil extends PApplet {
 PVector camLocation;
 float camSpeed = 20;
 public Player player = new Player();
+public level currentLevel = new level();
 
 public HashMap<String, Boolean> inputs = new HashMap<String, Boolean>();
 
 staticObject[] objects = new staticObject[2];
+dynamicObject[] testObjects = new dynamicObject[1];
 
  public void setup() {
   /* size commented out by preprocessor */;
@@ -30,6 +32,8 @@ staticObject[] objects = new staticObject[2];
   camLocation = new PVector(0, 0);
   objects[0] = new staticObject(new PVector(0, height), new PVector(width * 2000, 50));
   objects[1] = new staticObject(new PVector(width / 2, height - 50), new PVector(200, 500));
+
+  testObjects[0] = new testObject();
 }
 
  public void updateCamLocation() {
@@ -94,31 +98,33 @@ public Boolean getInput(String keyValue)
  public void physics() {
   player.resetAccel();
   gravity(player);
+  wind(player);
   airResistance(player);
 }
 
 //Gravity
  public void gravity(dynamicObject object) {
-    PVector gravity = new PVector(0, 1);
-    object.addForce(gravity);
+  PVector gravity = new PVector(0, 1);
+  object.addForce(gravity);
 }
 
 //Air resistance
  public void airResistance(dynamicObject object) {
-    PVector drag = object.velocity.get();
-    float speed = drag.mag();
-    float area = object.size.y;
-    float magnitude = (speed * (area / 500)) * object.airConstant;
-    drag.mult(-1);
-    drag.normalize();
-    drag.mult(magnitude);
-    print("\nSpeed: " + speed + "\nArea:" + area + "\nMagnitude: " + magnitude + "\nLuftmodstand: " + drag);
-    object.addForce(drag);
+  PVector drag = object.velocity.get();
+  float speed = drag.mag();
+  float area = object.size.y;
+  float magnitude = (speed * (area / 500)) * object.airConstant;
+  drag.mult(-1);
+  drag.normalize();
+  drag.mult(magnitude);
+  //print("\nSpeed: " + speed + "\nArea:" + area + "\nMagnitude: " + magnitude + "\nLuftmodstand: " + drag);
+  object.addForce(drag);
 }
 
 //Wind
- public void wind() {
-
+ public void wind(dynamicObject object) {
+  PVector wind = currentLevel.wind;
+  object.addForce(wind.div(10));
 }
 
 //Draw
@@ -134,31 +140,54 @@ public Boolean getInput(String keyValue)
   rectMode(CENTER);
   translate(-camLocation.x, -camLocation.y);
 
-
   for (int i = 0; i < objects.length; i++) {
     objects[i].draw();
   }
   player.draw();
 }
 class dynamicObject {
-    PVector location = new PVector(0, 0);
-    PVector velocity = new PVector(0, 0);
-    PVector acceleration = new PVector(0, 0);
-    PVector size = new PVector(20, 20);
-    float mass, airConstant;
+  PVector location = new PVector(0, 0);
+  PVector velocity = new PVector(0, 0);
+  PVector acceleration = new PVector(0, 0);
+  PVector size = new PVector(20, 20);
+  float mass, airConstant;
 
-    //Add force to object function
-     public void addForce(PVector force) {
-        //print("Force added: " + force);
-        acceleration.add(new PVector(force.x / mass, force.y / mass));
-        //print("New total acceleration: " + acceleration + "\n");
-    }
+  //Add force to object function
+   public void addForce(PVector force) {
+    //print("Force added: " + force);
+    acceleration.add(new PVector(force.x / mass, force.y / mass));
+    //print("New total acceleration: " + acceleration + "\n");
+  }
 
-    //Reset object acceleration
+  //Reset object acceleration
    public void resetAccel() {
     //print("Frame start \n");
     acceleration = new PVector(0, 0);
   }
+
+   public void draw() {
+    registerMethod("draw", this);
+  }
+}
+
+class testObject extends dynamicObject {
+    testObject() {
+        mass = 0.5f;
+        airConstant = 0.2f;
+
+    }
+     public void draw() {
+        //registerMethod("draw", this);
+        super.draw();
+        noStroke();
+        colorMode(RGB);
+        fill(60, 120, 60);
+        rect(location.x, location.y, size.x, size.y);
+        print("\nLocation: " + location);
+    }
+}
+class level {
+    PVector wind = new PVector(5,0);
 }
 class Player extends dynamicObject {
   //Object definitions
@@ -167,11 +196,11 @@ class Player extends dynamicObject {
 
   //Textures
   PImage playerTexture;
-  
+
   Player() {
     mass = 5;
     airConstant = 0;
-    size = new PVector(60,97);
+    size = new PVector(60, 97);
   }
 
   //Color value
@@ -180,7 +209,7 @@ class Player extends dynamicObject {
    public void update() {
     //Textures
     animations();
-    
+
     //Inputs
     if (getInput("a")) {
       addForce(new PVector(-standardAccel, 0));
@@ -198,26 +227,48 @@ class Player extends dynamicObject {
     location.add(velocity);
     isTouchingGround = false;
   }
+
    public void animations() {
     playerTexture = loadImage("player.png");
   }
 
-
+  float c1 = 0,c2 = 1,c3 = 1,c4 = 0;
    public void draw() {
     noStroke();
     colorMode(RGB);
+    /*
+    float dir = 1;
+    if (velocity.x > 0.1) {
+      dir = 1;
+      scale(1,1);
+    } else if (velocity.x < -0.1) {
+      dir = -1;
+      scale(-1,1);
+    }*/
     //fill(60, 120, 60);
     //rect(location.x, location.y, size.x, size.y);
     textureMode(NORMAL);
     beginShape();
     texture(playerTexture);
-    vertex(location.x - size.x/2, location.y - size.y/2, 0, 0);
-    vertex(location.x + size.x/2, location.y - size.y/2, 1, 0);
-    vertex(location.x + size.x/2, location.y + size.y/2, 1, 1);
-    vertex(location.x - size.x/2, location.y + size.y/2, 0, 1);
+    if (getInput("a")) {
+      c1 = 0;
+      c2 = 1;
+      c3 = 1;
+      c4 = 0;
+      
+    } else if(getInput("d")) {
+      c1 = 1;
+      c2 = 0;
+      c3 = 0;
+      c4 = 1;
+    }
+    vertex(location.x - size.x/2, location.y - size.y/2, c1, 0);
+    vertex(location.x + size.x/2, location.y - size.y/2, c2, 0);
+    vertex(location.x + size.x/2, location.y + size.y/2, c3, 1);
+    vertex(location.x - size.x/2, location.y + size.y/2, c4, 1);
     endShape();
   }
-  
+
   //Friction function
   PVector lastFriction = new PVector(0, 0, 0);
    public void friction(float frictionC, float axis) {

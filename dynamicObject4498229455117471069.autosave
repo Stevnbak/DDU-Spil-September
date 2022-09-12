@@ -19,7 +19,7 @@ class dynamicObject {
   }
 
   void draw() {
-    registerMethod("draw", this);
+
   }
 }
 
@@ -29,9 +29,7 @@ class testObject extends dynamicObject {
         airConstant = 0.2;
 
     }
-    void draw() {
-        //registerMethod("draw", this);
-        super.draw();
+    public void draw() {
         noStroke();
         colorMode(RGB);
         fill(60, 120, 60);
