@@ -1,6 +1,6 @@
 class Player extends dynamicObject {
   //Object definitions
-  float standardAccel = 0.25, jumpPower = 25;
+  float standardAccel = 0.25, jumpPower = 8;
   boolean isTouchingGround = false;
 
   //Textures
@@ -8,7 +8,7 @@ class Player extends dynamicObject {
 
   Player() {
     mass = 5;
-    maxVelocity = 10;
+    maxVelocity.x = 8;
     airConstant = 0;
     size = new PVector(60, 97);
   }
@@ -32,6 +32,7 @@ class Player extends dynamicObject {
       if (isTouchingGround) addForce(new PVector(0, -jumpPower));
     }
     isTouchingGround = false;
+    //println("Player location: " + location);
   }
 
   int frameTime = 0, anim = 2;
