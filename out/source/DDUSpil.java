@@ -165,16 +165,22 @@ class Player extends dynamicObject {
   float bounceFactor = random(0.850f, 0.950f), standardAccel = 0.25f, jumpPower = 15, maxVelocity = 10;
   boolean isTouchingGround = false;
 
+  //Textures
+  PImage playerTexture;
+  
   Player() {
     mass = 5;
     airConstant = 0;
-    size = new PVector(50,50);
+    size = new PVector(60,97);
   }
 
   //Color value
   PVector colorValue = new PVector(2, 230, 36);
 
    public void update() {
+    //Textures
+    animations();
+    
     //Inputs
     if (getInput("a")) {
       addForce(new PVector(-standardAccel, 0));
@@ -192,12 +198,24 @@ class Player extends dynamicObject {
     location.add(velocity);
     isTouchingGround = false;
   }
+   public void animations() {
+    playerTexture = loadImage("player.png");
+  }
+
 
    public void draw() {
     noStroke();
     colorMode(RGB);
-    fill(60, 120, 60);
-    rect(location.x, location.y, size.x, size.y);
+    //fill(60, 120, 60);
+    //rect(location.x, location.y, size.x, size.y);
+    textureMode(NORMAL);
+    beginShape();
+    texture(playerTexture);
+    vertex(location.x - size.x/2, location.y - size.y/2, 0, 0);
+    vertex(location.x + size.x/2, location.y - size.y/2, 1, 0);
+    vertex(location.x + size.x/2, location.y + size.y/2, 1, 1);
+    vertex(location.x - size.x/2, location.y + size.y/2, 0, 1);
+    endShape();
   }
   
   //Friction function

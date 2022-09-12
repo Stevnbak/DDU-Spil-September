@@ -9,7 +9,7 @@ class Player extends dynamicObject {
   Player() {
     mass = 5;
     airConstant = 0;
-    size = new PVector(50,50);
+    size = new PVector(60,97);
   }
 
   //Color value
@@ -37,15 +37,15 @@ class Player extends dynamicObject {
     isTouchingGround = false;
   }
   void animations() {
-    playerTexture = loadImage("Dansk_flag.jpeg");
+    playerTexture = loadImage("player.png");
   }
 
 
   void draw() {
     noStroke();
     colorMode(RGB);
-    fill(60, 120, 60);
-    rect(location.x, location.y, size.x, size.y);
+    //fill(60, 120, 60);
+    //rect(location.x, location.y, size.x, size.y);
     textureMode(NORMAL);
     beginShape();
     texture(playerTexture);
