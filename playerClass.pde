@@ -41,19 +41,40 @@ class Player extends dynamicObject {
     playerTexture = loadImage("player.png");
   }
 
-
+  float c1 = 0,c2 = 1,c3 = 1,c4 = 0;
   void draw() {
     noStroke();
     colorMode(RGB);
+    /*
+    float dir = 1;
+    if (velocity.x > 0.1) {
+      dir = 1;
+      scale(1,1);
+    } else if (velocity.x < -0.1) {
+      dir = -1;
+      scale(-1,1);
+    }*/
     //fill(60, 120, 60);
     //rect(location.x, location.y, size.x, size.y);
     textureMode(NORMAL);
     beginShape();
     texture(playerTexture);
-    vertex(location.x - size.x/2, location.y - size.y/2, 0, 0);
-    vertex(location.x + size.x/2, location.y - size.y/2, 1, 0);
-    vertex(location.x + size.x/2, location.y + size.y/2, 1, 1);
-    vertex(location.x - size.x/2, location.y + size.y/2, 0, 1);
+    if (getInput("d")) {
+      c1 = 0;
+      c2 = 1;
+      c3 = 1;
+      c4 = 0;
+      
+    } else if(getInput("a")) {
+      c1 = 1;
+      c2 = 0;
+      c3 = 0;
+      c4 = 1;
+    }
+    vertex(location.x - size.x/2, location.y - size.y/2, c1, 0);
+    vertex(location.x + size.x/2, location.y - size.y/2, c2, 0);
+    vertex(location.x + size.x/2, location.y + size.y/2, c3, 1);
+    vertex(location.x - size.x/2, location.y + size.y/2, c4, 1);
     endShape();
   }
 
