@@ -5,11 +5,11 @@ class Player extends dynamicObject {
 
   //Textures
   PImage playerTexture;
-  
+
   Player() {
     mass = 5;
     airConstant = 0;
-    size = new PVector(60,97);
+    size = new PVector(60, 97);
   }
 
   //Color value
@@ -18,7 +18,7 @@ class Player extends dynamicObject {
   void update() {
     //Textures
     animations();
-    
+
     //Inputs
     if (getInput("a")) {
       addForce(new PVector(-standardAccel, 0));
@@ -36,6 +36,7 @@ class Player extends dynamicObject {
     location.add(velocity);
     isTouchingGround = false;
   }
+
   void animations() {
     playerTexture = loadImage("player.png");
   }
@@ -55,7 +56,7 @@ class Player extends dynamicObject {
     vertex(location.x - size.x/2, location.y + size.y/2, 0, 1);
     endShape();
   }
-  
+
   //Friction function
   PVector lastFriction = new PVector(0, 0, 0);
   void friction(float frictionC, float axis) {

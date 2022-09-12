@@ -82,26 +82,25 @@ void physics() {
 
 //Gravity
 void gravity(dynamicObject object) {
-    PVector gravity = new PVector(0, 1);
-    object.addForce(gravity);
+  PVector gravity = new PVector(0, 1);
+  object.addForce(gravity);
 }
 
 //Air resistance
 void airResistance(dynamicObject object) {
-    PVector drag = object.velocity.get();
-    float speed = drag.mag();
-    float area = object.size.y;
-    float magnitude = (speed * (area / 500)) * object.airConstant;
-    drag.mult(-1);
-    drag.normalize();
-    drag.mult(magnitude);
-    print("\nSpeed: " + speed + "\nArea:" + area + "\nMagnitude: " + magnitude + "\nLuftmodstand: " + drag);
-    object.addForce(drag);
+  PVector drag = object.velocity.get();
+  float speed = drag.mag();
+  float area = object.size.y;
+  float magnitude = (speed * (area / 500)) * object.airConstant;
+  drag.mult(-1);
+  drag.normalize();
+  drag.mult(magnitude);
+  print("\nSpeed: " + speed + "\nArea:" + area + "\nMagnitude: " + magnitude + "\nLuftmodstand: " + drag);
+  object.addForce(drag);
 }
 
 //Wind
 void wind() {
-
 }
 
 //Draw
