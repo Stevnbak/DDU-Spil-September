@@ -1,26 +1,18 @@
-class Player {
+class Player extends dynamicObject {
   //Object definitions
-  float mass = 5;
-  float bounceFactor = random(0.850, 0.950);
-  float size = 50;
-  float standardAccel = 0.25;
-  float jumpPower = 15;
-  float maxVelocity = 10;
+  float bounceFactor = random(0.850, 0.950), standardAccel = 0.25, jumpPower = 15, maxVelocity = 10;
   boolean isTouchingGround = false;
+
+  Player() {
+    mass = 5;
+    airConstant = 1;
+    size = new PVector(50,50);
+  }
 
   //Color value
   PVector colorValue = new PVector(2, 230, 36);
 
-  //Physics vectors
-  PVector location = new PVector(0, 0);
-  PVector velocity = new PVector(0, 0);
-  PVector acceleration = new PVector(0, 0);
-
   void update() {
-    //Gravity
-    PVector gravity = new PVector(0, 1);
-    addForce(gravity);
-
     //Inputs
     if (getInput("a")) {
       addForce(new PVector(-standardAccel, 0));
@@ -31,7 +23,7 @@ class Player {
     if (getInput("w") || getInput(" ")) {
       if (isTouchingGround) addForce(new PVector(0, -jumpPower));
     }
-    print("Acceleration: " + acceleration + "\n");
+
     //Update location...
     velocity.add(acceleration.mult(mass));
     velocity.x = constrain(velocity.x, -maxVelocity, maxVelocity);
@@ -43,20 +35,9 @@ class Player {
     noStroke();
     colorMode(RGB);
     fill(60, 120, 60);
-    rect(location.x, location.y, size, size);
+    rect(location.x, location.y, size.x, size.y);
   }
-
-  //Reset object acceleration
-  void resetAccel() {
-    //print("Frame start \n");
-    acceleration = new PVector(0, 0);
-  }
-  //Add force to object function
-  void addForce(PVector force) {
-    //print("Force added: " + force);
-    acceleration.add(new PVector(force.x / mass, force.y / mass));
-    //print("New total acceleration: " + acceleration + "\n");
-  }
+  
   //Friction function
   PVector lastFriction = new PVector(0, 0, 0);
   void friction(float frictionC, float axis) {
@@ -77,14 +58,14 @@ class Player {
     }
     if (axis == 0) friction.y = 0;
     if (axis == 1) friction.x = 0;
-    print("Friction: " + friction + "\n");
+    //print("Friction: " + friction + "\n");
     addForce(friction);
   }
   //Drag in liquid
   void drag(float dragConstant) {
     PVector drag = velocity.get();
     float speed = drag.mag();
-    float dragMag = dragConstant * speed * speed * (size / 10);
+    float dragMag = dragConstant * speed * speed * (size.x * size.y / 20);
     drag.mult(-1);
     drag.normalize();
     drag.mult(dragMag);
@@ -112,28 +93,28 @@ class Player {
   }
   void boxCollision(float x, float y, float w, float h, float friction) {
     //Y-Collision
-    if (location.x + (size / 2) >= x && location.x - (size / 2) <= x + w) {
+    if (location.x + (size.x / 2) >= x && location.x - (size.x / 2) <= x + w) {
       //Bottom
-      if (location.y - (size / 2) <= y + h && location.y + (size / 2) >= y + h) {
-        bounce( y + h + (size / 2), 1);
+      if (location.y - (size.y / 2) <= y + h && location.y + (size.y / 2) >= y + h) {
+        bounce( y + h + (size.y / 2), 1);
         friction(friction, 0);
       }
       //Top
-      if (location.y + (size / 2) >= y && location.y - (size / 2) <= y) {
-        bounce(y - (size / 2), 1);
+      if (location.y + (size.y / 2) >= y && location.y - (size.y / 2) <= y) {
+        bounce(y - (size.y / 2), 1);
         friction(friction, 0);
       }
     }
     //X-Collision
-    if (location.y + (size / 2) - 5 >= y && location.y - (size / 2) + 5 <= y + h) {
+    if (location.y + (size.y / 2) - 5 >= y && location.y - (size.y / 2) + 5 <= y + h) {
       //Left
-      if (location.x + (size / 2) >= x && location.x - (size / 2) <= x) {
-        bounce(x - (size / 2), 0);
+      if (location.x + (size.x / 2) >= x && location.x - (size.x / 2) <= x) {
+        bounce(x - (size.x / 2), 0);
         friction(friction, 1);
       }
       //Right
-      if (location.x - (size / 2) <= x + w && location.x + (size / 2) >= x + w) {
-        bounce( x + w + (size / 2), 0);
+      if (location.x - (size.x / 2) <= x + w && location.x + (size.x / 2) >= x + w) {
+        bounce( x + w + (size.x / 2), 0);
         friction(friction, 1);
       }
     }

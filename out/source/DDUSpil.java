@@ -19,31 +19,31 @@ PVector camLocation;
 float camSpeed = 20;
 public Player player = new Player();
 
-public HashMap<String,Boolean> inputs = new HashMap<String,Boolean>();
+public HashMap<String, Boolean> inputs = new HashMap<String, Boolean>();
 
 staticObject[] objects = new staticObject[2];
 
  public void setup() {
   /* size commented out by preprocessor */;
-  surface.setTitle("Test Title");
+  surface.setTitle("Game Title");
   surface.setResizable(true);
-  camLocation = new PVector(0,0);
+  camLocation = new PVector(0, 0);
   objects[0] = new staticObject(new PVector(0, height), new PVector(width * 2000, 50));
   objects[1] = new staticObject(new PVector(width / 2, height - 50), new PVector(200, 500));
 }
 
  public void updateCamLocation() {
-    PVector centerLocation = new PVector(camLocation.x + width/2, camLocation.y + height /2);
-    float xDistance = centerLocation.x - player.location.x;
-    float yDistance = centerLocation.y - player.location.y;
-    camLocation.x -= xDistance / camSpeed;
-    camLocation.y -= yDistance / camSpeed;
+  PVector centerLocation = new PVector(camLocation.x + width/2, camLocation.y + height /2);
+  float xDistance = centerLocation.x - player.location.x;
+  float yDistance = centerLocation.y - player.location.y;
+  camLocation.x -= xDistance / camSpeed;
+  camLocation.y -= yDistance / camSpeed;
 }
 
 // Inputs
-public Boolean getInput(String keyValue) 
-{ 
-  return inputs.getOrDefault(keyValue, false); 
+public Boolean getInput(String keyValue)
+{
+  return inputs.getOrDefault(keyValue, false);
 }
  public void keyPressed() {
   inputs.put(key + "", true);
@@ -53,23 +53,78 @@ public Boolean getInput(String keyValue)
 }
  public void mousePressed() {
   switch (mouseButton) {
-    case 37: {inputs.put("MLeft", true); break;}
-    case 39: {inputs.put("MRight", true); break;}
-    case 3: {inputs.put("MMid", true); break;}
+  case 37:
+    {
+      inputs.put("MLeft", true);
+      break;
+    }
+  case 39:
+    {
+      inputs.put("MRight", true);
+      break;
+    }
+  case 3:
+    {
+      inputs.put("MMid", true);
+      break;
+    }
   }
 }
  public void mouseReleased() {
   switch (mouseButton) {
-    case 37: {inputs.put("MLeft", false); break;}
-    case 39: {inputs.put("MRight", false); break;}
-    case 3: {inputs.put("MMid", false); break;}
+  case 37:
+    {
+      inputs.put("MLeft", false);
+      break;
+    }
+  case 39:
+    {
+      inputs.put("MRight", false);
+      break;
+    }
+  case 3:
+    {
+      inputs.put("MMid", false);
+      break;
+    }
   }
+}
+
+//Physics
+ public void physics() {
+  player.resetAccel();
+  gravity(player);
+  //airResistance(player);
+}
+
+//Gravity
+ public void gravity(dynamicObject object) {
+    PVector gravity = new PVector(0, 1);
+    object.addForce(gravity);
+}
+
+//Air resistance
+ public void airResistance(dynamicObject object) {
+    PVector drag = object.velocity.get();
+    float speed = drag.mag();
+    float area = object.size.x * object.size.y;
+    float magnitude = object.airConstant * speed * speed * (area / 100);
+    drag.mult(-1);
+    drag.normalize();
+    drag.mult(magnitude);
+    //print("Luftmodstand: " + drag + "\n");
+    object.addForce(drag);
+}
+
+//Wind
+ public void wind() {
+
 }
 
 //Draw
  public void draw() {
-  player.resetAccel();
-  for(int i = 0; i < objects.length; i++) {
+  physics();
+  for (int i = 0; i < objects.length; i++) {
     objects[i].update();
   }
   player.update();
@@ -80,45 +135,57 @@ public Boolean getInput(String keyValue)
   translate(-camLocation.x, -camLocation.y);
 
 
-  for(int i = 0; i < objects.length; i++) {
+  for (int i = 0; i < objects.length; i++) {
     objects[i].draw();
   }
   player.draw();
 }
-class Player {
+class dynamicObject {
+    PVector location = new PVector(0, 0);
+    PVector velocity = new PVector(0, 0);
+    PVector acceleration = new PVector(0, 0);
+    PVector size = new PVector(20, 20);
+    float mass, airConstant;
+
+    //Add force to object function
+     public void addForce(PVector force) {
+        //print("Force added: " + force);
+        acceleration.add(new PVector(force.x / mass, force.y / mass));
+        //print("New total acceleration: " + acceleration + "\n");
+    }
+
+    //Reset object acceleration
+   public void resetAccel() {
+    //print("Frame start \n");
+    acceleration = new PVector(0, 0);
+  }
+}
+class Player extends dynamicObject {
   //Object definitions
-  float mass = 5;
-  float bounceFactor = random(0.850f, 0.950f);
-  float size = 50;
-  float standardAccel = 0.25f;
-  float jumpPower = 15;
-  float maxVelocity = 10;
+  float bounceFactor = random(0.850f, 0.950f), standardAccel = 0.25f, jumpPower = 15, maxVelocity = 10;
   boolean isTouchingGround = false;
+
+  Player() {
+    mass = 5;
+    airConstant = 1;
+    size = new PVector(50,50);
+  }
 
   //Color value
   PVector colorValue = new PVector(2, 230, 36);
 
-  //Physics vectors
-  PVector location = new PVector(0,0);
-  PVector velocity = new PVector(0, 0);
-  PVector acceleration = new PVector(0, 0);
-
    public void update() {
-    //Gravity
-    PVector gravity = new PVector(0, 1);
-    addForce(gravity);
-
     //Inputs
     if (getInput("a")) {
-      addForce(new PVector(-standardAccel,0));
+      addForce(new PVector(-standardAccel, 0));
     }
     if (getInput("d")) {
-      addForce(new PVector(standardAccel,0));
+      addForce(new PVector(standardAccel, 0));
     }
     if (getInput("w") || getInput(" ")) {
-      if(isTouchingGround) addForce(new PVector(0,-jumpPower));
+      if (isTouchingGround) addForce(new PVector(0, -jumpPower));
     }
-    print("Acceleration: " + acceleration + "\n");
+
     //Update location...
     velocity.add(acceleration.mult(mass));
     velocity.x = constrain(velocity.x, -maxVelocity, maxVelocity);
@@ -130,22 +197,11 @@ class Player {
     noStroke();
     colorMode(RGB);
     fill(60, 120, 60);
-    rect(location.x, location.y, size, size);
+    rect(location.x, location.y, size.x, size.y);
   }
-
-  //Reset object acceleration
-   public void resetAccel() {
-    //print("Frame start \n");
-    acceleration = new PVector(0, 0);
-  }
-  //Add force to object function
-   public void addForce(PVector force) {
-    //print("Force added: " + force);
-    acceleration.add(new PVector(force.x / mass, force.y / mass));
-    //print("New total acceleration: " + acceleration + "\n");
-  }
+  
   //Friction function
-  PVector lastFriction = new PVector(0,0,0);
+  PVector lastFriction = new PVector(0, 0, 0);
    public void friction(float frictionC, float axis) {
     //print("Velocity (Friction): " + velocity + "\n");
     float normal = 1;
@@ -154,18 +210,24 @@ class Player {
     friction.mult(-1);
     friction.normalize();
     friction.mult(frictionMag);
-    if (-lastFriction.x == friction.x) {    lastFriction = friction.get();friction.x = 0;}
-    if (-lastFriction.y == friction.y) {    lastFriction = friction.get();friction.y = 0;}
-    if(axis == 0) friction.y = 0;
-    if(axis == 1) friction.x = 0;
-    print("Friction: " + friction + "\n");
+    if (-lastFriction.x == friction.x) {
+      lastFriction = friction.get();
+      friction.x = 0;
+    }
+    if (-lastFriction.y == friction.y) {
+      lastFriction = friction.get();
+      friction.y = 0;
+    }
+    if (axis == 0) friction.y = 0;
+    if (axis == 1) friction.x = 0;
+    //print("Friction: " + friction + "\n");
     addForce(friction);
   }
   //Drag in liquid
    public void drag(float dragConstant) {
     PVector drag = velocity.get();
     float speed = drag.mag();
-    float dragMag = dragConstant * speed * speed * (size / 10);
+    float dragMag = dragConstant * speed * speed * (size.x * size.y / 20);
     drag.mult(-1);
     drag.normalize();
     drag.mult(dragMag);
@@ -174,16 +236,16 @@ class Player {
   }
 
 
-//Collisions...
+  //Collisions...
   //Bounce function
    public void bounce(float locationValue, float axis) {
-    if(axis == 0) {
+    if (axis == 0) {
       location.x = locationValue;
       velocity.x = 0;
       //velocity.x *= -bounceFactor;
       //if(velocity.x > 1) velocity.x = round(velocity.x);
     }
-    if(axis == 1) {
+    if (axis == 1) {
       location.y = locationValue;
       velocity.y = 0;
       isTouchingGround = true;
@@ -191,30 +253,30 @@ class Player {
       //if(velocity.y > 1) velocity.y = round(velocity.y);
     }
   }
-   public void boxCollision(float x,float y,float w,float h, float friction) {
+   public void boxCollision(float x, float y, float w, float h, float friction) {
     //Y-Collision
-    if(location.x + (size / 2) >= x && location.x - (size / 2) <= x + w) {
+    if (location.x + (size.x / 2) >= x && location.x - (size.x / 2) <= x + w) {
       //Bottom
-      if (location.y - (size / 2) <= y + h && location.y + (size / 2) >= y + h) {
-        bounce( y + h + (size / 2), 1);
+      if (location.y - (size.y / 2) <= y + h && location.y + (size.y / 2) >= y + h) {
+        bounce( y + h + (size.y / 2), 1);
         friction(friction, 0);
-      } 
+      }
       //Top
-      if (location.y + (size / 2) >= y && location.y - (size / 2) <= y) {
-        bounce(y - (size / 2), 1);
+      if (location.y + (size.y / 2) >= y && location.y - (size.y / 2) <= y) {
+        bounce(y - (size.y / 2), 1);
         friction(friction, 0);
       }
     }
     //X-Collision
-    if(location.y + (size / 2) - 5 >= y && location.y - (size / 2) + 5 <= y + h) {
+    if (location.y + (size.y / 2) - 5 >= y && location.y - (size.y / 2) + 5 <= y + h) {
       //Left
-      if (location.x + (size / 2) >= x && location.x - (size / 2) <= x) {
-        bounce(x - (size / 2), 0);
+      if (location.x + (size.x / 2) >= x && location.x - (size.x / 2) <= x) {
+        bounce(x - (size.x / 2), 0);
         friction(friction, 1);
       }
       //Right
-      if (location.x - (size / 2) <= x + w && location.x + (size / 2) >= x + w) {
-        bounce( x + w + (size / 2), 0);
+      if (location.x - (size.x / 2) <= x + w && location.x + (size.x / 2) >= x + w) {
+        bounce( x + w + (size.x / 2), 0);
         friction(friction, 1);
       }
     }
@@ -225,14 +287,14 @@ class staticObject {
   PVector size;
   float frictionC = 0.15f;
   //Loction vector
-  PVector location = new PVector(0,0);
-  
+  PVector location = new PVector(0, 0);
+
   //Constructor
   staticObject(PVector startLocation, PVector newSize) {
     location = startLocation.get();
     size = newSize.get();
   }
-  
+
   //Update
    public void update() {
     //Collision check
@@ -240,7 +302,7 @@ class staticObject {
   }
 
    public void collisionCheck() {
-    player.boxCollision(location.x - size.x / 2,location.y - size.y/2,size.x,size.y,frictionC);
+    player.boxCollision(location.x - size.x / 2, location.y - size.y/2, size.x, size.y, frictionC);
   }
 
    public void draw() {
@@ -252,7 +314,7 @@ class staticObject {
 }
 
 
-  public void settings() { size(1080, 720); }
+  public void settings() { size(1080, 720, P2D); }
 
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "DDUSpil" };

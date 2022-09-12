@@ -7,7 +7,7 @@ public HashMap<String, Boolean> inputs = new HashMap<String, Boolean>();
 staticObject[] objects = new staticObject[2];
 
 void setup() {
-  size(1080, 720);
+  size(1080, 720, P2D);
   surface.setTitle("Game Title");
   surface.setResizable(true);
   camLocation = new PVector(0, 0);
@@ -73,9 +73,40 @@ void mouseReleased() {
   }
 }
 
+//Physics
+void physics() {
+  player.resetAccel();
+  gravity(player);
+  //airResistance(player);
+}
+
+//Gravity
+void gravity(dynamicObject object) {
+    PVector gravity = new PVector(0, 1);
+    object.addForce(gravity);
+}
+
+//Air resistance
+void airResistance(dynamicObject object) {
+    PVector drag = object.velocity.get();
+    float speed = drag.mag();
+    float area = object.size.x * object.size.y;
+    float magnitude = object.airConstant * speed * speed * (area / 100);
+    drag.mult(-1);
+    drag.normalize();
+    drag.mult(magnitude);
+    //print("Luftmodstand: " + drag + "\n");
+    object.addForce(drag);
+}
+
+//Wind
+void wind() {
+
+}
+
 //Draw
 void draw() {
-  player.resetAccel();
+  physics();
   for (int i = 0; i < objects.length; i++) {
     objects[i].update();
   }
