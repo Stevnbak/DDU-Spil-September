@@ -18,6 +18,9 @@ class staticObject {
   }
 
   void collisionCheck() {
+    for (int i = 0; i < dynamicObjects.length; i++) {
+      dynamicObjects[i].boxCollision(location.x - size.x / 2, location.y - size.y/2, size.x, size.y, frictionC);
+    }
     player.boxCollision(location.x - size.x / 2, location.y - size.y/2, size.x, size.y, frictionC);
   }
 

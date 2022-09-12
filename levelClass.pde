@@ -1,3 +1,3 @@
 class level {
-    PVector wind = new PVector(5,0);
+  PVector wind = new PVector(0.075, 0);
 }

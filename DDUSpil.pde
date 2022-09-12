@@ -6,7 +6,7 @@ public level currentLevel = new level();
 public HashMap<String, Boolean> inputs = new HashMap<String, Boolean>();
 
 staticObject[] objects = new staticObject[2];
-dynamicObject[] testObjects = new dynamicObject[1];
+dynamicObject[] dynamicObjects = new dynamicObject[1];
 
 void setup() {
   size(1080, 720, P2D);
@@ -16,7 +16,7 @@ void setup() {
   objects[0] = new staticObject(new PVector(0, height), new PVector(width * 2000, 50));
   objects[1] = new staticObject(new PVector(width / 2, height - 50), new PVector(200, 500));
 
-  testObjects[0] = new testObject();
+  dynamicObjects[0] = new testObject();
 }
 
 void updateCamLocation() {
@@ -77,52 +77,23 @@ void mouseReleased() {
   }
 }
 
-//Physics
-void physics() {
-  player.resetAccel();
-  gravity(player);
-  wind(player);
-  airResistance(player);
-}
-
-//Gravity
-void gravity(dynamicObject object) {
-  PVector gravity = new PVector(0, 1);
-  object.addForce(gravity);
-}
-
-//Air resistance
-void airResistance(dynamicObject object) {
-  PVector drag = object.velocity.get();
-  float speed = drag.mag();
-  float area = object.size.y;
-  float magnitude = (speed * (area / 500)) * object.airConstant;
-  drag.mult(-1);
-  drag.normalize();
-  drag.mult(magnitude);
-  //print("\nSpeed: " + speed + "\nArea:" + area + "\nMagnitude: " + magnitude + "\nLuftmodstand: " + drag);
-  object.addForce(drag);
-}
-
-//Wind
-void wind(dynamicObject object) {
-  PVector wind = currentLevel.wind;
-  object.addForce(wind.div(10));
-}
-
 //Draw
 void draw() {
-  physics();
+  for (int i = 0; i < dynamicObjects.length; i++) {
+    dynamicObjects[i].physics();
+  }
+  player.update();
   for (int i = 0; i < objects.length; i++) {
     objects[i].update();
   }
-  player.update();
 
   background(255);
   updateCamLocation();
   rectMode(CENTER);
   translate(-camLocation.x, -camLocation.y);
-
+  for (int i = 0; i < dynamicObjects.length; i++) {
+    dynamicObjects[i].draw();
+  }
   for (int i = 0; i < objects.length; i++) {
     objects[i].draw();
   }

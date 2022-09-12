@@ -23,7 +23,7 @@ public level currentLevel = new level();
 public HashMap<String, Boolean> inputs = new HashMap<String, Boolean>();
 
 staticObject[] objects = new staticObject[2];
-dynamicObject[] testObjects = new dynamicObject[1];
+dynamicObject[] dynamicObjects = new dynamicObject[1];
 
  public void setup() {
   /* size commented out by preprocessor */;
@@ -33,7 +33,7 @@ dynamicObject[] testObjects = new dynamicObject[1];
   objects[0] = new staticObject(new PVector(0, height), new PVector(width * 2000, 50));
   objects[1] = new staticObject(new PVector(width / 2, height - 50), new PVector(200, 500));
 
-  testObjects[0] = new testObject();
+  dynamicObjects[0] = new testObject();
 }
 
  public void updateCamLocation() {
@@ -94,63 +94,44 @@ public Boolean getInput(String keyValue)
   }
 }
 
-//Physics
- public void physics() {
-  player.resetAccel();
-  gravity(player);
-  wind(player);
-  airResistance(player);
-}
-
-//Gravity
- public void gravity(dynamicObject object) {
-  PVector gravity = new PVector(0, 1);
-  object.addForce(gravity);
-}
-
-//Air resistance
- public void airResistance(dynamicObject object) {
-  PVector drag = object.velocity.get();
-  float speed = drag.mag();
-  float area = object.size.y;
-  float magnitude = (speed * (area / 500)) * object.airConstant;
-  drag.mult(-1);
-  drag.normalize();
-  drag.mult(magnitude);
-  //print("\nSpeed: " + speed + "\nArea:" + area + "\nMagnitude: " + magnitude + "\nLuftmodstand: " + drag);
-  object.addForce(drag);
-}
-
-//Wind
- public void wind(dynamicObject object) {
-  PVector wind = currentLevel.wind;
-  object.addForce(wind.div(10));
-}
-
 //Draw
  public void draw() {
-  physics();
+    for (int i = 0; i < dynamicObjects.length; i++) {
+    dynamicObjects[i].physics();
+  }
+  player.update();
   for (int i = 0; i < objects.length; i++) {
     objects[i].update();
   }
-  player.update();
 
   background(255);
   updateCamLocation();
   rectMode(CENTER);
   translate(-camLocation.x, -camLocation.y);
-
+  for (int i = 0; i < dynamicObjects.length; i++) {
+    dynamicObjects[i].draw();
+  }
   for (int i = 0; i < objects.length; i++) {
     objects[i].draw();
   }
   player.draw();
 }
 class dynamicObject {
-  PVector location = new PVector(0, 0);
+  PVector location = new PVector(100, 100);
   PVector velocity = new PVector(0, 0);
   PVector acceleration = new PVector(0, 0);
   PVector size = new PVector(20, 20);
-  float mass, airConstant;
+  float mass, airConstant, maxVelocity = -1;
+
+   public void draw() {
+    //Update location...
+    velocity.add(acceleration.mult(mass));
+    if (maxVelocity > -1) {
+      velocity.x = constrain(velocity.x, -maxVelocity, maxVelocity);
+      velocity.y = constrain(velocity.y, -maxVelocity, maxVelocity);
+    }
+    location.add(velocity);
+  }
 
   //Add force to object function
    public void addForce(PVector force) {
@@ -164,109 +145,38 @@ class dynamicObject {
     //print("Frame start \n");
     acceleration = new PVector(0, 0);
   }
-
-   public void draw() {
-    registerMethod("draw", this);
-  }
-}
-
-class testObject extends dynamicObject {
-    testObject() {
-        mass = 0.5f;
-        airConstant = 0.2f;
-
-    }
-     public void draw() {
-        //registerMethod("draw", this);
-        super.draw();
-        noStroke();
-        colorMode(RGB);
-        fill(60, 120, 60);
-        rect(location.x, location.y, size.x, size.y);
-        print("\nLocation: " + location);
-    }
-}
-class level {
-    PVector wind = new PVector(5,0);
-}
-class Player extends dynamicObject {
-  //Object definitions
-  float bounceFactor = random(0.850f, 0.950f), standardAccel = 0.25f, jumpPower = 15, maxVelocity = 10;
-  boolean isTouchingGround = false;
-
-  //Textures
-  PImage playerTexture;
-
-  Player() {
-    mass = 5;
-    airConstant = 0;
-    size = new PVector(60, 97);
+  //Physics
+   public void physics() {
+    resetAccel();
+    gravity();
+    wind();
+    airResistance();
   }
 
-  //Color value
-  PVector colorValue = new PVector(2, 230, 36);
-
-   public void update() {
-    //Textures
-    animations();
-
-    //Inputs
-    if (getInput("a")) {
-      addForce(new PVector(-standardAccel, 0));
-    }
-    if (getInput("d")) {
-      addForce(new PVector(standardAccel, 0));
-    }
-    if (getInput("w") || getInput(" ")) {
-      if (isTouchingGround) addForce(new PVector(0, -jumpPower));
-    }
-
-    //Update location...
-    velocity.add(acceleration.mult(mass));
-    velocity.x = constrain(velocity.x, -maxVelocity, maxVelocity);
-    location.add(velocity);
-    isTouchingGround = false;
+  //Gravity
+   public void gravity() {
+    PVector gravity = new PVector(0, 1);
+    addForce(gravity);
   }
 
-   public void animations() {
-    playerTexture = loadImage("player.png");
+  //Air resistance
+   public void airResistance() {
+    PVector drag = velocity.get();
+    float speed = drag.mag();
+    float area = size.y;
+    float magnitude = (speed * (area / 500)) * airConstant;
+    drag.mult(-1);
+    drag.normalize();
+    drag.mult(magnitude);
+    //print("\nSpeed: " + speed + "\nArea:" + area + "\nMagnitude: " + magnitude + "\nLuftmodstand: " + drag);
+    addForce(drag);
   }
 
-  float c1 = 0,c2 = 1,c3 = 1,c4 = 0;
-   public void draw() {
-    noStroke();
-    colorMode(RGB);
-    /*
-    float dir = 1;
-    if (velocity.x > 0.1) {
-      dir = 1;
-      scale(1,1);
-    } else if (velocity.x < -0.1) {
-      dir = -1;
-      scale(-1,1);
-    }*/
-    //fill(60, 120, 60);
-    //rect(location.x, location.y, size.x, size.y);
-    textureMode(NORMAL);
-    beginShape();
-    texture(playerTexture);
-    if (getInput("a")) {
-      c1 = 0;
-      c2 = 1;
-      c3 = 1;
-      c4 = 0;
-      
-    } else if(getInput("d")) {
-      c1 = 1;
-      c2 = 0;
-      c3 = 0;
-      c4 = 1;
-    }
-    vertex(location.x - size.x/2, location.y - size.y/2, c1, 0);
-    vertex(location.x + size.x/2, location.y - size.y/2, c2, 0);
-    vertex(location.x + size.x/2, location.y + size.y/2, c3, 1);
-    vertex(location.x - size.x/2, location.y + size.y/2, c4, 1);
-    endShape();
+  //Wind
+   public void wind() {
+    PVector wind = currentLevel.wind;
+    print("\nWind:" + wind);
+    addForce(wind.get());
   }
 
   //Friction function
@@ -311,43 +221,148 @@ class Player extends dynamicObject {
     if (axis == 0) {
       location.x = locationValue;
       velocity.x = 0;
-      //velocity.x *= -bounceFactor;
-      //if(velocity.x > 1) velocity.x = round(velocity.x);
     }
     if (axis == 1) {
       location.y = locationValue;
       velocity.y = 0;
-      isTouchingGround = true;
-      //velocity.y *= -bounceFactor;
-      //if(velocity.y > 1) velocity.y = round(velocity.y);
     }
   }
-   public void boxCollision(float x, float y, float w, float h, float friction) {
+   public void boxCollision(float x, float y, float w, float h, float frictionC) {
     //Y-Collision
     if (location.x + (size.x / 2) >= x && location.x - (size.x / 2) <= x + w) {
       //Bottom
       if (location.y - (size.y / 2) <= y + h && location.y + (size.y / 2) >= y + h) {
         bounce( y + h + (size.y / 2), 1);
-        friction(friction, 0);
+        friction(frictionC, 0);
       }
       //Top
       if (location.y + (size.y / 2) >= y && location.y - (size.y / 2) <= y) {
         bounce(y - (size.y / 2), 1);
-        friction(friction, 0);
+        friction(frictionC, 0);
       }
     }
     //X-Collision
-    if (location.y + (size.y / 2) - 5 >= y && location.y - (size.y / 2) + 5 <= y + h) {
+    if (location.y + (size.y / 2) - 1 >= y && location.y - (size.y / 2) + 1 <= y + h) {
       //Left
       if (location.x + (size.x / 2) >= x && location.x - (size.x / 2) <= x) {
         bounce(x - (size.x / 2), 0);
-        friction(friction, 1);
+        friction(frictionC, 1);
       }
       //Right
       if (location.x - (size.x / 2) <= x + w && location.x + (size.x / 2) >= x + w) {
         bounce( x + w + (size.x / 2), 0);
-        friction(friction, 1);
+        friction(frictionC, 1);
       }
+    }
+  }
+}
+
+class testObject extends dynamicObject {
+  testObject() {
+    mass = 0.5f;
+    airConstant = 0.2f;
+    maxVelocity = 10;
+  }
+   public void draw() {
+    super.draw();
+    noStroke();
+    colorMode(RGB);
+    fill(60, 120, 60);
+    rect(location.x, location.y, size.x, size.y);
+    //print("\nLocation: " + location);
+  }
+}
+class level {
+  PVector wind = new PVector(0.075f, 0);
+}
+class Player extends dynamicObject {
+  //Object definitions
+  float standardAccel = 0.25f, jumpPower = 25;
+  boolean isTouchingGround = false;
+
+  //Textures
+  PImage playerTexture;
+
+  Player() {
+    mass = 5;
+    maxVelocity = 10;
+    airConstant = 0;
+    size = new PVector(60, 97);
+  }
+
+  //Color value
+  PVector colorValue = new PVector(2, 230, 36);
+
+   public void update() {
+    physics();
+    //Textures
+    animations();
+
+    //Inputs
+    if (getInput("a")) {
+      addForce(new PVector(-standardAccel, 0));
+    }
+    if (getInput("d")) {
+      addForce(new PVector(standardAccel, 0));
+    }
+    if (getInput("w") || getInput(" ")) {
+      if (isTouchingGround) addForce(new PVector(0, -jumpPower));
+    }
+    isTouchingGround = false;
+  }
+
+  int frameTime = 0, anim = 2;
+
+   public void animations() {
+    if (isTouchingGround == false) {
+      if (velocity.y < 0) {
+        playerTexture = loadImage("player_jump.png");
+      } else {
+        playerTexture = loadImage("player_fall.png");
+      }
+    } else if (velocity.x < -0.2f || velocity.x > 0.2f) {
+      if (frameTime < millis()) {
+        if (anim == 1) anim = 2;
+        else if (anim == 2) anim =1;
+        playerTexture = loadImage("player_walk" + anim+ ".png");
+        frameTime = millis() + 100;
+      }
+    } else {
+      playerTexture = loadImage("player_stand.png");
+    }
+  }
+
+  float c1 = 0, c2 = 1, c3 = 1, c4 = 0;
+   public void draw() {
+    super.draw();
+    noStroke();
+    colorMode(RGB);
+    textureMode(NORMAL);
+    beginShape();
+    texture(playerTexture);
+    if (getInput("d")) {
+      c1 = 0;
+      c2 = 1;
+      c3 = 1;
+      c4 = 0;
+    } else if (getInput("a")) {
+      c1 = 1;
+      c2 = 0;
+      c3 = 0;
+      c4 = 1;
+    }
+    vertex(location.x - size.x/2, location.y - size.y/2, c1, 0);
+    vertex(location.x + size.x/2, location.y - size.y/2, c2, 0);
+    vertex(location.x + size.x/2, location.y + size.y/2, c3, 1);
+    vertex(location.x - size.x/2, location.y + size.y/2, c4, 1);
+    endShape();
+  }
+
+  //Bounce function
+   public void bounce(float locationValue, float axis) {
+    super.bounce(locationValue, axis);
+    if (axis == 1) {
+      isTouchingGround = true;
     }
   }
 }
@@ -371,6 +386,9 @@ class staticObject {
   }
 
    public void collisionCheck() {
+    for (int i = 0; i < dynamicObjects.length; i++) {
+      dynamicObjects[i].boxCollision(location.x - size.x / 2, location.y - size.y/2, size.x, size.y, frictionC);
+    }
     player.boxCollision(location.x - size.x / 2, location.y - size.y/2, size.x, size.y, frictionC);
   }
 
