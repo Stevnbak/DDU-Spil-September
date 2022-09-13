@@ -1,18 +1,22 @@
-
 class Particle extends dynamicObject {
   float lifespan;
+  float radar;
   int sum;
+  float factor;
 
   boolean alert;
   boolean nonreg;
 
   Particle(PVector lo, float he) {
-    mass=0.5;
+    mass=2;
+    factor=2;
+    radar=40;
 
     location=lo;
     location.y=location.y+he/2*random(-1, 1);
 
     velocity=new PVector(random(-1, 1), random(-1, 1));
+    velocity.mult(factor);
     size=new PVector(4, 4);
 
     lifespan = 255.0;
@@ -38,40 +42,7 @@ class Particle extends dynamicObject {
   void update(PVector po) {
     physics();
     detection(po);
-    //Collisions
-    for (int i = 0; i < objects.length; i++) {
-      boxCollision(objects[i].location.x - objects[i].size.x / 2, objects[i].location.y - objects[i].size.y/2, objects[i].size.x, objects[i].size.y);
-    }
-  }
-
-  void bounce(float locationValue, float axis) {
-    if (axis == 0) {
-      location.x = locationValue;
-      velocity.x = 0;
-    }
-    if (axis == 1) {
-      location.y = locationValue;
-      velocity.y = 0;
-    }
-  }
-
-  void boxCollision(float x, float y, float w, float h) {
-    if (location.x + (size.x / 2) >= x && location.x - (size.x / 2) <= x + w) {
-      if (location.y - (size.y / 2) <= y + h && location.y + (size.y / 2) >= y + h) {
-        bounce( y + h + (size.y / 2), 1);
-      }
-      if (location.y + (size.y / 2) >= y && location.y - (size.y / 2) <= y) {
-        bounce(y - (size.y / 2), 1);
-      }
-    }
-    if (location.y + (size.y / 2) - 1 >= y && location.y - (size.y / 2) + 1 <= y + h) {
-      if (location.x + (size.x / 2) >= x && location.x - (size.x / 2) <= x) {
-        bounce(x - (size.x / 2), 0);
-      }
-      if (location.x - (size.x / 2) <= x + w && location.x + (size.x / 2) >= x + w) {
-        bounce( x + w + (size.x / 2), 0);
-      }
-    }
+    draw();
   }
 
   void draw() {
