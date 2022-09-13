@@ -110,7 +110,7 @@ void draw() {
     objects.get(i).draw();
   }
   //Particle stuff...
-  odor.addParticle(player.location.get(),player.size.y,4);
+  odor.addParticle(player.location.get(),player.size.get().y,4);
   odor.update(temporary,40);
 
   fill(55);

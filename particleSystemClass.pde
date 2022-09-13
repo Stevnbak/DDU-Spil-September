@@ -10,9 +10,9 @@ class ParticleSystem {
   }
 
   void addParticle(PVector lo, float he, int fr) {
-    if (frameCount%fr==0)
+    if (frameCount % fr==0)
     {
-      particles.add(new Particle(lo, he));
+      particles.add(new Particle(lo.get(), he));
     }
   }
 
@@ -20,7 +20,7 @@ class ParticleSystem {
     Iterator<Particle>it=particles.iterator();
 
     while (it.hasNext()) {
-      Particle p=it.next();
+      Particle p = it.next();
 
       if (p.alert) {
         amount++;
@@ -32,8 +32,7 @@ class ParticleSystem {
       }
 
       for (int i = 0; i < objects.size(); i++) {
-        objects.get(i).update();
-        checkCollision(objects.get(i),p);
+        checkCollision(objects.get(i), p);
       }
       
       p.update(po, ra);
