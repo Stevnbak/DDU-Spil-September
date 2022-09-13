@@ -205,7 +205,11 @@ void playingDraw() {
   //Particle stuff...
   odor.addParticle(player.location.get(), player.size.get().y, 4);
   odor.update(temporary, 40);
-
+  
+  //Draw animals
+  for (int i = 0; i < animals.size(); i++) {
+    animals.get(i).draw();
+  }
   fill(55);
   ellipse(temporary.x, temporary.y, 40, 40);
   //Draw player
