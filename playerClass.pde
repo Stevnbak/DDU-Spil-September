@@ -34,7 +34,7 @@ class Player extends dynamicObject {
       if (isTouchingGround) addForce(new PVector(0, -jumpPower));
     }
     if(getInput("MLeft")) {
-      currentPower += 1;
+      currentPower += 0.2;
       if (currentPower > maxPower) currentPower = maxPower;
     } else if(currentPower > 0) {
       shootProjectile(new PVector(mouseX + camLocation.x, mouseY + camLocation.y), currentPower);
@@ -74,6 +74,10 @@ class Player extends dynamicObject {
     if (maxVelocity.y > -1) velocity.y = constrain(velocity.y, -maxVelocity.y, maxVelocity.y);
     location.add(velocity);
     //Draw...
+    if (getInput("MLeft")) {
+      aimProjectile(new PVector(mouseX + camLocation.x, mouseY + camLocation.y),currentPower);
+    }
+    
     noStroke();
     colorMode(RGB);
     textureMode(NORMAL);
@@ -102,6 +106,25 @@ class Player extends dynamicObject {
     super.collision(locationValue, side);
     if (side == top) {
       isTouchingGround = true;
+    }
+  }
+  
+  //Aiming
+  void aimProjectile(PVector targetLocation,float power) {
+    PVector direction = new PVector(targetLocation.x - location.x, targetLocation.y - location.y);
+    direction.normalize();
+    direction.mult(2.5);
+    float d=6;
+    
+    fill(55);
+    for (int i=0;i<power*0.4;i++)
+    {
+      ellipse(location.x+direction.x*d*i,location.y+direction.y*d*i,d,d);
+      /*
+      sidste
+      arc
+      curve?
+      */
     }
   }
 
