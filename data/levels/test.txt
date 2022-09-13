@@ -1,5 +1,6 @@
 size:[1000,1000]
 spawn:[250,0]
+background:"backgroundColorGrass.png"
 object:[300,33,50,75]
 object:[350,75,50,150]
 object:[425,25,100,50]

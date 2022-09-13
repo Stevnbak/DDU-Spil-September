@@ -3,9 +3,9 @@ class Animal extends dynamicObject {
   PImage animalTexture;
   
   Animal(PVector spawnLocation, float spawnMass, PVector spawnSize) {
-    location = spawnLocation;
+    location = spawnLocation.get();
     mass = spawnMass;
-    size = spawnSize;
+    size = spawnSize.get();
   }
   
   void draw() {

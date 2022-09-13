@@ -1,30 +1,42 @@
+//Camera stuff
 PVector camLocation;
 float camSpeed = 20;
-PImage background;
+
+//Player stuff
 public Player player = new Player();
+
+//Level stuff
 public level currentLevel;
-ParticleSystem odor=new ParticleSystem();
-PVector temporary=new PVector(200,-100);
+
+//Background
+PImage background;
+
+//Particle stuff
+ParticleSystem odor = new ParticleSystem();
+PVector temporary = new PVector(200, -100);
+
+//Inputs
 public HashMap<String, Boolean> inputs = new HashMap<String, Boolean>();
 
-public ArrayList<staticObject> objects = new ArrayList<staticObject>();
+//Object lists
+public ArrayList<staticObject> staticObjects = new ArrayList<staticObject>();
 public ArrayList<dynamicObject> dynamicObjects = new ArrayList<dynamicObject>();
 public ArrayList<Animal> animals = new ArrayList<Animal>();
 
 void setup() {
+  //Window size
   size(1080, 720, P2D);
+  //Title
   surface.setTitle("Game Title");
   //surface.setResizable(false);
   camLocation = new PVector(0, 0);
-
   //Set level
   currentLevel = new level("test");
-
-  //Add test object (green square)
-  dynamicObjects.add(new testObject());
-  
-  //Loads background
-  background = loadImage("backgroundColorGrass.png");
+  if(background == null) {
+    background = loadImage("backgroundColorGrass.png");
+  }
+  //Set state
+  setState("playing");
 }
 
 void updateCamLocation() {
@@ -87,6 +99,74 @@ void mouseReleased() {
 
 //Draw
 void draw() {
+  //Inputs to change state
+  if(getInput("b")) setState("designing");
+  if(getInput("n")) setState("playing");
+  if(getInput("m")) setState("menu");
+
+  switch (state) {
+    case "playing":{ playingDraw(); break;}
+    case "designing":{ designDraw(); break;}
+    case "menu":{ menuDraw(); break;}
+    case "loading":{ loadingDraw(); break;}
+    case "complete":{ completeDraw(); break;}
+  }
+}
+
+void designDraw() {
+  //Draw background
+  frameBackground();
+  //Text
+  fill(0);
+  textSize(128);
+  text("Design", 40, 120); 
+}
+
+void loadingDraw() {
+  //Draw background
+  frameBackground();
+  //Text
+  fill(0);
+  textSize(128);
+  text("Loading", 40, 120); 
+}
+
+void menuDraw() {
+  //Draw background
+  frameBackground();
+  //Text
+  fill(0);
+  textSize(128);
+  text("Menu", 40, 120); 
+}
+
+void completeDraw() {
+  //Draw background
+  frameBackground();
+  //Text
+  fill(0);
+  textSize(128);
+  text("Complete", 40, 120); 
+}
+
+PImage lastFrame;
+void frameBackground() {
+  //Draw background
+  background(255);
+  textureMode(NORMAL);
+  textureWrap(REPEAT);
+  beginShape();
+  texture(lastFrame);
+  vertex(0, 0, 0, 0);
+  vertex(width, 0, 1, 0);
+  vertex(width, height, 1, 1);
+  vertex(0, height, 0, 1);
+  endShape();
+  fill(255,255,255,50);
+  rect(width / 2, height / 2, width, height);
+}
+
+void playingDraw() {
   //Update dynamic object physics
   for (int i = 0; i < dynamicObjects.size(); i++) {
     dynamicObjects.get(i).physics();
@@ -94,8 +174,8 @@ void draw() {
   //Update player (including physics)
   player.update();
   //Update static objects (Including collisions with dynamic objects...)
-  for (int i = 0; i < objects.size(); i++) {
-    objects.get(i).update();
+  for (int i = 0; i < staticObjects.size(); i++) {
+    staticObjects.get(i).update();
   }
   //Update camera location
   updateCamLocation();
@@ -119,15 +199,15 @@ void draw() {
     dynamicObjects.get(i).draw();
   }
   //Draw static objects
-  for (int i = 0; i < objects.size(); i++) {
-    objects.get(i).draw();
+  for (int i = 0; i < staticObjects.size(); i++) {
+    staticObjects.get(i).draw();
   }
   //Particle stuff...
-  odor.addParticle(player.location.get(),player.size.get().y,4);
-  odor.update(temporary,40);
+  odor.addParticle(player.location.get(), player.size.get().y, 4);
+  odor.update(temporary, 40);
 
   fill(55);
-  ellipse(temporary.x,temporary.y,40,40);
+  ellipse(temporary.x, temporary.y, 40, 40);
   //Draw player
   player.draw();
 }

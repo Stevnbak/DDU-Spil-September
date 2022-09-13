@@ -109,20 +109,3 @@ class dynamicObject {
     }
   }
 }
-
-class testObject extends dynamicObject {
-  testObject() {
-    mass = 0.5;
-    airConstant = 0.2;
-    maxVelocity.x = 10;
-    maxVelocity.y = 10;
-  }
-  void draw() {
-    super.draw();
-    noStroke();
-    colorMode(RGB);
-    fill(60, 120, 60);
-    rect(location.x, location.y, size.x, size.y);
-    //print("\nLocation: " + location);
-  }
-}
