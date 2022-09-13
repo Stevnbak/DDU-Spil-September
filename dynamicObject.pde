@@ -4,9 +4,10 @@ class dynamicObject {
   PVector acceleration = new PVector(0, 0);
   PVector size = new PVector(20, 20);
   PVector maxVelocity = new PVector(-1, -1);
-  float mass, airConstant;
+  float mass = 1, airConstant = 0;
 
   void draw() {
+    physics();
     //Update location...
     velocity.add(acceleration.mult(mass));
     if (maxVelocity.x > -1) velocity.x = constrain(velocity.x, -maxVelocity.x, maxVelocity.x);
@@ -97,7 +98,8 @@ class dynamicObject {
 
 
   //Collision function
-  void collision(float locationValue, float side) {
+  void collision(float locationValue, int side) {
+    //println("1");
     if (side == left || side == right) {
       location.x = locationValue;
       velocity.x = 0;

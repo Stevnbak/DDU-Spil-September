@@ -6,6 +6,7 @@ class Player extends dynamicObject {
   //Textures
   PImage playerTexture;
 
+  //Constructor
   Player() {
     mass = 5;
     maxVelocity.x = 8;
@@ -13,10 +14,11 @@ class Player extends dynamicObject {
     size = new PVector(60, 97);
   }
 
-  //Color value
-  PVector colorValue = new PVector(2, 230, 36);
-
+  float currentPower = 0;
+  float maxPower = 30;
+  //Update function
   void update() {
+    //Physics...
     physics();
     //Textures
     animations();
@@ -31,12 +33,19 @@ class Player extends dynamicObject {
     if (getInput("w") || getInput(" ")) {
       if (isTouchingGround) addForce(new PVector(0, -jumpPower));
     }
+    if(getInput("MLeft")) {
+      currentPower += 1;
+      if (currentPower > maxPower) currentPower = maxPower;
+    } else if(currentPower > 0) {
+      shootProjectile(new PVector(mouseX + camLocation.x, mouseY + camLocation.y), currentPower);
+      currentPower = 0;
+    }
     isTouchingGround = false;
     //println("Player location: " + location);
   }
 
+  //Animations
   int frameTime = 0, anim = 2;
-
   void animations() {
     if (isTouchingGround == false) {
       if (velocity.y < 0) {
@@ -56,9 +65,15 @@ class Player extends dynamicObject {
     }
   }
 
+  //Draw
   float c1 = 0, c2 = 1, c3 = 1, c4 = 0;
   void draw() {
-    super.draw();
+    //Update location...
+    velocity.add(acceleration.mult(mass));
+    if (maxVelocity.x > -1) velocity.x = constrain(velocity.x, -maxVelocity.x, maxVelocity.x);
+    if (maxVelocity.y > -1) velocity.y = constrain(velocity.y, -maxVelocity.y, maxVelocity.y);
+    location.add(velocity);
+    //Draw...
     noStroke();
     colorMode(RGB);
     textureMode(NORMAL);
@@ -82,11 +97,50 @@ class Player extends dynamicObject {
     endShape();
   }
 
-  //Bounce function
-  void collision(float locationValue, float side) {
+  //Collision function
+  void collision(float locationValue, int side) {
     super.collision(locationValue, side);
     if (side == top) {
       isTouchingGround = true;
     }
+  }
+
+  //Shooting
+  void shootProjectile(PVector targetLocation, float power) {
+    println("Shooting... with power: " + power);
+    PVector direction = new PVector(targetLocation.x - location.x, targetLocation.y - location.y);
+    direction.normalize();
+    Projectile newProj = new Projectile(location.get(), power, direction.get());
+    dynamicObjects.add(newProj);
+  }
+}
+
+class Projectile extends dynamicObject {
+
+  Projectile(PVector startLocation, float startPower, PVector startDirection) {
+    location = startLocation.get();
+    velocity = startDirection.get().mult(startPower);
+    airConstant = 0;
+  }
+
+  void collision(float locationValue, int side) {
+    dynamicObjects.remove(this);
+  }
+
+  void draw() {
+    //Collision?
+    for (int i = 0; i < animals.size(); i++) {
+      boolean inside = isInside(this, animals.get(i));
+      if(inside) {
+        //Hit animal
+        println("Hit animal");
+      }
+    }
+    super.draw();
+    //println("Velocity: " + velocity);
+    noStroke();
+    colorMode(RGB);
+    fill(155,155,0);
+    rect(location.x, location.y, size.x, size.y);
   }
 }
