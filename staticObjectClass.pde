@@ -7,6 +7,7 @@ class staticObject {
 
   //Constructor
   staticObject(PVector startLocation, PVector newSize) {
+    //println("Static object initialized... Location: " + startLocation + " Size: " + newSize);
     location = startLocation.get();
     size = newSize.get();
   }
@@ -18,8 +19,8 @@ class staticObject {
   }
 
   void collisionCheck() {
-    for (int i = 0; i < dynamicObjects.length; i++) {
-      dynamicObjects[i].boxCollision(location.x - size.x / 2, location.y - size.y/2, size.x, size.y, frictionC);
+    for (int i = 0; i < dynamicObjects.size(); i++) {
+      dynamicObjects.get(i).boxCollision(location.x - size.x / 2, location.y - size.y/2, size.x, size.y, frictionC);
     }
     player.boxCollision(location.x - size.x / 2, location.y - size.y/2, size.x, size.y, frictionC);
   }
