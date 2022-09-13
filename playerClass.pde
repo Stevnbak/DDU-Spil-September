@@ -110,45 +110,7 @@ class Player extends dynamicObject {
     //println("Shooting... with power: " + power);
     PVector direction = new PVector(targetLocation.x - location.x, targetLocation.y - location.y);
     direction.normalize();
-    Projectile newProj = new Projectile(location.get(), power, direction.get());
+    Projectile newProj = new Projectile(location.get(), power, direction.get(),8,0);
     dynamicObjects.add(newProj);
-  }
-}
-
-class Projectile extends dynamicObject {
-
-  float startTime = 0;
-  Projectile(PVector startLocation, float startPower, PVector startDirection) {
-    location = startLocation.get();
-    velocity = startDirection.get().mult(startPower);
-    airConstant = 0;
-    startTime = millis();
-  }
-
-  void collision(float locationValue, int side) {
-    dynamicObjects.remove(this);
-  }
-
-  void draw() {
-    //Collision?
-    for (int i = 0; i < animals.size(); i++) {
-      boolean inside = isInside(this, animals.get(i));
-      if(inside) {
-        //Hit animal
-        println("Hit animal");
-      }
-    }
-    if (isInside(this, player)) {
-      if(millis() > startTime + 500) {
-        println("Dead!");
-        exit();
-      }
-    }
-    super.draw();
-    //println("Velocity: " + velocity);
-    noStroke();
-    colorMode(RGB);
-    fill(155,155,0);
-    rect(location.x, location.y, size.x, size.y);
   }
 }
