@@ -1,16 +1,20 @@
 class Design {
   PShape[] shapes=new PShape[4];
-  float[] value;
-
+  float[] form={1.15,0.5,0.47,0.04};
+  float[] mass={0.01,0.01,0.01,0.01};
+  
   PShape sq;
   PShape tr;
   PShape ci;
   PShape el;
 
-  int nu;
-  float sc;
+  int n;
+  float s;
 
-  Design(float s, int n) {
+  Design(float sc, int nu) {
+    n=nu;
+    s=sc;
+    
     sq=createShape(RECT, 0, 0, s, s);
     sq.setFill(color(55));
     sq.setStroke(false);
@@ -31,13 +35,13 @@ class Design {
     shapes[1]=tr;
     shapes[2]=ci;
     shapes[3]=el;
-
-    nu=n;
-    sc=s;
   }
 
   void draw() {
     shapeMode(CENTER);
-    shape(shapes[nu], 0, 0);
+    shape(shapes[n], 0, 0);
+    stroke(55);
+    strokeWeight(s/3);
+    line(-s/2, 0, 0, s*4);
   }
 }

@@ -16,6 +16,7 @@ class Player extends dynamicObject {
 
   float currentPower = 0;
   float maxPower = 30;
+  int delta=1;
   //Update function
   void update() {
     //Physics...
@@ -34,8 +35,17 @@ class Player extends dynamicObject {
       if (isTouchingGround) addForce(new PVector(0, -jumpPower));
     }
     if (getInput("MLeft")) {
-      currentPower += 0.1;
-      if (currentPower > maxPower) currentPower = maxPower;
+      currentPower=currentPower+(0.5*delta);
+      if (currentPower > maxPower){
+        delta =-1;
+        currentPower=maxPower;
+      }
+      
+      else if (currentPower<0){
+        delta = 1;
+        currentPower=0;
+    }
+      
     } else if (currentPower > 0) {
       shootProjectile(new PVector(mouseX + camLocation.x, mouseY + camLocation.y), currentPower);
       currentPower = 0;
@@ -114,7 +124,7 @@ class Player extends dynamicObject {
     //println("Shooting... with power: " + power);
     PVector direction = new PVector(targetLocation.x - location.x, targetLocation.y - location.y);
     direction.normalize();
-    Projectile newProj = new Projectile(location.get(), power, direction.get(), 8, 0);
+    Projectile newProj = new Projectile(location.get(), power, direction.get(), 8, 2);
     dynamicObjects.add(newProj);
   }
   
@@ -124,25 +134,22 @@ class Player extends dynamicObject {
     direction.normalize();
     direction.mult(2.5);
     float d=8;
+    float s=3;
 
-    for (int i=0; i<=power/2; i++)
+    for (int i=0; i<=power/s; i++)
     {
-      if (i==power/2-(power/2%1))
+      fill(55);
+      if (i==power/s-(power/s%1))
       {
-        fill(55);
         ellipse(location.x+direction.x*d*i, location.y+direction.y*d*i, d, d);
 
-        fill(55, (power/2%1)*255);
-        float posx, posy, radius = d/2, ang, dang=0.01, percentage=(power/2)%1;
-
+        float posx, posy, radius = d/2, ang, dang=0.01, percentage=(power/s)%1;
         pushMatrix();
         translate(location.x+direction.x*d*(i+1), location.y+direction.y*d*(i+1));
-
         if (percentage>0.5) {
           rotate(direction.heading()-PI);
           ang = 0;
           beginShape();
-          fill(55);
           noStroke();
           for ( int n = 0; n <= 360; n++) {
             posx = radius * sin(ang);
@@ -158,7 +165,6 @@ class Player extends dynamicObject {
             rotate(PI);
             ang = 0;
             beginShape();
-            fill(55);
             noStroke();
             for ( int n = 0; n <= 360; n++) {
               posx = radius * sin(ang);
@@ -174,7 +180,6 @@ class Player extends dynamicObject {
           rotate(direction.heading()-PI);
           ang = 0;
           beginShape();
-          fill(55);
           noStroke();
           for ( int n = 0; n <= 360; n++) {
             posx = radius * sin(ang);
@@ -188,7 +193,6 @@ class Player extends dynamicObject {
         }
         popMatrix();
       } else {
-        fill(55);
         ellipse(location.x+direction.x*d*i, location.y+direction.y*d*i, d, d);
       }
     }
