@@ -13,10 +13,10 @@ class Animal extends dynamicObject {
     textureMode(NORMAL);
     beginShape();
     texture(animalTexture);
-    vertex(location.x - size.x/2, location.y - size.y/2, c1, 0);
-    vertex(location.x + size.x/2, location.y - size.y/2, c2, 0);
-    vertex(location.x + size.x/2, location.y + size.y/2, c3, 1);
-    vertex(location.x - size.x/2, location.y + size.y/2, c4, 1);
+    vertex(location.x - size.x/2, location.y - size.y/2, 0, 0);
+    vertex(location.x + size.x/2, location.y - size.y/2, 1, 0);
+    vertex(location.x + size.x/2, location.y + size.y/2, 1, 1);
+    vertex(location.x - size.x/2, location.y + size.y/2, 0, 1);
     endShape();
   }
 }
