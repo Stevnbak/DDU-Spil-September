@@ -22,6 +22,9 @@ void setup() {
 
   //Add test object (green square)
   dynamicObjects.add(new testObject());
+  
+  //Loads background
+  background = loadImage("backgroundColorGrass.png");
 }
 
 void updateCamLocation() {
@@ -98,7 +101,6 @@ void draw() {
   updateCamLocation();
   //Draw background
   background(255);
-  background = loadImage("backgroundColorGrass.png");
   textureMode(NORMAL);
   textureWrap(REPEAT);
   beginShape();
