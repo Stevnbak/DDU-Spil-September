@@ -32,10 +32,11 @@ void setup() {
   camLocation = new PVector(0, 0);
   //Set level
   currentLevel = new level("test");
+  if(background == null) {
+    background = loadImage("backgroundColorGrass.png");
+  }
   //Set state
   setState("playing");
-  //Loads background
-  background = loadImage("backgroundColorGrass.png");
 }
 
 void updateCamLocation() {
@@ -98,9 +99,14 @@ void mouseReleased() {
 
 //Draw
 void draw() {
+  //Inputs to change state
+  if(getInput("b")) setState("designing");
+  if(getInput("n")) setState("playing");
+  if(getInput("m")) setState("menu");
+
   switch (state) {
     case "playing":{ playingDraw(); break;}
-    case "design":{ designDraw(); break;}
+    case "designing":{ designDraw(); break;}
     case "menu":{ menuDraw(); break;}
     case "loading":{ loadingDraw(); break;}
     case "complete":{ completeDraw(); break;}
@@ -108,19 +114,56 @@ void draw() {
 }
 
 void designDraw() {
-
+  //Draw background
+  frameBackground();
+  //Text
+  fill(0);
+  textSize(128);
+  text("Design", 40, 120); 
 }
 
 void loadingDraw() {
-
+  //Draw background
+  frameBackground();
+  //Text
+  fill(0);
+  textSize(128);
+  text("Loading", 40, 120); 
 }
 
 void menuDraw() {
-
+  //Draw background
+  frameBackground();
+  //Text
+  fill(0);
+  textSize(128);
+  text("Menu", 40, 120); 
 }
 
 void completeDraw() {
+  //Draw background
+  frameBackground();
+  //Text
+  fill(0);
+  textSize(128);
+  text("Complete", 40, 120); 
+}
 
+PImage lastFrame;
+void frameBackground() {
+  //Draw background
+  background(255);
+  textureMode(NORMAL);
+  textureWrap(REPEAT);
+  beginShape();
+  texture(lastFrame);
+  vertex(0, 0, 0, 0);
+  vertex(width, 0, 1, 0);
+  vertex(width, height, 1, 1);
+  vertex(0, height, 0, 1);
+  endShape();
+  fill(255,255,255,50);
+  rect(width / 2, height / 2, width, height);
 }
 
 void playingDraw() {

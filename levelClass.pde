@@ -27,6 +27,8 @@ class level {
           //Add "infinite" roof
           staticObjects.add(new staticObject(new PVector(0, -int(values[1]) - 250), new PVector(width * 2000, 500), "none.png"));
         }
+      } else if (type.equals("background")) {
+        background = loadImage(values[0].replace((char)'"',' ').trim());
       }
     }
     //Add "infinite" floor
