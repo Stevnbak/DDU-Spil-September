@@ -1,36 +1,37 @@
-
 import java.util.Iterator;
 
 class ParticleSystem {
   ArrayList<Particle> particles;
-  int level;
+  int amount;
 
   ParticleSystem() {
     particles=new ArrayList<Particle>();
-    level=0;
+    amount=0;
   }
 
-  void addParticle(PVector lo,float he) {
-    particles.add(new Particle(lo,he));
+  void addParticle(PVector lo, float he, int fr) {
+    if (frameCount%fr==0)
+    {
+      particles.add(new Particle(lo, he));
+    }
   }
 
-  void update(PVector po) {
+  void update(PVector po,float ra) {
     Iterator<Particle>it=particles.iterator();
 
     while (it.hasNext()) {
       Particle p=it.next();
-      
-      if (p.alert){
-        level++;
+
+      if (p.alert) {
+        amount++;
         p.alert=false;
       }
-      
+
       if (p.isDead()) {
         it.remove();
       }
-      
-      p.update(po);
-      p.draw();
+
+      p.update(po,ra);
     }
   }
 }
