@@ -5,12 +5,16 @@ class staticObject {
   //Loction vector
   PVector location = new PVector(0, 0);
   PImage texture = loadImage("slice27_27.png");
+  PImage topTexture = loadImage("slice03_03.png");
   //Constructor
   staticObject(PVector startLocation, PVector newSize, String newTexture) {
     //println("Static object initialized... Location: " + startLocation + " Size: " + newSize);
     location = startLocation.get();
     size = newSize.get();
-    if(newTexture != "") texture = loadImage(newTexture);
+    if(newTexture != "") {
+      texture = loadImage(newTexture);
+      noTexture = true;
+    }
     c1 = size.x/50;
     c2 = size.y/50;
   }
@@ -26,6 +30,7 @@ class staticObject {
 
   float c1;
   float c2;
+  boolean noTexture = false;
 
   void draw() {
     textureMode(NORMAL);
@@ -37,5 +42,15 @@ class staticObject {
     vertex(location.x + size.x/2, location.y + size.y/2, c1, c2);
     vertex(location.x - size.x/2, location.y + size.y/2, 0, c2);
     endShape();
+    
+    if (noTexture == false) {
+      beginShape();
+      texture(topTexture);
+      vertex(location.x - size.x/2, location.y - size.y/2, 0, 0);
+      vertex(location.x + size.x/2, location.y - size.y/2, c1, 0);
+      vertex(location.x + size.x/2, location.y - size.y/2 + 50, c1, 1);
+      vertex(location.x - size.x/2, location.y - size.y/2 + 50, 0, 1);
+      endShape();
+    }
   }
 }

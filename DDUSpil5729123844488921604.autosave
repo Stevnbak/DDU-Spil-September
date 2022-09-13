@@ -1,9 +1,14 @@
 PVector camLocation;
 float camSpeed = 20;
 public Player player = new Player();
+<<<<<<< HEAD
+public ParticleSystem odor=new ParticleSystem();
+public PVector snude=new PVector(100,100);
+public level currentLevel = new level();
+=======
 public level currentLevel;
-ParticleSystem odor=new ParticleSystem();
-PVector temporary=new PVector(200,-100);
+>>>>>>> 70b2d10179730d36432c0e2775bfaaa33eb7c165
+
 public HashMap<String, Boolean> inputs = new HashMap<String, Boolean>();
 
 public ArrayList<staticObject> objects = new ArrayList<staticObject>();
@@ -13,13 +18,15 @@ public ArrayList<Animal> animals = new ArrayList<Animal>();
 void setup() {
   size(1080, 720, P2D);
   surface.setTitle("Game Title");
-  //surface.setResizable(false);
+  surface.setResizable(true);
   camLocation = new PVector(0, 0);
 
   //Set level
   currentLevel = new level("test");
 
-  //Add test object (green square)
+  objects.add(new staticObject(new PVector(0, height), new PVector(width * 2000, 50)));
+  objects.add(new staticObject(new PVector(width / 2, height - 50), new PVector(200, 500)));
+
   dynamicObjects.add(new testObject());
 }
 
@@ -87,8 +94,14 @@ void draw() {
     dynamicObjects.get(i).physics();
   }
   player.update();
+<<<<<<< HEAD
+  
+  for (int i = 0; i < objects.length; i++) {
+    objects[i].update();
+=======
   for (int i = 0; i < objects.size(); i++) {
     objects.get(i).update();
+>>>>>>> 70b2d10179730d36432c0e2775bfaaa33eb7c165
   }
   background(255);
   updateCamLocation();
@@ -100,11 +113,8 @@ void draw() {
   for (int i = 0; i < objects.size(); i++) {
     objects.get(i).draw();
   }
-  
-  odor.addParticle(player.location.get(),player.size.y,4);
-  odor.update(temporary,40);
-  fill(55);
-  ellipse(temporary.x,temporary.y,40,40);
-  
   player.draw();
+  
+  odor.update(snude);
+  odor.addParticle(player.location.get(),player.size.get().y);
 }
