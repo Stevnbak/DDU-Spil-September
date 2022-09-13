@@ -14,6 +14,7 @@ class level {
       } else if (type.equals("spawn")) {
         player.location = new PVector(int(values[0]), -int(values[1]));
       } else if (type.equals("animal")) {
+        animals.add(new Animal(new PVector(int(values[0]), -int(values[1])), int(values[2]), new PVector(int(values[3]), int(values[4]))));
       } else if (type.equals("size")) {
         //Side wall exits?
         if(int(values[0]) != 0)  {
