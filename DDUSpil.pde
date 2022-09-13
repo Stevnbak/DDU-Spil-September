@@ -11,10 +11,6 @@ public level currentLevel;
 //Background
 PImage background;
 
-//Game state
-String state;
-String[] availableStates = {"playing","designing","loading","menu","complete"};
-
 //Particle stuff
 ParticleSystem odor = new ParticleSystem();
 PVector temporary = new PVector(200, -100);
@@ -37,9 +33,7 @@ void setup() {
   //Set level
   currentLevel = new level("test");
   //Set state
-  state = "playing";
-  //Add test object (green square)
-  dynamicObjects.add(new testObject());
+  setState("playing");
   //Loads background
   background = loadImage("backgroundColorGrass.png");
 }
@@ -104,6 +98,32 @@ void mouseReleased() {
 
 //Draw
 void draw() {
+  switch (state) {
+    case "playing":{ playingDraw(); break;}
+    case "design":{ designDraw(); break;}
+    case "menu":{ menuDraw(); break;}
+    case "loading":{ loadingDraw(); break;}
+    case "complete":{ completeDraw(); break;}
+  }
+}
+
+void designDraw() {
+
+}
+
+void loadingDraw() {
+
+}
+
+void menuDraw() {
+
+}
+
+void completeDraw() {
+
+}
+
+void playingDraw() {
   //Update dynamic object physics
   for (int i = 0; i < dynamicObjects.size(); i++) {
     dynamicObjects.get(i).physics();
