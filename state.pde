@@ -14,8 +14,8 @@ public void setState(String newState) {
   if (isAvailable(availableStates, newState)) {
     if(newState == state) return;
     if(state == "playing") {
-        saveFrame("data/frame.png");
-        lastFrame = loadImage("frame.png");
+        saveFrame("data/game/frame.png");
+        lastFrame = loadImage("game/frame.png");
     }
     state = newState;
   } else {

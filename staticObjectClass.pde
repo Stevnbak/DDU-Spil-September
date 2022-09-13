@@ -4,15 +4,15 @@ class staticObject {
   float frictionC = 0.15;
   //Loction vector
   PVector location = new PVector(0, 0);
-  PImage texture = loadImage("slice27_27.png");
-  PImage topTexture = loadImage("slice03_03.png");
+  PImage texture = loadImage("world/dirtTile.png");
+  PImage topTexture = loadImage("world/grassTile.png");
   //Constructor
   staticObject(PVector startLocation, PVector newSize, String newTexture) {
     //println("Static object initialized... Location: " + startLocation + " Size: " + newSize);
     location = startLocation.get();
     size = newSize.get();
     if(newTexture != "") {
-      texture = loadImage(newTexture);
+      texture = loadImage("world/" + newTexture);
       noTexture = true;
     }
     c1 = size.x/50;
