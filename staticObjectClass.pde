@@ -18,10 +18,6 @@ class staticObject {
   //Update
   void update() {
     //Collision check
-    collisionCheck();
-  }
-
-  void collisionCheck() {
     for (int i = 0; i < dynamicObjects.size(); i++) {
       checkCollision(this, dynamicObjects.get(i));
     }

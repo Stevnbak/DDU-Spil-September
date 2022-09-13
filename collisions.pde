@@ -2,7 +2,7 @@
 public int bottom = 0, top = 1, left = 2, right = 3, nothing = -1;
 //Check collision between 2 dynamic objects
 public void checkCollision(dynamicObject object1, dynamicObject object2) {
-    int side = collision(object2.location, object2.size, object1.location, object1.size);
+    int side = getSideCollision(object2.location, object2.size, object1.location, object1.size);
     if(side == bottom) {
         object2.collision(object1.location.y + (object1.size.y / 2) + (object2.size.y / 2), side);
         object1.collision(object2.location.y + (object2.size.y / 2) + (object1.size.y / 2), side);
@@ -19,7 +19,7 @@ public void checkCollision(dynamicObject object1, dynamicObject object2) {
 }
 //Check collision between 1 static and 1 dynamic object
 public void checkCollision(staticObject object1, dynamicObject object2) {
-    int side = collision(object2.location, object2.size, object1.location, object1.size);
+    int side = getSideCollision(object2.location, object2.size, object1.location, object1.size);
     if(side == bottom) {
         object2.collision(object1.location.y + (object1.size.y / 2) + (object2.size.y / 2), side);
         object2.friction(object1.frictionC, 0);
@@ -34,9 +34,19 @@ public void checkCollision(staticObject object1, dynamicObject object2) {
         object2.friction(object1.frictionC, 1);
     }
 }
-//new PVector(object1.location.x - (object1.size.x / 2), object1.location.y - (object1.size.y/2));
-//new PVector(location2.x - (size2.x / 2), location2.y - (size2.y/2));
-int collision(PVector location1, PVector size1, PVector location2, PVector size2) {
+//Check if one object is inside another object
+boolean isInside(dynamicObject object1, dynamicObject object2) {
+  int side = getSideCollision(object2.location, object2.size, object1.location, object1.size);
+  if(side != nothing) return true;
+  return false;
+}
+boolean isInside(staticObject object1, dynamicObject object2) {
+  int side = getSideCollision(object2.location, object2.size, object1.location, object1.size);
+  if(side != nothing) return true;
+  return false;
+}
+
+int getSideCollision(PVector location1, PVector size1, PVector location2, PVector size2) {
     //Y-Collision
     if (location1.x + (size1.x / 2) - 7.5 >= location2.x - (size2.x / 2) && location1.x - (size1.x / 2) + 7.5 <= location2.x + (size2.x / 2)) {
       //Bottom
