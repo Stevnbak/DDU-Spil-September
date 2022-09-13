@@ -107,7 +107,7 @@ class Player extends dynamicObject {
 
   //Shooting
   void shootProjectile(PVector targetLocation, float power) {
-    println("Shooting... with power: " + power);
+    //println("Shooting... with power: " + power);
     PVector direction = new PVector(targetLocation.x - location.x, targetLocation.y - location.y);
     direction.normalize();
     Projectile newProj = new Projectile(location.get(), power, direction.get());
@@ -117,10 +117,12 @@ class Player extends dynamicObject {
 
 class Projectile extends dynamicObject {
 
+  float startTime = 0;
   Projectile(PVector startLocation, float startPower, PVector startDirection) {
     location = startLocation.get();
     velocity = startDirection.get().mult(startPower);
     airConstant = 0;
+    startTime = millis();
   }
 
   void collision(float locationValue, int side) {
@@ -134,6 +136,12 @@ class Projectile extends dynamicObject {
       if(inside) {
         //Hit animal
         println("Hit animal");
+      }
+    }
+    if (isInside(this, player)) {
+      if(millis() > startTime + 500) {
+        println("Dead!");
+        exit();
       }
     }
     super.draw();
