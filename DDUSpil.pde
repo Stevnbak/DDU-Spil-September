@@ -1,10 +1,15 @@
 //Camera stuff
 PVector camLocation;
 float camSpeed = 20;
+
 //Player stuff
 public Player player = new Player();
+
 //Level stuff
 public level currentLevel;
+
+//Background
+PImage background;
 
 //Game state
 String state;
@@ -33,6 +38,10 @@ void setup() {
   currentLevel = new level("test");
   //Set state
   state = "playing";
+  //Add test object (green square)
+  dynamicObjects.add(new testObject());
+  //Loads background
+  background = loadImage("backgroundColorGrass.png");
 }
 
 void updateCamLocation() {
@@ -109,6 +118,15 @@ void draw() {
   updateCamLocation();
   //Draw background
   background(255);
+  textureMode(NORMAL);
+  textureWrap(REPEAT);
+  beginShape();
+  texture(background);
+  vertex(0, 0, 0, 0);
+  vertex(width, 0, 1, 0);
+  vertex(width, height, 1, 1);
+  vertex(0, height, 0, 1);
+  endShape();
   //Set rect mode
   rectMode(CENTER);
   //Move everything according to camera location
