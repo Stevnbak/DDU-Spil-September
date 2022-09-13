@@ -1,5 +1,6 @@
 PVector camLocation;
 float camSpeed = 20;
+PImage background;
 public Player player = new Player();
 public level currentLevel;
 ParticleSystem odor=new ParticleSystem();
@@ -97,6 +98,16 @@ void draw() {
   updateCamLocation();
   //Draw background
   background(255);
+  background = loadImage("backgroundColorGrass.png");
+  textureMode(NORMAL);
+  textureWrap(REPEAT);
+  beginShape();
+  texture(background);
+  vertex(0, 0, 0, 0);
+  vertex(width, 0, 1, 0);
+  vertex(width, height, 1, 1);
+  vertex(0, height, 0, 1);
+  endShape();
   //Set rect mode
   rectMode(CENTER);
   //Move everything according to camera location
