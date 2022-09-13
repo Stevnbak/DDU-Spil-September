@@ -7,7 +7,6 @@ class dynamicObject {
   float mass = 1, airConstant = 0;
 
   void draw() {
-    physics();
     //Update location...
     velocity.add(acceleration.mult(mass));
     if (maxVelocity.x > -1) velocity.x = constrain(velocity.x, -maxVelocity.x, maxVelocity.x);
