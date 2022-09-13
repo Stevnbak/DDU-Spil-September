@@ -103,6 +103,7 @@ void draw() {
   
   odor.addParticle(player.location.get(),player.size.y,4);
   odor.update(temporary,40);
+
   fill(55);
   ellipse(temporary.x,temporary.y,40,40);
   

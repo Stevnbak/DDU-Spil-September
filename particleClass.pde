@@ -2,6 +2,7 @@ class Particle extends dynamicObject {
   float lifespan;
   int sum;
   float factor;
+  float loss;
 
   boolean alert;
   boolean nonreg;
@@ -9,6 +10,7 @@ class Particle extends dynamicObject {
   Particle(PVector lo, float he) {
     mass=2;
     factor=2;
+    loss=-0.4;
 
     location=lo;
     location.y=location.y+he/2*random(-1, 1);
@@ -23,20 +25,11 @@ class Particle extends dynamicObject {
     nonreg=true;
   }
 
-  void detection(PVector po,float ra) {
-    if ((location.x-po.x)*(location.x-po.x)+(location.y-po.y)*(location.y-po.y)<=ra*ra){
+  void detection(PVector po, float ra) {
+    if ((location.x-po.x)*(location.x-po.x)+(location.y-po.y)*(location.y-po.y)<=ra*ra) {
       alert=true;
-        nonreg=false;
+      nonreg=false;
     }
-    
-    /*
-    if (location.x<po.x+radar/2 && location.x>po.x-radar/2/2&&nonreg) {
-      if (location.y<po.x+radar/2 && location.y>po.y-radar/2) {
-        alert=true;
-        nonreg=false;
-      }
-    }
-    */
   }
 
   void physics() {
@@ -44,16 +37,16 @@ class Particle extends dynamicObject {
     wind();
   }
 
-  void update(PVector po,float ra) {
+  void update(PVector po, float ra) {
     physics();
-    detection(po,ra);
+    detection(po, ra);
     draw();
   }
 
   void draw() {
     super.draw();
     noStroke();
-    fill(0,lifespan);
+    fill(0, lifespan);
 
     if (!nonreg) {
       colorMode(RGB);
@@ -69,5 +62,19 @@ class Particle extends dynamicObject {
     } else {
       return false;
     }
+  }
+
+  void collision(float locationValue, int side) {
+    if (side == left || side == right) {
+      location.x = locationValue;
+      velocity.x = velocity.x*loss;
+    }
+    if (side == bottom || side == top) {
+      location.y = locationValue;
+      velocity.y = velocity.y*loss;
+    }
+  }
+
+  void friction(float frictionC, float axis) {
   }
 }

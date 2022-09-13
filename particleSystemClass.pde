@@ -16,7 +16,7 @@ class ParticleSystem {
     }
   }
 
-  void update(PVector po,float ra) {
+  void update(PVector po, float ra) {
     Iterator<Particle>it=particles.iterator();
 
     while (it.hasNext()) {
@@ -31,7 +31,12 @@ class ParticleSystem {
         it.remove();
       }
 
-      p.update(po,ra);
+      for (int i = 0; i < objects.size(); i++) {
+        objects.get(i).update();
+        checkCollision(objects.get(i),p);
+      }
+      
+      p.update(po, ra);
     }
   }
 }
