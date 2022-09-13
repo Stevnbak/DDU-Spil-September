@@ -37,9 +37,6 @@ class Design {
   }
 
   void draw() {
-    strokeWeight(sc/2);
-    line(0, 0, 0, sc*2);
-
     shapeMode(CENTER);
     shape(shapes[nu], 0, 0);
   }

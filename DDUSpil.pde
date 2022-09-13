@@ -13,7 +13,6 @@ PImage background;
 
 //Particle stuff
 ParticleSystem odor = new ParticleSystem();
-PVector temporary = new PVector(200, -100);
 
 //Inputs
 public HashMap<String, Boolean> inputs = new HashMap<String, Boolean>();
@@ -204,14 +203,12 @@ void playingDraw() {
   }
   //Particle stuff...
   odor.addParticle(player.location.get(), player.size.get().y, 4);
-  odor.update(temporary, 40);
+  odor.update(animals.get(0).location, animals.get(0).size.x/2);
   
   //Draw animals
   for (int i = 0; i < animals.size(); i++) {
     animals.get(i).draw();
   }
-  fill(55);
-  ellipse(temporary.x, temporary.y, 40, 40);
   //Draw player
   player.draw();
 }

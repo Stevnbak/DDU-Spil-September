@@ -36,8 +36,12 @@ class Projectile extends dynamicObject {
     
     pushMatrix();
     translate(location.x,location.y);
-    rotate(angle+PI/2+random(-0.05,0.05));
+    rotate(angle+PI/2);
     arrow.draw();
+    stroke(55);
+    strokeWeight(size.x/3);
+    line(-size.x/2, 0, 0, size.x*4);
+    noStroke();
     popMatrix();
   }
 }
