@@ -33,10 +33,10 @@ class Player extends dynamicObject {
     if (getInput("w") || getInput(" ")) {
       if (isTouchingGround) addForce(new PVector(0, -jumpPower));
     }
-    if(getInput("MLeft")) {
-      currentPower += 0.2;
+    if (getInput("MLeft")) {
+      currentPower += 0.1;
       if (currentPower > maxPower) currentPower = maxPower;
-    } else if(currentPower > 0) {
+    } else if (currentPower > 0) {
       shootProjectile(new PVector(mouseX + camLocation.x, mouseY + camLocation.y), currentPower);
       currentPower = 0;
     }
@@ -75,9 +75,9 @@ class Player extends dynamicObject {
     location.add(velocity);
     //Draw...
     if (getInput("MLeft")) {
-      aimProjectile(new PVector(mouseX + camLocation.x, mouseY + camLocation.y),currentPower);
+      aimProjectile(new PVector(mouseX + camLocation.x, mouseY + camLocation.y), currentPower);
     }
-    
+
     noStroke();
     colorMode(RGB);
     textureMode(NORMAL);
@@ -108,32 +108,89 @@ class Player extends dynamicObject {
       isTouchingGround = true;
     }
   }
-  
-  //Aiming
-  void aimProjectile(PVector targetLocation,float power) {
-    PVector direction = new PVector(targetLocation.x - location.x, targetLocation.y - location.y);
-    direction.normalize();
-    direction.mult(2.5);
-    float d=6;
-    
-    fill(55);
-    for (int i=0;i<power*0.4;i++)
-    {
-      ellipse(location.x+direction.x*d*i,location.y+direction.y*d*i,d,d);
-      /*
-      sidste
-      arc
-      curve?
-      */
-    }
-  }
 
   //Shooting
   void shootProjectile(PVector targetLocation, float power) {
     //println("Shooting... with power: " + power);
     PVector direction = new PVector(targetLocation.x - location.x, targetLocation.y - location.y);
     direction.normalize();
-    Projectile newProj = new Projectile(location.get(), power, direction.get(),8,0);
+    Projectile newProj = new Projectile(location.get(), power, direction.get(), 8, 0);
     dynamicObjects.add(newProj);
+  }
+  
+  //Aiming
+  void aimProjectile(PVector targetLocation, float power) {
+    PVector direction = new PVector(targetLocation.x - location.x, targetLocation.y - location.y);
+    direction.normalize();
+    direction.mult(2.5);
+    float d=8;
+
+    for (int i=0; i<=power/2; i++)
+    {
+      if (i==power/2-(power/2%1))
+      {
+        fill(55);
+        ellipse(location.x+direction.x*d*i, location.y+direction.y*d*i, d, d);
+
+        fill(55, (power/2%1)*255);
+        float posx, posy, radius = d/2, ang, dang=0.01, percentage=(power/2)%1;
+
+        pushMatrix();
+        translate(location.x+direction.x*d*(i+1), location.y+direction.y*d*(i+1));
+
+        if (percentage>0.5) {
+          rotate(direction.heading()-PI);
+          ang = 0;
+          beginShape();
+          fill(55);
+          noStroke();
+          for ( int n = 0; n <= 360; n++) {
+            posx = radius * sin(ang);
+            posy = radius * cos(ang);
+            if ( sin(ang) >0 && sin(ang) < 1 ) {
+              vertex(posx, posy);
+            }
+            ang += dang;
+          }
+          endShape(CLOSE);
+
+          if (percentage-0.5>0) {
+            rotate(PI);
+            ang = 0;
+            beginShape();
+            fill(55);
+            noStroke();
+            for ( int n = 0; n <= 360; n++) {
+              posx = radius * sin(ang);
+              posy = radius * cos(ang);
+              if ( sin(ang) >0 && sin(ang) < 2*percentage-1 ) {
+                vertex(posx, posy);
+              }
+              ang += dang;
+            }
+            endShape(CLOSE);
+          }
+        } else {
+          rotate(direction.heading()-PI);
+          ang = 0;
+          beginShape();
+          fill(55);
+          noStroke();
+          for ( int n = 0; n <= 360; n++) {
+            posx = radius * sin(ang);
+            posy = radius * cos(ang);
+            if ( sin(ang) >1-(percentage*2) && sin(ang) < 1 ) {
+              vertex(posx, posy);
+            }
+            ang += dang;
+          }
+          endShape(CLOSE);
+        }
+        popMatrix();
+      } else {
+        fill(55);
+        ellipse(location.x+direction.x*d*i, location.y+direction.y*d*i, d, d);
+      }
+    }
   }
 }
