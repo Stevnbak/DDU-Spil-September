@@ -1,5 +1,5 @@
 class level {
-  PVector wind = new PVector(0.075, 0);
+  PVector wind = new PVector(0, 0);
   //ArrayList<staticObject> objects = new ArrayList<staticObject>();
   PVector spawnLocation = new PVector(width /2, height / 2);
 
@@ -8,7 +8,7 @@ class level {
     for (int i = 0; i < lines.length; i++) {
       String[] temp = split(lines[i], ":");
       String type = trim(temp[0]);
-      String[] values = split(temp[1].replace("[", "").replace("]", ""), ",");
+      String[] values = split(temp[1].replace("[", "").replace("]", "").replace(" ",""), ",");
       if (type.equals("object")) {
         staticObjects.add(new staticObject(new PVector(int(values[0]), -int(values[1])), new PVector(int(values[2]), int(values[3])), ""));
       } else if (type.equals("spawn")) {
@@ -29,7 +29,9 @@ class level {
           staticObjects.add(new staticObject(new PVector(0, -int(values[1]) - 250), new PVector(width * 2000, 500), "none.png"));
         }
       } else if (type.equals("background")) {
-        background = loadImage(values[0].replace((char)'"',' ').trim());
+        background = loadImage("world/" + values[0].replace((char)'"',' ').trim());
+      } else if (type.equals("wind")) {
+        wind = new PVector(float(values[0]), float(values[1]));
       }
     }
     //Add "infinite" floor

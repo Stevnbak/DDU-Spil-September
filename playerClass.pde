@@ -49,19 +49,19 @@ class Player extends dynamicObject {
   void animations() {
     if (isTouchingGround == false) {
       if (velocity.y < 0) {
-        playerTexture = loadImage("player_jump.png");
+        playerTexture = loadImage("player/player_jump.png");
       } else {
-        playerTexture = loadImage("player_fall.png");
+        playerTexture = loadImage("player/player_fall.png");
       }
     } else if (velocity.x < -0.2 || velocity.x > 0.2) {
       if (frameTime < millis()) {
         if (anim == 1) anim = 2;
         else if (anim == 2) anim =1;
-        playerTexture = loadImage("player_walk" + anim+ ".png");
+        playerTexture = loadImage("player/player_walk" + anim+ ".png");
         frameTime = millis() + 100;
       }
     } else {
-      playerTexture = loadImage("player_stand.png");
+      playerTexture = loadImage("player/player_stand.png");
     }
   }
 

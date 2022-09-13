@@ -33,7 +33,7 @@ void setup() {
   //Set level
   currentLevel = new level("test");
   if(background == null) {
-    background = loadImage("backgroundColorGrass.png");
+    background = loadImage("world/backgroundGrass.png");
   }
   //Set state
   setState("playing");
