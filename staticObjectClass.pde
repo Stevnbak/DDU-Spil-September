@@ -21,9 +21,9 @@ class staticObject {
 
   void collisionCheck() {
     for (int i = 0; i < dynamicObjects.size(); i++) {
-      dynamicObjects.get(i).boxCollision(location.x - size.x / 2, location.y - size.y/2, size.x, size.y, frictionC);
+      checkCollision(this, dynamicObjects.get(i));
     }
-    player.boxCollision(location.x - size.x / 2, location.y - size.y/2, size.x, size.y, frictionC);
+    checkCollision(this, player);
   }
 
   void draw() {

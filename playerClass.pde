@@ -83,9 +83,9 @@ class Player extends dynamicObject {
   }
 
   //Bounce function
-  void bounce(float locationValue, float axis) {
-    super.bounce(locationValue, axis);
-    if (axis == 1) {
+  void collision(float locationValue, float side) {
+    super.collision(locationValue, side);
+    if (side == top) {
       isTouchingGround = true;
     }
   }

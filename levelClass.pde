@@ -12,7 +12,7 @@ class level {
       if (type.equals("object")) {
         objects.add(new staticObject(new PVector(int(values[0]), -int(values[1])), new PVector(int(values[2]), int(values[3])), ""));
       } else if (type.equals("spawn")) {
-        player.location = new PVector(int(values[0]), int(values[1]));
+        player.location = new PVector(int(values[0]), -int(values[1]));
       } else if (type.equals("animal")) {
       } else if (type.equals("size")) {
         //Side wall exits?

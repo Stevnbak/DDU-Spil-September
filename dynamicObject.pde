@@ -96,44 +96,15 @@ class dynamicObject {
   }
 
 
-  //Collisions...
-  //Bounce function
-  void bounce(float locationValue, float axis) {
-    if (axis == 0) {
+  //Collision function
+  void collision(float locationValue, float side) {
+    if (side == left || side == right) {
       location.x = locationValue;
       velocity.x = 0;
     }
-    if (axis == 1) {
+    if (side == bottom || side == top) {
       location.y = locationValue;
       velocity.y = 0;
-    }
-  }
-  void boxCollision(float x, float y, float w, float h, float frictionC) {
-    //Y-Collision
-    if (location.x + (size.x / 2) - 7.5 >= x && location.x - (size.x / 2) + 7.5 <= x + w) {
-      //Bottom
-      if (location.y - (size.y / 2) <= y + h && location.y + (size.y / 2) >= y + h) {
-        bounce( y + h + (size.y / 2), 1);
-        friction(frictionC, 0);
-      }
-      //Top
-      if (location.y + (size.y / 2) >= y && location.y - (size.y / 2) <= y) {
-        bounce(y - (size.y / 2), 1);
-        friction(frictionC, 0);
-      }
-    }
-    //X-Collision
-    if (location.y + (size.y / 2) - 2 >= y && location.y - (size.y / 2) + 2 <= y + h) {
-      //Left
-      if (location.x + (size.x / 2) >= x && location.x - (size.x / 2) <= x) {
-        bounce(x - (size.x / 2), 0);
-        friction(frictionC, 1);
-      }
-      //Right
-      if (location.x - (size.x / 2) <= x + w && location.x + (size.x / 2) >= x + w) {
-        bounce( x + w + (size.x / 2), 0);
-        friction(frictionC, 1);
-      }
     }
   }
 }
