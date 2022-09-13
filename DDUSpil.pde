@@ -2,7 +2,8 @@ PVector camLocation;
 float camSpeed = 20;
 public Player player = new Player();
 public level currentLevel;
-
+ParticleSystem odor=new ParticleSystem();
+PVector temporary=new PVector(200,-100);
 public HashMap<String, Boolean> inputs = new HashMap<String, Boolean>();
 
 public ArrayList<staticObject> objects = new ArrayList<staticObject>();
@@ -99,5 +100,11 @@ void draw() {
   for (int i = 0; i < objects.size(); i++) {
     objects.get(i).draw();
   }
+  
+  odor.addParticle(player.location.get(),player.size.y,4);
+  odor.update(temporary,40);
+  fill(55);
+  ellipse(temporary.x,temporary.y,40,40);
+  
   player.draw();
 }
