@@ -3,15 +3,14 @@ class dynamicObject {
   PVector velocity = new PVector(0, 0);
   PVector acceleration = new PVector(0, 0);
   PVector size = new PVector(20, 20);
-  float mass, airConstant, maxVelocity = -1;
+  PVector maxVelocity = new PVector(-1, -1);
+  float mass, airConstant;
 
   void draw() {
     //Update location...
     velocity.add(acceleration.mult(mass));
-    if (maxVelocity > -1) {
-      velocity.x = constrain(velocity.x, -maxVelocity, maxVelocity);
-      velocity.y = constrain(velocity.y, -maxVelocity, maxVelocity);
-    }
+    if (maxVelocity.x > -1) velocity.x = constrain(velocity.x, -maxVelocity.x, maxVelocity.x);
+    if (maxVelocity.y > -1) velocity.y = constrain(velocity.y, -maxVelocity.y, maxVelocity.y);
     location.add(velocity);
   }
 
@@ -111,7 +110,7 @@ class dynamicObject {
   }
   void boxCollision(float x, float y, float w, float h, float frictionC) {
     //Y-Collision
-    if (location.x + (size.x / 2) >= x && location.x - (size.x / 2) <= x + w) {
+    if (location.x + (size.x / 2) - 7.5 >= x && location.x - (size.x / 2) + 7.5 <= x + w) {
       //Bottom
       if (location.y - (size.y / 2) <= y + h && location.y + (size.y / 2) >= y + h) {
         bounce( y + h + (size.y / 2), 1);
@@ -124,7 +123,7 @@ class dynamicObject {
       }
     }
     //X-Collision
-    if (location.y + (size.y / 2) - 1 >= y && location.y - (size.y / 2) + 1 <= y + h) {
+    if (location.y + (size.y / 2) - 2 >= y && location.y - (size.y / 2) + 2 <= y + h) {
       //Left
       if (location.x + (size.x / 2) >= x && location.x - (size.x / 2) <= x) {
         bounce(x - (size.x / 2), 0);
@@ -143,7 +142,8 @@ class testObject extends dynamicObject {
   testObject() {
     mass = 0.5;
     airConstant = 0.2;
-    maxVelocity = 10;
+    maxVelocity.x = 10;
+    maxVelocity.y = 10;
   }
   void draw() {
     super.draw();
