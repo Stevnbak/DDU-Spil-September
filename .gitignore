@@ -2,3 +2,4 @@
 out/*.*
 *.java
 *.class
+.vscode/tasks.json
