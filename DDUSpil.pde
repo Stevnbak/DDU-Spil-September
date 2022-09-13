@@ -83,29 +83,38 @@ void mouseReleased() {
 
 //Draw
 void draw() {
+  //Update dynamic object physics
   for (int i = 0; i < dynamicObjects.size(); i++) {
     dynamicObjects.get(i).physics();
   }
+  //Update player (including physics)
   player.update();
+  //Update static objects (Including collisions with dynamic objects...)
   for (int i = 0; i < objects.size(); i++) {
     objects.get(i).update();
   }
-  background(255);
+  //Update camera location
   updateCamLocation();
+  //Draw background
+  background(255);
+  //Set rect mode
   rectMode(CENTER);
+  //Move everything according to camera location
   translate(-camLocation.x, -camLocation.y);
+  //Draw dynamic objects
   for (int i = 0; i < dynamicObjects.size(); i++) {
     dynamicObjects.get(i).draw();
   }
+  //Draw static objects
   for (int i = 0; i < objects.size(); i++) {
     objects.get(i).draw();
   }
-  
+  //Particle stuff...
   odor.addParticle(player.location.get(),player.size.y,4);
   odor.update(temporary,40);
 
   fill(55);
   ellipse(temporary.x,temporary.y,40,40);
-  
+  //Draw player
   player.draw();
 }
