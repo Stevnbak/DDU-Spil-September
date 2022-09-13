@@ -1,26 +1,38 @@
+//Camera stuff
 PVector camLocation;
 float camSpeed = 20;
+//Player stuff
 public Player player = new Player();
+//Level stuff
 public level currentLevel;
-ParticleSystem odor=new ParticleSystem();
-PVector temporary=new PVector(200,-100);
+
+//Game state
+String state;
+String[] availableStates = {"playing","designing","loading","menu","complete"};
+
+//Particle stuff
+ParticleSystem odor = new ParticleSystem();
+PVector temporary = new PVector(200, -100);
+
+//Inputs
 public HashMap<String, Boolean> inputs = new HashMap<String, Boolean>();
 
-public ArrayList<staticObject> objects = new ArrayList<staticObject>();
+//Object lists
+public ArrayList<staticObject> staticObjects = new ArrayList<staticObject>();
 public ArrayList<dynamicObject> dynamicObjects = new ArrayList<dynamicObject>();
 public ArrayList<Animal> animals = new ArrayList<Animal>();
 
 void setup() {
+  //Window size
   size(1080, 720, P2D);
+  //Title
   surface.setTitle("Game Title");
   //surface.setResizable(false);
   camLocation = new PVector(0, 0);
-
   //Set level
   currentLevel = new level("test");
-
-  //Add test object (green square)
-  dynamicObjects.add(new testObject());
+  //Set state
+  state = "playing";
 }
 
 void updateCamLocation() {
@@ -90,8 +102,8 @@ void draw() {
   //Update player (including physics)
   player.update();
   //Update static objects (Including collisions with dynamic objects...)
-  for (int i = 0; i < objects.size(); i++) {
-    objects.get(i).update();
+  for (int i = 0; i < staticObjects.size(); i++) {
+    staticObjects.get(i).update();
   }
   //Update camera location
   updateCamLocation();
@@ -106,15 +118,15 @@ void draw() {
     dynamicObjects.get(i).draw();
   }
   //Draw static objects
-  for (int i = 0; i < objects.size(); i++) {
-    objects.get(i).draw();
+  for (int i = 0; i < staticObjects.size(); i++) {
+    staticObjects.get(i).draw();
   }
   //Particle stuff...
-  odor.addParticle(player.location.get(),player.size.get().y,4);
-  odor.update(temporary,40);
+  odor.addParticle(player.location.get(), player.size.get().y, 4);
+  odor.update(temporary, 40);
 
   fill(55);
-  ellipse(temporary.x,temporary.y,40,40);
+  ellipse(temporary.x, temporary.y, 40, 40);
   //Draw player
   player.draw();
 }

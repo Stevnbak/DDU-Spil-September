@@ -31,8 +31,8 @@ class ParticleSystem {
         it.remove();
       }
 
-      for (int i = 0; i < objects.size(); i++) {
-        checkCollision(objects.get(i), p);
+      for (int i = 0; i < staticObjects.size(); i++) {
+        checkCollision(staticObjects.get(i), p);
       }
       
       p.update(po, ra);
