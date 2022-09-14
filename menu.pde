@@ -40,7 +40,7 @@ public void menuSetup() {
   ));
   menuButtons.add(new LocationButton(new PVector(250, 400), 50, () -> {
     println("Location");
-    currentLevel = new level("test");
+    currentLevel = new level("1");
     setState("playing");
   }
   ));

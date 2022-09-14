@@ -1,3 +1,4 @@
+PVector mapSize;
 class level {
   PVector wind = new PVector(0, 0);
   //ArrayList<staticObject> objects = new ArrayList<staticObject>();
@@ -6,16 +7,23 @@ class level {
   level(String levelName) {
     String[] lines = loadStrings("levels/" + levelName + ".map");
     for (int i = 0; i < lines.length; i++) {
+      if(lines[i].length() <= 2) continue;
+      if(lines[i].charAt(0) == '/' && lines[i].charAt(1) == '/') continue;
       String[] temp = split(lines[i], ":");
       String type = trim(temp[0]);
       String[] values = split(temp[1].replace("[", "").replace("]", "").replace(" ",""), ",");
       if (type.equals("object")) {
-        staticObjects.add(new staticObject(new PVector(int(values[0]), -int(values[1])), new PVector(int(values[2]), int(values[3])), ""));
+        if(values.length != 4) {
+          println("Error: object line " + i + " has incorrect number of values");
+        } else {
+          staticObjects.add(new staticObject(new PVector(int(values[0]), -int(values[1])), new PVector(int(values[2]), int(values[3])), ""));
+        }
       } else if (type.equals("spawn")) {
         player.location = new PVector(int(values[0]), -int(values[1]));
       } else if (type.equals("animal")) {
         animals.add(new Animal(new PVector(int(values[0]), -int(values[1])), int(values[2]), new PVector(int(values[3]), int(values[4]))));
       } else if (type.equals("size")) {
+        mapSize = new PVector(int(values[0]), int(values[1]));
         //Side wall exits?
         if(int(values[0]) != 0)  {
           //Left wall
@@ -32,6 +40,7 @@ class level {
         background = loadImage("world/" + values[0].replace((char)'"',' ').trim());
       } else if (type.equals("wind")) {
         wind = new PVector(float(values[0]), float(values[1]));
+        println("Wind set to " + wind);
       }
     }
     //Add "infinite" floor
@@ -143,4 +152,12 @@ void editorDraw() {
     noStroke();
     text(distText, (float)x, (float)y);
   }
+
+
+  //Draw borders
+  stroke(0);
+  line(mapSize.x / 2, 0, mapSize.x / 2, -mapSize.y / 2);
+  line(-mapSize.x / 2, 0, -mapSize.x / 2, -mapSize.y / 2);
+  line(-mapSize.x / 2, -mapSize.y / 2, mapSize.x / 2, -mapSize.y / 2);
+  noStroke();
 }
