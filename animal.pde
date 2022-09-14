@@ -2,23 +2,41 @@ class Animal extends dynamicObject {
   //Texture
   PImage animalTexture = loadImage("frog.png");
   float threat;
+  float health;
+  float escaped = 0;
+  float killed = 0;
   
   Animal(PVector spawnLocation, float spawnMass, PVector spawnSize) {
     location = spawnLocation.get();
     mass = spawnMass;
     size = spawnSize.get();
+    health = mass * 10;
   }
   
   void detection() {
     threat = odor.amount/10;
-    if (threat >= 255) {
-      threat = 255;
-      //lose the game
+    for (int i = 0; i < animals.size(); i++) {
+      if (threat >= 255) {
+        //animal escaped
+        animals.remove(i);
+        escaped++;
+      }
+    }
+  }
+  
+  void damageCalc() {
+    for (int i = 0; i < animals.size(); i++) {
+      if (health <= 0) {
+        //animal killed
+        animals.remove(i);
+        killed++;
+      }
     }
   }
   
   void draw() {
     detection();
+    damageCalc();
     super.draw();
     textureMode(NORMAL);
     tint(255,255 - threat);

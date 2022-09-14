@@ -1,5 +1,5 @@
 public String state;
-String[] availableStates = {"playing", "designing", "loading", "menu", "complete"};
+String[] availableStates = {"playing", "designing", "loading", "menu", "complete", "editor"};
 
 boolean isAvailable(String[] arr, String val) {
   for (int i = 0; i < arr.length; i++) {
@@ -17,6 +17,7 @@ public void setState(String newState) {
         saveFrame("data/game/frame.png");
         lastFrame = loadImage("game/frame.png");
     }
+    if(newState == "editor") editorSetup();
     state = newState;
   } else {
     println("State (" + newState + ") is not allowed as a state...");
