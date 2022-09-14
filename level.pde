@@ -132,12 +132,11 @@ void editorDraw() {
   if(P1 != null && P2 != null) {
     double xDist = Math.round(Math.abs(P2.x-P1.x));
     double yDist = Math.round(Math.abs(P2.y-P1.y));
-    double totalDist = Math.round(Math.sqrt(xDist * xDist + yDist * yDist));
     stroke(0);
     line(P1.x,-P1.y,P2.x,-P2.y);
     textFont(coordinateFont);
     textSize(25);
-    String distText = "X: " + (int)xDist + " Y: " + (int)yDist + " Total: " + (int)totalDist;
+    String distText = "X: " + (int)xDist + " Y: " + (int)yDist;
     double y = -min(P1.y, P2.y) + 25;
     double x = (max(P1.x,P2.x) - (xDist / 2)) - (textWidth(distText) / 2);
     fill(0);
