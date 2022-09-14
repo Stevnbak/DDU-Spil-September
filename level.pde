@@ -4,7 +4,7 @@ class level {
   PVector spawnLocation = new PVector(width /2, height / 2);
 
   level(String levelName) {
-    String[] lines = loadStrings("levels/" + levelName + ".txt");
+    String[] lines = loadStrings("levels/" + levelName + ".map");
     for (int i = 0; i < lines.length; i++) {
       String[] temp = split(lines[i], ":");
       String type = trim(temp[0]);
