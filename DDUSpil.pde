@@ -3,7 +3,7 @@ PVector camLocation;
 float camSpeed = 20;
 
 //Player stuff
-public Player player = new Player();
+public Player player;
 
 //Level stuff
 public level currentLevel;
@@ -23,12 +23,13 @@ public ArrayList<dynamicObject> dynamicObjects = new ArrayList<dynamicObject>();
 public ArrayList<Animal> animals = new ArrayList<Animal>();
 
 void setup() {
-  //Window size
+  //Window...
   size(1080, 720, P2D);
-  //Title
   surface.setTitle("Game Title");
-  //surface.setResizable(false);
-  camLocation = new PVector(0, 0);
+  surface.setResizable(true);
+
+  //Spawn player
+  player = new Player();
   //Set level
   currentLevel = new level("test");
   if(background == null) {
@@ -36,6 +37,9 @@ void setup() {
   }
   //Set state
   setState("playing");
+
+  //Cam location
+  camLocation = new PVector(player.location.x - width / 2, player.location.y - height / 2);
 
   //Setup menu...
   menuSetup();
@@ -55,12 +59,19 @@ public Boolean getInput(String keyValue)
   return inputs.getOrDefault(keyValue, false);
 }
 void keyPressed() {
-  inputs.put(key + "", true);
   if (key == ESC) {
+    inputs.put("ESC", true);
     key = 0;
+    return;
   }
+  inputs.put(key + "", true);
 }
 void keyReleased() {
+  if (key == ESC) {
+    inputs.put("ESC", false);
+    key = 0;
+    return;
+  }
   inputs.put(key + "", false);
 }
 void mousePressed() {
@@ -115,6 +126,7 @@ void draw() {
     case "menu":{ menuDraw(); break;}
     case "loading":{ loadingDraw(); break;}
     case "complete":{ completeDraw(); break;}
+    case "editor":{ editorDraw(); break;}
   }
 }
 
@@ -138,6 +150,7 @@ void completeDraw() {
 
 PImage lastFrame;
 void frameBackground() {
+  camLocation = new PVector (0,0);
     background(255);
   //Background image
   textureMode(NORMAL);

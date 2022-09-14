@@ -39,7 +39,7 @@ class Button {
     Runnable action;
 
    Button(PVector location, PVector size, color colorValue, String text, Runnable run) {
-         this.location = location.get();
+        this.location = location.get();
         this.size = size.get();
         this.colorValue = colorValue;
         this.text = text;
@@ -70,11 +70,11 @@ class Button {
         } else {
             noStroke();
         }
-        rect(location.x, location.y, size.x, size.y);
+        rect(location.x + camLocation.x, location.y + camLocation.y, size.x, size.y);
         fill(0);
         noStroke();
         textFont(font);
-        text(text, location.x - textWidth(text) / 2, location.y + (textHeight(text) / 2));
+        text(text, location.x + camLocation.x - textWidth(text) / 2, location.y + camLocation.y + (textHeight(text) / 2));
     }
 
     void hover() {

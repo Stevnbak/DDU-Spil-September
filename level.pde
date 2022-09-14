@@ -38,3 +38,110 @@ class level {
     staticObjects.add(new staticObject(new PVector(0, height / 2), new PVector(width * 2000, height), ""));
   }
 }
+
+void editorSetup() {
+  currentLevel = new level("test");
+  camLocation = new PVector(player.location.x - width / 2, player.location.y - height / 2);
+  coordinateFont = createFont("Arial", 30, true);
+  loadBtn = new Button(new PVector(100, height - 50), new PVector(200,50), color(0,0,200), "Load level", () -> {
+    println("Loaded level");
+    staticObjects = new ArrayList<staticObject>();
+    animals = new ArrayList<Animal>();
+    currentLevel = new level("test");
+  });
+}
+Button loadBtn;
+PFont coordinateFont;
+
+PVector P1;
+PVector P2;
+int lastP;
+
+void editorDraw() {
+  background(255);
+  //Draw background
+  background(255);
+  textureMode(NORMAL);
+  textureWrap(REPEAT);
+  beginShape();
+  texture(background);
+  vertex(0, 0, 0, 0);
+  vertex(width, 0, 1, 0);
+  vertex(width, height, 1, 1);
+  vertex(0, height, 0, 1);
+  endShape();
+
+  //Move camera
+  if (getInput("a")) {
+    camLocation.x -= 5;
+  }
+  if (getInput("d")) {
+    camLocation.x += 5;
+  }
+  if (getInput("w")) {
+    camLocation.y -= 5;
+  }
+  if (getInput("s")) {
+    camLocation.y += 5;
+  }
+  //Set rect mode
+  rectMode(CENTER);
+  //Move everything according to camera location
+  translate(-camLocation.x, -camLocation.y);
+  //Draw static objects
+  for (int i = 0; i < staticObjects.size(); i++) {
+    staticObjects.get(i).draw();
+  }
+  //Draw animals
+  for (int i = 0; i < animals.size(); i++) {
+    animals.get(i).draw();
+  }
+  //Draw player
+  player.draw();
+  //Draw mouse coordinates
+  String text = "[" + (int)(mouseX + camLocation.x) + "; " + (int)-(mouseY + camLocation.y) + "]";
+  fill(0);
+  textFont(coordinateFont);
+  text(text, (mouseX + camLocation.x), (mouseY  + camLocation.y));
+
+  //Button
+  loadBtn.location = new PVector(100, height - 50);
+  loadBtn.update();
+
+  //Points on screen
+  if(getInput("MLeft")) {
+    inputs.put("MLeft", false);
+    if(lastP == 2) {
+      P1 = new PVector(mouseX + camLocation.x, -(mouseY + camLocation.y)); lastP = 1;
+    } else {
+      P2 = new PVector(mouseX + camLocation.x, -(mouseY + camLocation.y)); lastP = 2;
+    }
+  }
+  if(getInput("ESC")) {
+    P1 = null;
+    P2 = null;
+  }
+  fill(0);
+  noStroke();
+  if(P1 != null) {
+    ellipse(P1.x, -P1.y, 5,5);
+  }
+  if(P2 != null) {
+    ellipse(P2.x, -P2.y, 5,5);
+  }
+  if(P1 != null && P2 != null) {
+    double xDist = Math.round(Math.abs(P2.x-P1.x));
+    double yDist = Math.round(Math.abs(P2.y-P1.y));
+    double totalDist = Math.round(Math.sqrt(xDist * xDist + yDist * yDist));
+    stroke(0);
+    line(P1.x,-P1.y,P2.x,-P2.y);
+    textFont(coordinateFont);
+    textSize(25);
+    String distText = "X: " + (int)xDist + " Y: " + (int)yDist + " Total: " + (int)totalDist;
+    double y = -min(P1.y, P2.y) + 25;
+    double x = (max(P1.x,P2.x) - (xDist / 2)) - (textWidth(distText) / 2);
+    fill(0);
+    noStroke();
+    text(distText, (float)x, (float)y);
+  }
+}

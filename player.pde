@@ -12,6 +12,7 @@ class Player extends dynamicObject {
     maxVelocity.x = 8;
     airConstant = 0;
     size = new PVector(60, 97);
+    playerTexture = loadImage("player/player_stand.png");
   }
 
   float currentPower = 0;
