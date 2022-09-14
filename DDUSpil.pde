@@ -36,7 +36,7 @@ void setup() {
     background = loadImage("world/backgroundGrass.png");
   }
   //Set state
-  setState("playing");
+  setState("menu");
 
   //Cam location
   camLocation = new PVector(player.location.x - width / 2, player.location.y - height / 2);
@@ -119,6 +119,7 @@ void draw() {
   if(getInput("b")) setState("designing");
   if(getInput("n")) setState("playing");
   if(getInput("m")) setState("menu");
+  if(getInput("i")) setState("intro");
 
   switch (state) {
     case "playing":{ playingDraw(); break;}
@@ -127,6 +128,7 @@ void draw() {
     case "loading":{ loadingDraw(); break;}
     case "complete":{ completeDraw(); break;}
     case "editor":{ editorDraw(); break;}
+    case "intro":{introDraw();break;}
   }
 }
 

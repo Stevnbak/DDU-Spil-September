@@ -1,4 +1,3 @@
-
 PImage Danmarkskort1;
 PImage Danmarkskort2;
 PFont dejaRegular;
@@ -43,25 +42,60 @@ void terminalDannebrog() {
   endShape();
 }
 
-void textTerminal(String[] texts,color[] colours,int[] lines,PFont[] fonts,PVector corner,PVector size ){
+void gradualTerminal(String[] texts,color[] colours,int[] lines,PFont[] fonts,PVector corner,PVector size,int t){
   float w=33.87;
   float h=19.05;
+  int total=0;
   
   for (int i=0;i<texts.length;i++){
     textFont(fonts[i]);
+    colorMode(RGB);
     fill(colours[i]);
     
+    int s=t-total;
+    total=total+texts[i].length();
+     
     float offset=0;
     for (int n=0;n<=i;n++){
       if (n!=i){
         offset=offset+lines[n];
       }
     }
-    offset=offset*16;
-    text(texts[i],corner.x/w*width,corner.y/h*height+offset,size.x/w*width,size.y/h*height);
+    offset=offset*24;
+    
+    rectMode(CORNER);
+    if (s<texts[i].length()){
+          text(texts[i].substring(0,s),corner.x/w*width,corner.y/h*height+offset,size.x/w*width,lines[i]*24);
+          break;
+    }
+    else{
+      text(texts[i],corner.x/w*width,corner.y/h*height+offset,size.x/w*width,lines[i]*24);
+    }
   }
 }
 
+void textTerminal(String[] texts,color[] colours,int[] lines,PFont[] fonts,PVector corner,PVector size){
+  float w=33.87;
+  float h=19.05;
+  
+  for (int i=0;i<texts.length;i++){
+    textFont(fonts[i]);
+    colorMode(RGB);
+    fill(colours[i]);
+        
+    float offset=0;
+    for (int n=0;n<=i;n++){
+      if (n!=i){
+        offset=offset+lines[n];
+      }
+    }
+    offset=offset*24;
+    
+    rectMode(CORNER);
+    text(texts[i],corner.x/w*width,corner.y/h*height+offset,size.x/w*width,lines[i]*24);
+    rectMode(CENTER);
+  }
+}
 
 public void introDraw() {
   
