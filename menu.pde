@@ -2,7 +2,22 @@ public ArrayList<Button> menuButtons = new ArrayList<Button>();
 
 public void menuDraw() {
   //Draw background
-  frameBackground();
+  mapBackground();
+  terminalBlack();
+
+  String[] t={"\nBorger #3141592\nDer forlyder nyt om en krise og\nkongeriget Danmark har brug for\ndin hjælp.\n", "// Vælg dit svar\n   Til tjeneste"};
+  colorMode(RGB);
+  color[] c={(255),(216)};
+  int[] l={5, 1};
+  PFont[] f={dejaBold, dejaBoldItalic};
+
+  PVector co=new PVector(21.69, 0.9);
+  PVector si=new PVector(14.63, 10.03);
+  textTerminal(t, c, l, f, co, si);
+  println(c[0]);
+  
+  
+  //frameBackground();
   //Text
   fill(0);
   textSize(128);
