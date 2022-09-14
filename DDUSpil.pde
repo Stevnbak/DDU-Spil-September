@@ -138,8 +138,8 @@ void completeDraw() {
 
 PImage lastFrame;
 void frameBackground() {
-  //Draw background
-  background(255);
+    background(255);
+  //Background image
   textureMode(NORMAL);
   textureWrap(REPEAT);
   beginShape();
@@ -149,6 +149,7 @@ void frameBackground() {
   vertex(width, height, 1, 1);
   vertex(0, height, 0, 1);
   endShape();
+  //Add gradient
   fill(255,255,255,50);
   rect(width / 2, height / 2, width, height);
 }
