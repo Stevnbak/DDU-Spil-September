@@ -1,5 +1,5 @@
 public String state;
-String[] availableStates = {"playing", "designing", "loading", "menu", "complete", "editor","intro"};
+String[] availableStates = {"playing", "designing", "loading", "menu", "complete", "editor","intro1","intro2","intro3","intro4","intro5","intro6"};
 
 boolean isAvailable(String[] arr, String val) {
   for (int i = 0; i < arr.length; i++) {
@@ -20,6 +20,8 @@ public void setState(String newState) {
   
   white=color(255,255,255);
   orange=color(216,101,16);
+  blue=color(0,176,241);
+  red=color(217,17,57);
 
   if (isAvailable(availableStates, newState)) {
     if (newState == state) return;

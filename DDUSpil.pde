@@ -119,7 +119,32 @@ void draw() {
   if(getInput("b")) setState("designing");
   if(getInput("n")) setState("playing");
   if(getInput("m")) setState("menu");
-  if(getInput("i")) setState("intro");
+  if(getInput("i")){
+    t=0;
+    setState("intro1");
+  }
+  if (getInput("1")&&state=="intro1"){
+    t=0;
+    setState("intro2");
+  }
+  if ((!ongoing)&&state=="intro2"){
+    ongoing=true;
+    t=0;
+    setState("intro3");
+  }
+  if (getInput("1")&&state=="intro3"){
+    t=0;
+    setState("intro4");
+  }
+  if ((!ongoing)&&state=="intro4"){
+    t=0;
+    setState("intro5");
+  }
+  if (getInput("1")&&state=="intro5"){
+    t=0;
+    setState("intro6");
+  }
+  
 
   switch (state) {
     case "playing":{ playingDraw(); break;}
@@ -128,7 +153,12 @@ void draw() {
     case "loading":{ loadingDraw(); break;}
     case "complete":{ completeDraw(); break;}
     case "editor":{ editorDraw(); break;}
-    case "intro":{introDraw();break;}
+    case "intro1":{intro1Draw();break;}
+    case "intro2":{intro2Draw();break;}
+    case "intro3":{intro3Draw();break;}
+    case "intro4":{intro4Draw();break;}
+    case "intro5":{intro5Draw();break;}
+    case "intro6":{intro6Draw();break;}
   }
 }
 

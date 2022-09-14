@@ -7,6 +7,8 @@ PFont dejaBoldItalic;
 
 color white;
 color orange;
+color blue;
+color red;
 
 void mapBackground() {
   background(255);
@@ -42,7 +44,7 @@ void terminalDannebrog() {
   endShape();
 }
 
-void gradualTerminal(String[] texts,color[] colours,int[] lines,PFont[] fonts,PVector corner,PVector size,int t){
+void gradualTerminal(boolean u,String[] texts,color[] colours,int[] lines,PFont[] fonts,PVector corner,PVector size,int t,int d,int f){
   float w=33.87;
   float h=19.05;
   int total=0;
@@ -55,7 +57,7 @@ void gradualTerminal(String[] texts,color[] colours,int[] lines,PFont[] fonts,PV
     int s=t-total;
     total=total+texts[i].length();
      
-    float offset=0;
+    float offset=d;
     for (int n=0;n<=i;n++){
       if (n!=i){
         offset=offset+lines[n];
@@ -71,10 +73,14 @@ void gradualTerminal(String[] texts,color[] colours,int[] lines,PFont[] fonts,PV
     else{
       text(texts[i],corner.x/w*width,corner.y/h*height+offset,size.x/w*width,lines[i]*24);
     }
+    
+    if (i+1==texts.length&&u){
+      ongoing=false;
+    }
   }
 }
 
-void textTerminal(String[] texts,color[] colours,int[] lines,PFont[] fonts,PVector corner,PVector size){
+void textTerminal(String[] texts,color[] colours,int[] lines,PFont[] fonts,PVector corner,PVector size,int d){
   float w=33.87;
   float h=19.05;
   
@@ -83,7 +89,7 @@ void textTerminal(String[] texts,color[] colours,int[] lines,PFont[] fonts,PVect
     colorMode(RGB);
     fill(colours[i]);
         
-    float offset=0;
+    float offset=d;
     for (int n=0;n<=i;n++){
       if (n!=i){
         offset=offset+lines[n];
@@ -95,8 +101,4 @@ void textTerminal(String[] texts,color[] colours,int[] lines,PFont[] fonts,PVect
     text(texts[i],corner.x/w*width,corner.y/h*height+offset,size.x/w*width,lines[i]*24);
     rectMode(CENTER);
   }
-}
-
-public void introDraw() {
-  
 }

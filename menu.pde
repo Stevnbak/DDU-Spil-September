@@ -1,22 +1,8 @@
 public ArrayList<Button> menuButtons = new ArrayList<Button>();
-public int t=0;
 public void menuDraw() {
-  t++;
   //Draw background
-  mapBackground();
-  terminalBlack();
+  frameBackground();
 
-  String[] te={"\nBorger #3141592\nDer forlyder nyt om en krise og\nkongeriget Danmark har brug for\ndin hjælp.\n", "\n// Vælg dit svar\n   [1] Til tjeneste"};
-  int[] l={5, 3};
-  PFont[] f={dejaBold, dejaBoldItalic};
-  
-  color[] c={white,orange};
-
-  PVector co=new PVector(21.69, 0.9);
-  PVector si=new PVector(14.63, 10.03);
-  gradualTerminal(te, c,l, f, co, si,t);
-
-  //frameBackground();
   //Text
   fill(255);
   textSize(128);
