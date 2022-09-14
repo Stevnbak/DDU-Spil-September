@@ -1,6 +1,6 @@
 class Animal extends dynamicObject {
   //Texture
-  PImage animalTexture;
+  PImage animalTexture = loadImage("frog.png");
   
   Animal(PVector spawnLocation, float spawnMass, PVector spawnSize) {
     location = spawnLocation.get();

@@ -16,6 +16,7 @@ class Player extends dynamicObject {
 
   float currentPower = 0;
   float maxPower = 30;
+  int delta=1;
   //Update function
   void update() {
     //Physics...
@@ -33,10 +34,19 @@ class Player extends dynamicObject {
     if (getInput("w") || getInput(" ")) {
       if (isTouchingGround) addForce(new PVector(0, -jumpPower));
     }
-    if(getInput("MLeft")) {
-      currentPower += 1;
-      if (currentPower > maxPower) currentPower = maxPower;
-    } else if(currentPower > 0) {
+    if (getInput("MLeft")) {
+      currentPower=currentPower+(0.5*delta);
+      if (currentPower > maxPower){
+        delta =-1;
+        currentPower=maxPower;
+      }
+      
+      else if (currentPower<0){
+        delta = 1;
+        currentPower=0;
+    }
+      
+    } else if (currentPower > 0) {
       shootProjectile(new PVector(mouseX + camLocation.x, mouseY + camLocation.y), currentPower);
       currentPower = 0;
     }
@@ -74,6 +84,10 @@ class Player extends dynamicObject {
     if (maxVelocity.y > -1) velocity.y = constrain(velocity.y, -maxVelocity.y, maxVelocity.y);
     location.add(velocity);
     //Draw...
+    if (getInput("MLeft")) {
+      aimProjectile(new PVector(mouseX + camLocation.x, mouseY + camLocation.y), currentPower);
+    }
+
     noStroke();
     colorMode(RGB);
     textureMode(NORMAL);
@@ -110,7 +124,77 @@ class Player extends dynamicObject {
     //println("Shooting... with power: " + power);
     PVector direction = new PVector(targetLocation.x - location.x, targetLocation.y - location.y);
     direction.normalize();
-    Projectile newProj = new Projectile(location.get(), power, direction.get(),8,0);
+    Projectile newProj = new Projectile(location.get(), power, direction.get(), 8, 2);
     dynamicObjects.add(newProj);
+  }
+  
+  //Aiming
+  void aimProjectile(PVector targetLocation, float power) {
+    PVector direction = new PVector(targetLocation.x - location.x, targetLocation.y - location.y);
+    direction.normalize();
+    direction.mult(2.5);
+    float d=8;
+    float s=3;
+
+    for (int i=0; i<=power/s; i++)
+    {
+      fill(55);
+      if (i==power/s-(power/s%1))
+      {
+        ellipse(location.x+direction.x*d*i, location.y+direction.y*d*i, d, d);
+
+        float posx, posy, radius = d/2, ang, dang=0.01, percentage=(power/s)%1;
+        pushMatrix();
+        translate(location.x+direction.x*d*(i+1), location.y+direction.y*d*(i+1));
+        if (percentage>0.5) {
+          rotate(direction.heading()-PI);
+          ang = 0;
+          beginShape();
+          noStroke();
+          for ( int n = 0; n <= 360; n++) {
+            posx = radius * sin(ang);
+            posy = radius * cos(ang);
+            if ( sin(ang) >0 && sin(ang) < 1 ) {
+              vertex(posx, posy);
+            }
+            ang += dang;
+          }
+          endShape(CLOSE);
+
+          if (percentage-0.5>0) {
+            rotate(PI);
+            ang = 0;
+            beginShape();
+            noStroke();
+            for ( int n = 0; n <= 360; n++) {
+              posx = radius * sin(ang);
+              posy = radius * cos(ang);
+              if ( sin(ang) >0 && sin(ang) < 2*percentage-1 ) {
+                vertex(posx, posy);
+              }
+              ang += dang;
+            }
+            endShape(CLOSE);
+          }
+        } else {
+          rotate(direction.heading()-PI);
+          ang = 0;
+          beginShape();
+          noStroke();
+          for ( int n = 0; n <= 360; n++) {
+            posx = radius * sin(ang);
+            posy = radius * cos(ang);
+            if ( sin(ang) >1-(percentage*2) && sin(ang) < 1 ) {
+              vertex(posx, posy);
+            }
+            ang += dang;
+          }
+          endShape(CLOSE);
+        }
+        popMatrix();
+      } else {
+        ellipse(location.x+direction.x*d*i, location.y+direction.y*d*i, d, d);
+      }
+    }
   }
 }
