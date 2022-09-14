@@ -1,5 +1,5 @@
 public String state;
-String[] availableStates = {"playing", "designing", "loading", "menu", "complete", "editor","intro1","intro2","intro3","intro4","intro5","intro6"};
+String[] availableStates = {"playing", "designing", "loading", "menu", "complete", "editor","intro1","intro2","intro3","intro4","intro5","intro6","intro7","intro8","level1"};
 
 boolean isAvailable(String[] arr, String val) {
   for (int i = 0; i < arr.length; i++) {
@@ -13,6 +13,9 @@ boolean isAvailable(String[] arr, String val) {
 public void setState(String newState) {
   Danmarkskort1 = loadImage("navigation/Danmarkskort1.png");
   Danmarkskort2 = loadImage("navigation/Danmarkskort2.jpeg");
+  inzoPic = loadImage("navigation/inzo.png");
+
+  
   dejaRegular=createFont("fonts/dejaRegular.ttf", 16);
   dejaItalic=createFont("fonts/dejaItalic.ttf", 16);
   dejaBold=createFont("fonts/dejaBold.ttf", 16);

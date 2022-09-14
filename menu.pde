@@ -106,7 +106,7 @@ class Button {
 
 class LocationButton extends Button {
   LocationButton(PVector location, float radius, Runnable run) {
-    super(location, new PVector(radius * 2, radius * 2), color(255, 0, 0), "", run);
+    super(location, new PVector(radius * 2, radius * 2), color(221, 0, 0), "", run);
   }
   void draw() {
     float radius = size.x;
@@ -116,9 +116,9 @@ class LocationButton extends Button {
     noStroke();
     float h = 0;
     for (int r = (int)radius; r > 0; --r) {
-      fill(255, 0, 0, h);
+      fill(221, 0, 0, h);
       ellipse(location.x, location.y, r, r);
-      h += radius / 255;
+      h += radius / (255);
     }
     fill(0);
     textFont(font);

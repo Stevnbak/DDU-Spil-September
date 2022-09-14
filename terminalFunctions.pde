@@ -1,5 +1,6 @@
 PImage Danmarkskort1;
 PImage Danmarkskort2;
+PImage inzoPic;
 PFont dejaRegular;
 PFont dejaItalic;
 PFont dejaBold;
@@ -10,12 +11,15 @@ color orange;
 color blue;
 color red;
 
-void mapBackground() {
+public float w=33.87;
+public float h=19.05;
+
+void mapBackground(PImage back) {
   background(255);
   textureMode(NORMAL);
   textureWrap(REPEAT);
   beginShape();
-  texture(Danmarkskort1);
+  texture(back);
   vertex(0, 0, 0, 0);
   vertex(width, 0, 1, 0);
   vertex(width, height, 1, 1);
@@ -81,8 +85,6 @@ void gradualTerminal(boolean u,String[] texts,color[] colours,int[] lines,PFont[
 }
 
 void textTerminal(String[] texts,color[] colours,int[] lines,PFont[] fonts,PVector corner,PVector size,int d){
-  float w=33.87;
-  float h=19.05;
   
   for (int i=0;i<texts.length;i++){
     textFont(fonts[i]);
