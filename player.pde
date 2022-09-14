@@ -63,13 +63,15 @@ class Player extends dynamicObject {
       } else {
         playerTexture = loadImage("player/player_fall.png");
       }
-    } else if (velocity.x < -0.2 || velocity.x > 0.2) {
+    } else if (getInput("d") || getInput("a")) {
       if (frameTime < millis()) {
         if (anim == 1) anim = 2;
         else if (anim == 2) anim =1;
         playerTexture = loadImage("player/player_walk" + anim+ ".png");
         frameTime = millis() + 100;
       }
+    } else if (velocity.x < -0.5 || velocity.x > 0.5) {
+      playerTexture = loadImage("player/player_slide.png");
     } else {
       playerTexture = loadImage("player/player_stand.png");
     }
