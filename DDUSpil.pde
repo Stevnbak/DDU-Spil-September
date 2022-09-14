@@ -54,6 +54,9 @@ public Boolean getInput(String keyValue)
 }
 void keyPressed() {
   inputs.put(key + "", true);
+  if (key == ESC) {
+    key = 0;
+  }
 }
 void keyReleased() {
   inputs.put(key + "", false);
