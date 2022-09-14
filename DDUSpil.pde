@@ -36,6 +36,9 @@ void setup() {
   }
   //Set state
   setState("playing");
+
+  //Setup menu...
+  menuSetup();
 }
 
 void updateCamLocation() {
@@ -112,15 +115,6 @@ void draw() {
   }
 }
 
-void designDraw() {
-  //Draw background
-  frameBackground();
-  //Text
-  fill(0);
-  textSize(128);
-  text("Design", 40, 120); 
-}
-
 void loadingDraw() {
   //Draw background
   frameBackground();
@@ -128,15 +122,6 @@ void loadingDraw() {
   fill(0);
   textSize(128);
   text("Loading", 40, 120); 
-}
-
-void menuDraw() {
-  //Draw background
-  frameBackground();
-  //Text
-  fill(0);
-  textSize(128);
-  text("Menu", 40, 120); 
 }
 
 void completeDraw() {

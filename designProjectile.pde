@@ -1,3 +1,12 @@
+public void designDraw() {
+  //Draw background
+  frameBackground();
+  //Text
+  fill(0);
+  textSize(128);
+  text("Design", 40, 120); 
+}
+
 class Design {
   PShape[] shapes=new PShape[4];
   float[] form={1.15,0.5,0.47,0.04};
