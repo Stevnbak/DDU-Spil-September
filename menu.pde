@@ -14,9 +14,19 @@ public void menuDraw() {
 }
 public void menuSetup() {
     //Create buttons
-    menuButtons.add(new Button(new PVector(250, 200), new PVector(150, 50), color(155, 0, 155), "Design", () -> {println("Design..."); setState("designing");}));
-    menuButtons.add(new Button(new PVector(250, 300), new PVector(150, 50), color(0, 155, 155), "Exit", () -> {println("Exit..."); exit();}));
-    menuButtons.add(new LocationButton(new PVector(250, 400), 50, () -> {println("Location"); currentLevel = new level("test"); setState("playing");}));
+    menuButtons.add(new Button(new PVector(250, 200), new PVector(150, 50), color(155, 0, 155), "Design", () -> {
+        println("Design..."); 
+        setState("designing");
+        }));
+    menuButtons.add(new Button(new PVector(250, 300), new PVector(150, 50), color(0, 155, 155), "Exit", () -> {
+        println("Exit..."); 
+        exit();
+        }));
+    menuButtons.add(new LocationButton(new PVector(250, 400), 50, () -> {
+        println("Location"); 
+        currentLevel = new level("test"); 
+        setState("playing");
+        }));
 }
 
 class Button {
