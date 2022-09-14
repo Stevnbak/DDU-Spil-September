@@ -4,3 +4,4 @@ out/*.*
 *.class
 .vscode/tasks.json
 .vscode/tasks.json
+data/game/frame.png
