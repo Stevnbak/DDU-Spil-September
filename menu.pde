@@ -1,4 +1,4 @@
-public ArrayList<button> menuButtons = new ArrayList<button>();
+public ArrayList<Button> menuButtons = new ArrayList<Button>();
 
 public void menuDraw() {
   //Draw background
@@ -14,12 +14,12 @@ public void menuDraw() {
 }
 public void menuSetup() {
     //Create buttons
-    menuButtons.add(new button(new PVector(100, 200), new PVector(200, 50), color(155, 155, 0), "Play", () -> {println("Play");}));
-    menuButtons.add(new button(new PVector(100, 300), new PVector(200, 50), color(155, 0, 155), "Options", () -> {println("Options");}));
-    menuButtons.add(new button(new PVector(100, 400), new PVector(200, 50), color(0, 155, 155), "Exit", () -> {println("Exit");}));
+    menuButtons.add(new Button(new PVector(250, 200), new PVector(150, 50), color(155, 0, 155), "Design", () -> {println("Design..."); setState("designing");}));
+    menuButtons.add(new Button(new PVector(250, 300), new PVector(150, 50), color(0, 155, 155), "Exit", () -> {println("Exit..."); exit();}));
+    menuButtons.add(new LocationButton(new PVector(250, 400), 50, () -> {println("Location"); currentLevel = new level("test"); setState("playing");}));
 }
 
-class button {
+class Button {
     PVector location;
     PVector size;
     color colorValue;
@@ -28,9 +28,9 @@ class button {
     boolean hover = false;
     Runnable action;
 
-    button(PVector location, PVector size, color colorValue, String text, Runnable run) {
-        this.location = location;
-        this.size = size;
+   Button(PVector location, PVector size, color colorValue, String text, Runnable run) {
+         this.location = location.get();
+        this.size = size.get();
         this.colorValue = colorValue;
         this.text = text;
         this.action = run;
@@ -80,7 +80,7 @@ class button {
         float minY = Float.MAX_VALUE;
         float maxY = Float.NEGATIVE_INFINITY;
         for (Character c : txt.toCharArray()) {
-            PShape character = font.getShape(c); // create character vector
+            PShape character = font.getShape(c);
             for (int i = 0; i < character.getVertexCount(); i++) {
                 minY = min(character.getVertex(i).y, minY);
                 maxY = max(character.getVertex(i).y, maxY);
@@ -88,5 +88,27 @@ class button {
         }
         final float textHeight = maxY - minY;
         return textHeight;
+    }
+}
+
+class LocationButton extends Button {
+    LocationButton(PVector location, float radius, Runnable run) {
+        super(location, new PVector(radius * 2,radius * 2), color(255,0,0), "", run);
+    }
+    void draw() {
+         float radius = size.x;
+        if(hover) {
+            radius += 10;
+        }
+        noStroke();
+        float h = 0;
+        for (int r = (int)radius; r > 0; --r) {
+            fill(255, 0,0,h);
+            ellipse(location.x, location.y, r, r);
+            h += radius / 255;
+        }
+        fill(0);
+        textFont(font);
+        text(text, location.x - textWidth(text) / 2, location.y + (textHeight(text) / 2));
     }
 }
