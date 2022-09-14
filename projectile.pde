@@ -25,7 +25,10 @@ class Projectile extends dynamicObject {
       boolean inside = isInside(this, animals.get(i));
       if(inside) {
         //Hit animal
-        println("Hit animal");
+        animals.get(i).health -= 50;
+        dynamicObjects.remove(this);
+        println("hit!");
+        println("health:" + animals.get(i).health);
       }
     }
     if (isInside(this, player)) {
