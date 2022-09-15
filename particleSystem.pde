@@ -77,7 +77,7 @@ class Particle extends dynamicObject {
        boolean detected = detection(animals.get(i));
        if(detected) {
         nonreg = false;
-        animals.get(i).threat += 1.5;
+        animals.get(i).threat += 1;
        }
     }
     draw();

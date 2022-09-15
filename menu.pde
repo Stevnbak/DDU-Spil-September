@@ -47,7 +47,7 @@ class Button {
     this.colorValue = colorValue;
     this.text = text;
     this.action = run;
-    this.font = createFont("Arial", size.y / 4 * 3, true);
+    //this.font = createFont("Arial", size.y / 4 * 3, true);
   }
 
   void update() {
@@ -76,7 +76,7 @@ class Button {
     rect(location.x + camLocation.x, location.y + camLocation.y, size.x, size.y);
     fill(0);
     noStroke();
-    //textFont(font);
+    textFont(font);
     text(text, location.x + camLocation.x - textWidth(text) / 2, location.y + camLocation.y + (textHeight(text) / 2));
   }
 

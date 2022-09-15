@@ -1,7 +1,7 @@
 class staticObject {
   //Object definitions
   PVector size;
-  float frictionC = 0.075;
+  float frictionC = 0.05;
   //Loction vector
   PVector location = new PVector(0, 0);
   PImage texture = loadImage("world/none.png");

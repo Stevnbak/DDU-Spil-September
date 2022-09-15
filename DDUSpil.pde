@@ -35,7 +35,6 @@ void setup() {
   
   //Set state
   setState("intro8");
-  //setState("editor");
 
   //Cam location
   camLocation = new PVector(player.location.x - width / 2, player.location.y - height / 2);

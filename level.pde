@@ -11,22 +11,17 @@ class level {
       if(lines[i].charAt(0) == '/' && lines[i].charAt(1) == '/') continue;
       String[] temp = split(lines[i], ":");
       String type = trim(temp[0]);
-      if(temp.length != 2) continue;
       String[] values = split(temp[1].replace("[", "").replace("]", "").replace(" ",""), ",");
       if (type.equals("object")) {
         if(values.length != 4) {
-          println("Error: object line " + (i + 1) + " has incorrect number of values");
+          println("Error: object line " + i + " has incorrect number of values");
         } else {
           staticObjects.add(new staticObject(new PVector(int(values[0]), -int(values[1])), new PVector(int(values[2]), int(values[3])), style));
         }
       } else if (type.equals("spawn")) {
         player.location = new PVector(int(values[0]), -int(values[1]));
       } else if (type.equals("animal")) {
-        if(values.length != 6) {
-          println("Error: object line " + (i + 1) + " has incorrect number of values");
-        } else {
-          animals.add(new Animal(new PVector(int(values[0]), -int(values[1])), int(values[2]), new PVector(int(values[3]), int(values[4])),("animals/" + values[5] + ".png")));
-        }
+        animals.add(new Animal(new PVector(int(values[0]), -int(values[1])), int(values[2]), new PVector(int(values[3]), int(values[4])),(values[5])));
       } else if (type.equals("size")) {
         mapSize = new PVector(int(values[0]), int(values[1]));
         //Side wall exits?
@@ -163,10 +158,8 @@ void editorDraw() {
 
   //Draw borders
   stroke(0);
-  if(mapSize != null) {
-    line(mapSize.x / 2, 0, mapSize.x / 2, -mapSize.y / 2);
-    line(-mapSize.x / 2, 0, -mapSize.x / 2, -mapSize.y / 2);
-    line(-mapSize.x / 2, -mapSize.y / 2, mapSize.x / 2, -mapSize.y / 2);
-  }
+  line(mapSize.x / 2, 0, mapSize.x / 2, -mapSize.y / 2);
+  line(-mapSize.x / 2, 0, -mapSize.x / 2, -mapSize.y / 2);
+  line(-mapSize.x / 2, -mapSize.y / 2, mapSize.x / 2, -mapSize.y / 2);
   noStroke();
 }
