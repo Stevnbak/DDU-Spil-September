@@ -1,6 +1,6 @@
 PImage Danmarkskort1;
 PImage Danmarkskort2;
-PImage inzoPic;
+PImage zo1P;
 PFont dejaRegular;
 PFont dejaItalic;
 PFont dejaBold;
@@ -10,6 +10,8 @@ color white;
 color orange;
 color blue;
 color red;
+color yellow;
+color green;
 
 public float w=33.87;
 public float h=19.05;

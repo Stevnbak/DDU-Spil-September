@@ -153,8 +153,6 @@ void draw() {
     t=0;
     setState("intro8");
   }
-  
-  
 
   switch (state) {
     case "playing":{ playingDraw(); break;}
@@ -171,7 +169,7 @@ void draw() {
     case "intro6":{intro6Draw();break;}
     case "intro7":{intro7Draw();break;}
     case "intro8":{intro8Draw();break;}
-    case "level1":{level1Draw();break;}
+    case "zo1":{zo1Draw();break;}
   }
 }
 
