@@ -21,7 +21,7 @@ class level {
       } else if (type.equals("spawn")) {
         player.location = new PVector(int(values[0]), -int(values[1]));
       } else if (type.equals("animal")) {
-        animals.add(new Animal(new PVector(int(values[0]), -int(values[1])), int(values[2]), new PVector(int(values[3]), int(values[4]))));
+        animals.add(new Animal(new PVector(int(values[0]), -int(values[1])), int(values[2]), new PVector(int(values[3]), int(values[4])),(values[5])));
       } else if (type.equals("size")) {
         mapSize = new PVector(int(values[0]), int(values[1]));
         //Side wall exits?
@@ -45,6 +45,8 @@ class level {
     }
     //Add "infinite" floor
     staticObjects.add(new staticObject(new PVector(0, height / 2), new PVector(width * 2000, height), ""));
+    //Count animals
+    total = animals.size();
   }
 }
 

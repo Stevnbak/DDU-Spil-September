@@ -1,22 +1,36 @@
+public int escaped = 0;
+public int killed = 0;
+
+void completion() {
+    String escape = "Escaped: " + escaped + "/" + total;
+    String kill = "Killed: " + killed + "/" + total;
+    //Draw completion status
+    textSize(50);
+    text(escape, 0, 50);
+    text(kill, 0, 100);
+
+    if(animals.size() == 0) {
+      setState("complete");
+    }
+  }
+
 class Animal extends dynamicObject {
   //Texture
-  PImage animalTexture = loadImage("frog.png");
+  PImage animalTexture;
   float threat;
   float health;
-  float escaped = 0;
-  float killed = 0;
   
-  Animal(PVector spawnLocation, float spawnMass, PVector spawnSize) {
+  Animal(PVector spawnLocation, float spawnMass, PVector spawnSize, String texture) {
     location = spawnLocation.get();
     mass = spawnMass;
     size = spawnSize.get();
     health = mass * 10;
+    animalTexture = loadImage(texture);
   }
   
   void detection() {
-    threat = odor.amount/10;
     for (int i = 0; i < animals.size(); i++) {
-      if (threat >= 255) {
+      if (threat >= 255 && animals.get(i) == this) {
         //animal escaped
         animals.remove(i);
         escaped++;
@@ -26,7 +40,7 @@ class Animal extends dynamicObject {
   
   void damageCalc() {
     for (int i = 0; i < animals.size(); i++) {
-      if (health <= 0) {
+      if (health <= 0 && animals.get(i) == this) {
         //animal killed
         animals.remove(i);
         killed++;
