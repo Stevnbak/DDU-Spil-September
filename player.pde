@@ -3,7 +3,7 @@ class Player extends dynamicObject {
   float standardAccel = 0.25, jumpPower = 8;
   boolean isTouchingGround = false;
   boolean isTouchingWall = false;
-  float wallJumpCooldown = 100, lastWallJump = 0, wall = 1;
+  float wallJumpCooldown = 200, lastWallJump = 0, wall = 1;
   //Textures
   PImage playerTexture;
 
@@ -40,7 +40,7 @@ class Player extends dynamicObject {
         lastWallJump = millis();
       } else if (isTouchingWall && millis() >= lastWallJump + wallJumpCooldown) {
         lastWallJump = millis();
-        addForce(new PVector(wall * 1.5 * jumpPower , -jumpPower * 2));
+        addForce(new PVector(wall * 1.5 * jumpPower , -jumpPower * 1.75));
       }
     }
     if (getInput("MLeft")) {

@@ -13,7 +13,7 @@ void introSetup() {
   );
 
   le1=new LocationButton(new PVector(11.52, 10.46), 3, () -> {
-    currentLevel = new level("1");
+    currentLevel = new level("2");
     setState("playing");
     dynamicObjects.remove(this);
   }
