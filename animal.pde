@@ -1,16 +1,19 @@
 class Animal extends dynamicObject {
   //Texture
-  PImage animalTexture = loadImage("frog.png");
+  PImage animalTexture;
   float threat;
   float health;
-  float escaped = 0;
-  float killed = 0;
+  int escaped = 0;
+  int killed = 0;
+  String escape;
+  String kill;
   
-  Animal(PVector spawnLocation, float spawnMass, PVector spawnSize) {
+  Animal(PVector spawnLocation, float spawnMass, PVector spawnSize, String texture) {
     location = spawnLocation.get();
     mass = spawnMass;
     size = spawnSize.get();
     health = mass * 10;
+    animalTexture = loadImage(texture);
   }
   
   void detection() {
@@ -34,9 +37,18 @@ class Animal extends dynamicObject {
     }
   }
   
+  void completion() {
+    escape = escaped + "/" + total;
+    kill = killed + "/" + total;
+    //Draw completion status
+    text(escape, camLocation.x + width*0.2, camLocation.y + 100);
+    text(kill, camLocation.x + width*0.8, camLocation.y + 100);
+  }
+  
   void draw() {
     detection();
     damageCalc();
+    completion();
     super.draw();
     textureMode(NORMAL);
     tint(255,255 - threat);

@@ -1,6 +1,7 @@
 //Camera stuff
 PVector camLocation;
 float camSpeed = 20;
+int total;
 
 //Player stuff
 public Player player;
@@ -35,6 +36,7 @@ void setup() {
   if(background == null) {
     background = loadImage("world/backgroundGrass.png");
   }
+  
   //Set state
   setState("intro8");
 
