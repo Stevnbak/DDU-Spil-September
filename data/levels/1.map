@@ -1,6 +1,6 @@
 //Basic
+style:Snow
 size:[3000,1500]
-background:"backgroundGrass.png"
 wind:[-0.025,0]
 //Player
 spawn:[-1400,150]
