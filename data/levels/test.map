@@ -1,6 +1,0 @@
-style:Fall
-wind:[0,0]
-spawn:[0,50]
-object:[-150,500,100,1000]
-object:[150,500,100,1000]
-animal:[400,50,10,100,100,animals/frog.png]
