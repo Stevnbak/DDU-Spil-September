@@ -2,7 +2,8 @@ class Player extends dynamicObject {
   //Object definitions
   float standardAccel = 0.25, jumpPower = 8;
   boolean isTouchingGround = false;
-
+  boolean isTouchingWall = false;
+  float wallJumpCooldown = 100, lastWallJump = 0, wall = 1;
   //Textures
   PImage playerTexture;
 
@@ -33,7 +34,14 @@ class Player extends dynamicObject {
       addForce(new PVector(standardAccel, 0));
     }
     if (getInput("w") || getInput(" ")) {
-      if (isTouchingGround) addForce(new PVector(0, -jumpPower));
+      if (isTouchingGround) 
+      {
+        addForce(new PVector(0, -jumpPower));
+        lastWallJump = millis();
+      } else if (isTouchingWall && millis() >= lastWallJump + wallJumpCooldown) {
+        lastWallJump = millis();
+        addForce(new PVector(wall * 1.5 * jumpPower , -jumpPower * 2));
+      }
     }
     if (getInput("MLeft")) {
       currentPower=currentPower+(0.5*delta);
@@ -52,7 +60,7 @@ class Player extends dynamicObject {
       currentPower = 0;
     }
     isTouchingGround = false;
-    //println("Player location: " + location);
+    isTouchingWall = false;
   }
 
   //Animations
@@ -119,6 +127,14 @@ class Player extends dynamicObject {
     super.collision(locationValue, side);
     if (side == top) {
       isTouchingGround = true;
+    }
+    if(side == right) {
+      isTouchingWall = true;
+      wall = 1;
+    }
+    if(side == left) {
+      isTouchingWall = true;
+      wall = -1;
     }
   }
 

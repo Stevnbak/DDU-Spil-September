@@ -2,16 +2,15 @@ import java.util.Iterator;
 
 class ParticleSystem {
   ArrayList<Particle> particles;
-  int amount;
 
   ParticleSystem() {
     particles=new ArrayList<Particle>();
-    amount=0;
   }
 
   void addParticle(PVector lo, float he, int fr) {
     if (frameCount % fr==0)
     {
+      particles.add(new Particle(lo.get(), he));
       particles.add(new Particle(lo.get(), he));
     }
   }
@@ -55,7 +54,7 @@ class Particle extends dynamicObject {
     velocity.mult(factor);
     size=new PVector(6, 6);
 
-    lifespan =200;
+    lifespan = 300;
 
     nonreg=true;
   }

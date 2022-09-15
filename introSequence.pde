@@ -11,7 +11,7 @@ void introSetup() {
   
   intu=new LocationButton(new PVector(11.52/w*width,10.46/h*height),3/h*height,() -> {
    setState("level1");
-   currentLevel = new level("1");
+   currentLevel = new level("test");
    setState("playing");
    dynamicObjects.remove(this);
    }

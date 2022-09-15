@@ -31,11 +31,7 @@ void setup() {
 
   //Spawn player
   player = new Player();
-  //Set level
-  currentLevel = new level("test");
-  if(background == null) {
-    background = loadImage("world/backgroundGrass.png");
-  }
+  
   
   //Set state
   setState("intro8");
