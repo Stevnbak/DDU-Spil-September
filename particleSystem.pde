@@ -16,16 +16,11 @@ class ParticleSystem {
     }
   }
 
-  void update(PVector po, float ra) {
+  void update() {
     Iterator<Particle>it=particles.iterator();
 
     while (it.hasNext()) {
       Particle p = it.next();
-
-      if (p.alert) {
-        amount++;
-        p.alert=false;
-      }
 
       if (p.isDead()) {
         it.remove();
@@ -35,7 +30,7 @@ class ParticleSystem {
         checkCollision(staticObjects.get(i), p);
       }
       
-      p.update(po, ra);
+      p.update();
     }
   }
 }
@@ -46,7 +41,6 @@ class Particle extends dynamicObject {
   float factor;
   float loss;
 
-  boolean alert;
   boolean nonreg;
 
   Particle(PVector lo, float he) {
@@ -63,15 +57,14 @@ class Particle extends dynamicObject {
 
     lifespan =200;
 
-    alert=false;
     nonreg=true;
   }
 
-  void detection(PVector po, float ra) {
-    if ((location.x-po.x)*(location.x-po.x)+(location.y-po.y)*(location.y-po.y)<=ra*ra) {
-      alert=true;
-      nonreg=false;
+  boolean detection(Animal animal) {
+    if (isInside(animal, this)) {
+      return true;
     }
+    return false;
   }
 
   void physics() {
@@ -79,9 +72,15 @@ class Particle extends dynamicObject {
     wind();
   }
 
-  void update(PVector po, float ra) {
+  void update() {
     physics();
-    detection(po, ra);
+    for (int i = 0; i < animals.size(); i++) {
+       boolean detected = detection(animals.get(i));
+       if(detected) {
+        nonreg = false;
+        animals.get(i).threat += 1;
+       }
+    }
     draw();
   }
 

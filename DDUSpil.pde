@@ -254,9 +254,7 @@ void playingDraw() {
   }
   //Particle stuff...
   odor.addParticle(player.location.get(), player.size.get().y, 4);
-  for (int i = 0; i < animals.size(); i++) {
-    odor.update(animals.get(i).location, animals.get(i).size.x/2);
-  }
+  odor.update();
   
   //Draw animals
   for (int i = 0; i < animals.size(); i++) {

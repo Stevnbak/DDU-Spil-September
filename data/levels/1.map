@@ -1,7 +1,7 @@
 //Basic
 size:[3000,1500]
 background:"backgroundGrass.png"
-wind:[-0.0025,0]
+wind:[-0.025,0]
 //Player
 spawn:[-1400,150]
 //Left "Mountain"

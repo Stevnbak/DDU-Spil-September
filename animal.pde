@@ -17,9 +17,8 @@ class Animal extends dynamicObject {
   }
   
   void detection() {
-    threat = odor.amount/10;
     for (int i = 0; i < animals.size(); i++) {
-      if (threat >= 255) {
+      if (threat >= 255 && animals.get(i) == this) {
         //animal escaped
         animals.remove(i);
         escaped++;
@@ -29,7 +28,7 @@ class Animal extends dynamicObject {
   
   void damageCalc() {
     for (int i = 0; i < animals.size(); i++) {
-      if (health <= 0) {
+      if (health <= 0 && animals.get(i) == this) {
         //animal killed
         animals.remove(i);
         killed++;
