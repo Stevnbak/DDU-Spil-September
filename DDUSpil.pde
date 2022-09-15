@@ -262,4 +262,9 @@ void playingDraw() {
   }
   //Draw player
   player.draw();
+
+  //HUD
+  translate(camLocation.x, camLocation.y);
+  //Draw completion counter
+  completion();
 }

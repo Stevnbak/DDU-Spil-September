@@ -1,12 +1,24 @@
+public int escaped = 0;
+public int killed = 0;
+
+void completion() {
+    String escape = "Escaped: " + escaped + "/" + total;
+    String kill = "Killed: " + killed + "/" + total;
+    //Draw completion status
+    textSize(50);
+    text(escape, 0, 50);
+    text(kill, 0, 100);
+
+    if(animals.size() == 0) {
+      setState("complete");
+    }
+  }
+
 class Animal extends dynamicObject {
   //Texture
   PImage animalTexture;
   float threat;
   float health;
-  int escaped = 0;
-  int killed = 0;
-  String escape;
-  String kill;
   
   Animal(PVector spawnLocation, float spawnMass, PVector spawnSize, String texture) {
     location = spawnLocation.get();
@@ -36,18 +48,9 @@ class Animal extends dynamicObject {
     }
   }
   
-  void completion() {
-    escape = escaped + "/" + total;
-    kill = killed + "/" + total;
-    //Draw completion status
-    text(escape, camLocation.x + width*0.2, camLocation.y + 100);
-    text(kill, camLocation.x + width*0.8, camLocation.y + 100);
-  }
-  
   void draw() {
     detection();
     damageCalc();
-    completion();
     super.draw();
     textureMode(NORMAL);
     tint(255,255 - threat);
