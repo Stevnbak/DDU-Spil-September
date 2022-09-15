@@ -1,21 +1,48 @@
-public LocationButton inzo;
-public LocationButton intu;
+public LocationButton zo1;
+public LocationButton le1;
 
-public ArrayList<Button> interfaceButtons = new ArrayList<Button>();
+public ArrayList<Button> zoomButtons = new ArrayList<Button>();
+public ArrayList<Button> levelButtons = new ArrayList<Button>();
+public ArrayList<PImage> zoomPictures = new ArrayList<PImage>();
 
 void introSetup() {
-  inzo=new LocationButton(new PVector(8.95/w*width, 4.44/h*height), 1.2/h*height, () -> {
-    setState("level1");
+  zo1=new LocationButton(new PVector(8.95, 4.44), 1.2, () -> {
+    setState("zo1");
+    t=0;
   }
   );
-  
-  intu=new LocationButton(new PVector(11.52/w*width,10.46/h*height),3/h*height,() -> {
-   setState("level1");
+
+  le1=new LocationButton(new PVector(11.52, 10.46), 3, () -> {
+    currentLevel = new level("1");
+    setState("playing");
+    dynamicObjects.remove(this);
+  }
+  );
+
+  zoomButtons.add(new LocationButton(new PVector(14.82, 11.59), 1.1, () -> {
+    setState(availableStates[0]);
+  }
+  ));
+
+  zoomButtons.add(new LocationButton(new PVector(6.51, 16.93), 0.9, () -> {
+    setState(availableStates[1]);
+  }
+  ));
+
+  zoomButtons.add(new LocationButton(new PVector(9.16, 8.77), 1.0, () -> {
+    setState(availableStates[2]);
+  }
+  ));
+
+  /*
+   interfaceButtons.add(new LocationButton(new PVector(250, 400), 50, () -> {
+   println("Location");
    currentLevel = new level("1");
    setState("playing");
    dynamicObjects.remove(this);
    }
-   );
+   ));
+   */
 
   /*
   intu=new LocationButton(new PVector(8.02/w*width,3.44/h*height),2/h*height,() -> {
@@ -162,13 +189,48 @@ public void intro7Draw() {
 }
 
 public void intro8Draw() {
+  t++;
   mapBackground(Danmarkskort1);
   terminalBlack();
-  inzo.update();
+  zo1.draw();
+  zo1.update();
+
+  for (int i=0; i<zoomButtons.size(); i++) {
+    zoomButtons.get(i).draw();
+  }
+
+  String[] te11={"\nVores algoritmer har fundet frem\ntil lokationer beasat af invasive\narter.\n\nDe er markeret med røde felter\npå dit Danmarkskort.\n\nNår du har bekæmpet dem alle\nskal du indberette dit fund og\nantal artsfæller på nettet.", "\nwww.arter.dk", "\nDet gør at eksperter kan\nkortlægge deres spredning og\npopulationer"};
+  int[] l11={11, 2, 4};
+  PFont[] f11={dejaBold, dejaBoldItalic, dejaBold};
+  color[] c11={white, yellow, white};
+  gradualTerminal(true, te11, c11, l11, f11, co, si, t, 0, 1);
+  
+  if (!ongoing){
+    String[] te12={"<] Tryk på det røde felt."};
+    int[] l12={1};
+    PFont[] f12={dejaBoldItalic};
+    color[] c12={white};
+    textTerminal(te12, c12, l12, f12, new PVector(10.23, 4.01), si,0);
+  }
 }
 
-public void level1Draw() {
-  mapBackground(inzoPic);
+
+public void zo1Draw() {
+  t++;
+  mapBackground(zo1P);
   terminalBlack();
-  intu.update();
+  le1.update();
+  le1.draw();
+  
+  String[] te13={"\n--------------------------------\n\nAntal elimineret:\n0/x\n\nAntal mistet:\n0/x\n\n--------------------------------"};
+  int[] l13={10};
+  PFont[] f13={dejaBold};
+  color[] c13={green};
+  textTerminal(te13, c13, l13, f13, co, si,0);
+  
+  String[] te14={"Lokation: Dronninglund\n(57.1949073,10.3166804)\n\nArtsnavn: Jærv"};
+  int[] l14={5};
+  PFont[] f14={dejaBold};
+  color[] c14={white};
+  gradualTerminal(false,te14, c14, l14, f14, new PVector(8.85,13.45), si,t,0,1);
 }

@@ -47,7 +47,7 @@ class Button {
     this.colorValue = colorValue;
     this.text = text;
     this.action = run;
-    this.font = createFont("Arial", size.y / 4 * 3, true);
+    //this.font = createFont("Arial", size.y / 4 * 3, true);
   }
 
   void update() {
@@ -105,9 +105,21 @@ class Button {
 }
 
 class LocationButton extends Button {
-  LocationButton(PVector location, float radius, Runnable run) {
-    super(location, new PVector(radius * 2, radius * 2), color(221, 0, 0), "", run);
+  LocationButton(PVector newLocation, float radius, Runnable run) {
+    super(new PVector(newLocation.x / w * width, newLocation.y / h * height), new PVector(radius/h*height * 2, radius/h*height * 2), color(221, 0, 0), "", run);
   }
+  
+  void update() {
+    hover();
+    if (getInput("MLeft")) {
+      if (hover) {
+        action.run();
+        inputs.put("MLeft", false);
+        ongoing=true;
+      }
+    }
+  }
+  
   void draw() {
     float radius = size.x;
     if (hover) {
@@ -121,7 +133,7 @@ class LocationButton extends Button {
       h += radius / (255);
     }
     fill(0);
-    textFont(font);
+    //textFont(font);
     text(text, location.x - textWidth(text) / 2, location.y + (textHeight(text) / 2));
   }
 }
