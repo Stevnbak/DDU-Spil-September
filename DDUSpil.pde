@@ -34,7 +34,7 @@ void setup() {
   
   
   //Set state
-  setState("intro1");
+  setState("intro8");
   //setState("editor");
 
   //Cam location
@@ -53,6 +53,11 @@ void updateCamLocation() {
   float yDistance = centerLocation.y - player.location.y;
   camLocation.x -= xDistance / camSpeed;
   camLocation.y -= yDistance / camSpeed;
+}
+
+void death() {
+  println("Dead!");
+  setState("" + currentLevel.name);
 }
 
 // Inputs

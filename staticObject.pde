@@ -1,15 +1,17 @@
 class staticObject {
   //Object definitions
   PVector size;
-  float frictionC = 0.075;
+  float frictionC = 0.085;
+  boolean kill = false;
   //Loction vector
   PVector location = new PVector(0, 0);
   PImage texture = loadImage("world/none.png");
   PImage topTexture = loadImage("world/none.png");
   //Constructor
-  staticObject(PVector startLocation, PVector newSize, String style) {
+  staticObject(PVector startLocation, PVector newSize, String style, boolean killing) {
     location = startLocation.get();
     size = newSize.get();
+    kill = killing;
     if(style == "") {
       noTexture = true;
     } else {
@@ -26,6 +28,10 @@ class staticObject {
     for (int i = 0; i < dynamicObjects.size(); i++) {
       checkCollision(this, dynamicObjects.get(i));
     }
+    boolean playerCollision = isInside(this, player);
+    if(playerCollision && kill) {
+      death();
+    }
     checkCollision(this, player);
   }
 
@@ -34,6 +40,7 @@ class staticObject {
   boolean noTexture = false;
 
   void draw() {
+    if(kill) stroke(0);
     textureMode(NORMAL);
     textureWrap(REPEAT);  
     if (!noTexture) {
@@ -52,5 +59,6 @@ class staticObject {
       vertex(location.x - size.x/2, location.y - size.y/2 + 51, 0, 1);
       endShape();
     }
+    noStroke();
   }
 }

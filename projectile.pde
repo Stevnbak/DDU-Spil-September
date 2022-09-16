@@ -32,8 +32,7 @@ class Projectile extends dynamicObject {
     }
     if (isInside(this, player)) {
       if(millis() > startTime + 500) {
-        println("Dead!");
-        exit();
+        death();
       }
     }
     super.draw();
