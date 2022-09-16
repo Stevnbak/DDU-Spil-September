@@ -22,7 +22,7 @@ public void setState(String newState) {
     dejaItalic=createFont("fonts/dejaItalic.ttf", 16);
     dejaBold=createFont("fonts/dejaBold.ttf", 16);
     dejaBoldItalic=createFont("fonts/dejaBoldItalic.ttf", 16);
-    dejaBoldLarge=createFont("fonts/dejaBoldItalic.ttf", 20);
+    dejaBoldLarge=createFont("fonts/dejaBold.ttf", 24);
     
     white=color(255,255,255);
     orange=color(216,101,16);
