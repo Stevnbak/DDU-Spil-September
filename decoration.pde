@@ -16,8 +16,7 @@ class Decoration {
     texture.resize(w, h);
   }
 
-  void draw() {
-    println("Test");
+  void draw() {S
     pushMatrix();
     textureMode(NORMAL);
     beginShape();
