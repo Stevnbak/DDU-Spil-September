@@ -1,5 +1,5 @@
 public String state;
-String[] availableStates = {"playing", "designing", "loading", "menu", "complete", "editor","intro1","intro2","intro3","intro4","intro5","intro6","intro7","intro8","intro9","zo1"};
+String[] availableStates = {"playing", "designing", "loading", "menu", "complete", "editor","intro1","intro2","intro3","intro4","intro5","intro6","intro7","intro8","intro9","zo1","deathSuicide","deathDrowned"};
 
 boolean isAvailable(String[] arr, String val) {
   for (int i = 0; i < arr.length; i++) {
@@ -22,6 +22,7 @@ public void setState(String newState) {
     dejaItalic=createFont("fonts/dejaItalic.ttf", 16);
     dejaBold=createFont("fonts/dejaBold.ttf", 16);
     dejaBoldItalic=createFont("fonts/dejaBoldItalic.ttf", 16);
+    dejaBoldLarge=createFont("fonts/dejaBoldItalic.ttf", 20);
     
     white=color(255,255,255);
     orange=color(216,101,16);
