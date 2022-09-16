@@ -8,6 +8,9 @@ class level {
   String animalType;
   level(String levelName) {
     name = levelName;
+    staticObjects = new ArrayList<staticObject>();
+    animals = new ArrayList<Animal>();
+    decorations = new ArrayList<Decoration>();
     //Read file...
     String[] lines = loadStrings("levels/" + levelName + ".map");
     for (int i = 0; i < lines.length; i++) {
@@ -118,6 +121,10 @@ void editorDraw() {
   rectMode(CENTER);
   //Move everything according to camera location
   translate(-camLocation.x, -camLocation.y);
+  //Draw decoration objects
+  for (int i = 0; i < decorations.size(); i++) {
+    decorations.get(i).draw();
+  }
   //Draw static objects
   for (int i = 0; i < staticObjects.size(); i++) {
     staticObjects.get(i).draw();
