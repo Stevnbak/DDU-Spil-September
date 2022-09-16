@@ -8,6 +8,9 @@ class level {
   String animalType;
   level(String levelName) {
     name = levelName;
+    staticObjects = new ArrayList<staticObject>();
+    animals = new ArrayList<Animal>();
+    decorations = new ArrayList<Decoration>();
     //Read file...
     String[] lines = loadStrings("levels/" + levelName + ".map");
     for (int i = 0; i < lines.length; i++) {
@@ -25,13 +28,19 @@ class level {
           if(values.length == 5) kill = boolean(values[4]);
           staticObjects.add(new staticObject(new PVector(int(values[0]), -int(values[1])), new PVector(int(values[2]), int(values[3])), style, kill));
         }
+      } else if (type.equals("decoration")) {
+         if(values.length != 4) {
+          println("Error: decoration line " + (i + 1) + " has incorrect number of values");
+         } else {
+          decorations.add(new Decoration(new PVector(int(values[0]), -int(values[1])), int(values[2]), style, values[3]));
+         }
       } else if (type.equals("spawn")) {
         player.location = new PVector(int(values[0]), -int(values[1]));
       } else if (type.equals("animalType")) {
         animalType = values[0];
       } else if (type.equals("animal")) {
         if(values.length != 5) {
-          println("Error: object line " + (i + 1) + " has incorrect number of values");
+          println("Error: animal line " + (i + 1) + " has incorrect number of values");
         } else {
           animals.add(new Animal(new PVector(int(values[0]), -int(values[1])), int(values[2]), new PVector(int(values[3]), int(values[4])),("animals/" + animalType + ".png")));
         }
@@ -112,6 +121,10 @@ void editorDraw() {
   rectMode(CENTER);
   //Move everything according to camera location
   translate(-camLocation.x, -camLocation.y);
+  //Draw decoration objects
+  for (int i = 0; i < decorations.size(); i++) {
+    decorations.get(i).draw();
+  }
   //Draw static objects
   for (int i = 0; i < staticObjects.size(); i++) {
     staticObjects.get(i).draw();

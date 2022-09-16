@@ -22,6 +22,7 @@ public HashMap<String, Boolean> inputs = new HashMap<String, Boolean>();
 public ArrayList<staticObject> staticObjects = new ArrayList<staticObject>();
 public ArrayList<dynamicObject> dynamicObjects = new ArrayList<dynamicObject>();
 public ArrayList<Animal> animals = new ArrayList<Animal>();
+public ArrayList<Decoration> decorations = new ArrayList<Decoration>();
 
 void setup() {
   //Window...
@@ -245,6 +246,10 @@ void playingDraw() {
   rectMode(CENTER);
   //Move everything according to camera location
   translate(-camLocation.x, -camLocation.y);
+  //Draw decoration objects
+  for (int i = 0; i < decorations.size(); i++) {
+    decorations.get(i).draw();
+  }
   //Draw dynamic objects
   for (int i = 0; i < dynamicObjects.size(); i++) {
     dynamicObjects.get(i).draw();
