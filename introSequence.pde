@@ -231,8 +231,6 @@ public void deathSuicideDraw(){
   mapBackground(lastFrame);
   t++;
   println(currentLevel.name);
-  
-  
 }
 
 public void deathDrownedDraw(){
