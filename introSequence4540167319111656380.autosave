@@ -5,6 +5,7 @@ public ArrayList<Button> zoomButtons = new ArrayList<Button>();
 public ArrayList<Button> levelButtons = new ArrayList<Button>();
 public ArrayList<PImage> zoomPictures = new ArrayList<PImage>();
 
+
 void introSetup() {
   zo1=new LocationButton(new PVector(8.95, 4.44), 1.2, () -> {
     setState("zo1");
@@ -12,7 +13,7 @@ void introSetup() {
   }
   );
 
-  le1=new LocationButton(new PVector(11.52, 10.46), 3, () -> {
+  le1=new LocationButton(new PVector(11.52, 10.46), 2, () -> {
     currentLevel = new level("1");
     setState("playing");
     dynamicObjects.remove(this);
@@ -222,7 +223,7 @@ public void zo1Draw() {
   le1.update();
   le1.draw();
   
-  String[] te13={"\n--------------------------------\n\nAntal elimineret:\n0/x\n\nAntal mistet:\n0/x\n\n--------------------------------"};
+  String[] te13={"\n--------------------------------\nAntal elimineret:\n0/x\n\nAntal mistet:\n0/x\n--------------------------------"};
   int[] l13={10};
   PFont[] f13={dejaBold};
   color[] c13={green};

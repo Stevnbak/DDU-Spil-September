@@ -1,10 +1,12 @@
 PVector mapSize;
 class level {
+  String name;
   PVector wind = new PVector(0, 0);
   //ArrayList<staticObject> objects = new ArrayList<staticObject>();
   PVector spawnLocation = new PVector(width /2, height / 2);
   String style;
   level(String levelName) {
+    name = levelName;
     String[] lines = loadStrings("levels/" + levelName + ".map");
     for (int i = 0; i < lines.length; i++) {
       if(lines[i].length() <= 2) continue;
@@ -14,10 +16,12 @@ class level {
       if(temp.length != 2) continue;
       String[] values = split(temp[1].replace("[", "").replace("]", "").replace(" ",""), ",");
       if (type.equals("object")) {
-        if(values.length != 4) {
+        if(values.length != 4 && values.length != 5) {
           println("Error: object line " + (i + 1) + " has incorrect number of values");
         } else {
-          staticObjects.add(new staticObject(new PVector(int(values[0]), -int(values[1])), new PVector(int(values[2]), int(values[3])), style));
+          boolean kill = false;
+          if(values.length == 5) kill = boolean(values[4]);
+          staticObjects.add(new staticObject(new PVector(int(values[0]), -int(values[1])), new PVector(int(values[2]), int(values[3])), style, kill));
         }
       } else if (type.equals("spawn")) {
         player.location = new PVector(int(values[0]), -int(values[1]));
@@ -32,14 +36,14 @@ class level {
         //Side wall exits?
         if(int(values[0]) != 0)  {
           //Left wall
-          staticObjects.add(new staticObject(new PVector(-int(values[0]) / 2 - 50, -int(values[1]) / 2), new PVector(100, int(values[1]) + 200), ""));
+          staticObjects.add(new staticObject(new PVector(-int(values[0]) / 2 - 50, -int(values[1]) / 2), new PVector(100, int(values[1]) + 200), "", false));
           //Right wall
-          staticObjects.add(new staticObject(new PVector(int(values[0]) / 2 + 50, -int(values[1]) / 2), new PVector(100, int(values[1]) + 200), ""));
+          staticObjects.add(new staticObject(new PVector(int(values[0]) / 2 + 50, -int(values[1]) / 2), new PVector(100, int(values[1]) + 200), "", false));
           //Add roof
-          staticObjects.add(new staticObject(new PVector(0, -int(values[1]) - 250), new PVector(int(values[0]), 500), ""));
+          staticObjects.add(new staticObject(new PVector(0, -int(values[1]) - 250), new PVector(int(values[0]), 500), "", false));
         } else {
           //Add "infinite" roof
-          staticObjects.add(new staticObject(new PVector(0, -int(values[1]) - 250), new PVector(width * 2000, 500), ""));
+          staticObjects.add(new staticObject(new PVector(0, -int(values[1]) - 250), new PVector(width * 2000, 500), "", false));
         }
       } else if (type.equals("style")) {
         style = values[0].replace((char)'"',' ').trim();
@@ -49,7 +53,7 @@ class level {
       }
     }
     //Add "infinite" floor
-    staticObjects.add(new staticObject(new PVector(0, height / 2), new PVector(width * 2000, height), style));
+    staticObjects.add(new staticObject(new PVector(0, height / 2), new PVector(width * 2000, height), style, false));
     //Count animals
     total = animals.size();
   }

@@ -1,6 +1,6 @@
 class Player extends dynamicObject {
   //Object definitions
-  float standardAccel = 0.25, jumpPower = 8;
+  float standardAccel = 0.25, jumpPower = 15;
   boolean isTouchingGround = false;
   boolean isTouchingWall = false;
   float wallJumpCooldown = 200, lastWallJump = 0, wall = 1;
@@ -36,11 +36,15 @@ class Player extends dynamicObject {
     if (getInput("w") || getInput(" ")) {
       if (isTouchingGround) 
       {
+        inputs.put("w",false);
+        inputs.put(" ",false);
         addForce(new PVector(0, -jumpPower));
         lastWallJump = millis();
       } else if (isTouchingWall && millis() >= lastWallJump + wallJumpCooldown) {
+        inputs.put("w",false);
+        inputs.put(" ",false);
         lastWallJump = millis();
-        addForce(new PVector(wall * 1.5 * jumpPower , -jumpPower * 1.75));
+        addForce(new PVector(wall * 1 * jumpPower , -jumpPower * 1));
       }
     }
     if (getInput("MLeft")) {
