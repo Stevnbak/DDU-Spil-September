@@ -5,6 +5,7 @@ class level {
   //ArrayList<staticObject> objects = new ArrayList<staticObject>();
   PVector spawnLocation = new PVector(width /2, height / 2);
   String style;
+  String animalType;
   level(String levelName) {
     name = levelName;
     String[] lines = loadStrings("levels/" + levelName + ".map");
@@ -25,11 +26,13 @@ class level {
         }
       } else if (type.equals("spawn")) {
         player.location = new PVector(int(values[0]), -int(values[1]));
+      } else if (type.equals("animalType")) {
+        animalType = values[0];
       } else if (type.equals("animal")) {
-        if(values.length != 6) {
+        if(values.length != 5) {
           println("Error: object line " + (i + 1) + " has incorrect number of values");
         } else {
-          animals.add(new Animal(new PVector(int(values[0]), -int(values[1])), int(values[2]), new PVector(int(values[3]), int(values[4])),("animals/" + values[5] + ".png")));
+          animals.add(new Animal(new PVector(int(values[0]), -int(values[1])), int(values[2]), new PVector(int(values[3]), int(values[4])),("animals/" + animalType + ".png")));
         }
       } else if (type.equals("size")) {
         mapSize = new PVector(int(values[0]), int(values[1]));

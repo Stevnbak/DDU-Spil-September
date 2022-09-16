@@ -17,9 +17,10 @@ class staticObject {
     } else {
       texture = loadImage("world/" + style + "Tile.png");
       topTexture = loadImage("world/" + style + "TopTile.png");
+      if(kill) topTexture = loadImage("world/" + style + "KillTile.png");
     }
     c1 = size.x/50;
-    c2 = (size.y - 50)/50;
+    c2 = (size.y)/50;
   }
 
   //Update
@@ -40,14 +41,13 @@ class staticObject {
   boolean noTexture = false;
 
   void draw() {
-    if(kill) stroke(0);
     textureMode(NORMAL);
     textureWrap(REPEAT);  
     if (!noTexture) {
       beginShape();
       texture(texture);
-      vertex(location.x - size.x/2, location.y - size.y/2 + 50, 0, 0);
-      vertex(location.x + size.x/2, location.y - size.y/2 + 50, c1, 0);
+      vertex(location.x - size.x/2, location.y - size.y/2, 0, 0);
+      vertex(location.x + size.x/2, location.y - size.y/2, c1, 0);
       vertex(location.x + size.x/2, location.y + size.y/2, c1, c2);
       vertex(location.x - size.x/2, location.y + size.y/2, 0, c2);
       endShape();
@@ -55,10 +55,9 @@ class staticObject {
       texture(topTexture);
       vertex(location.x - size.x/2, location.y - size.y/2, 0, 0);
       vertex(location.x + size.x/2, location.y - size.y/2, c1, 0);
-      vertex(location.x + size.x/2, location.y - size.y/2 + 51, c1, 1);
-      vertex(location.x - size.x/2, location.y - size.y/2 + 51, 0, 1);
+      vertex(location.x + size.x/2, location.y - size.y/2 + 49, c1, 1);
+      vertex(location.x - size.x/2, location.y - size.y/2 + 49, 0, 1);
       endShape();
     }
-    noStroke();
   }
 }
