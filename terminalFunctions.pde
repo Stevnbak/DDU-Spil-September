@@ -7,7 +7,6 @@ PFont dejaBold;
 PFont dejaBoldItalic;
 PFont dejaBoldLarge;
 
-
 color white;
 color orange;
 color blue;
