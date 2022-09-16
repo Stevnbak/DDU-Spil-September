@@ -3,6 +3,7 @@ wind:[0.05,-0.001]
 size:[3000,2000]
 spawn:[1375,200]
 animalType:Mink
+decoration:[1375,150,100,Tree01]
 //Right bottom
 object:[1500,325,50,750]
 object:[1400,50,150,200]
