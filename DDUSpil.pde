@@ -34,7 +34,7 @@ void setup() {
   
   
   //Set state
-  setState("intro8");
+  setState("zo1");
   //setState("editor");
 
   //Cam location

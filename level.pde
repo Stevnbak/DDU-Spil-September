@@ -8,6 +8,7 @@ class level {
   String animalType;
   level(String levelName) {
     name = levelName;
+    //Read file...
     String[] lines = loadStrings("levels/" + levelName + ".map");
     for (int i = 0; i < lines.length; i++) {
       if(lines[i].length() <= 2) continue;
@@ -48,6 +49,8 @@ class level {
           //Add "infinite" roof
           staticObjects.add(new staticObject(new PVector(0, -int(values[1]) - 250), new PVector(width * 2000, 500), "", false));
         }
+        //Add "infinite" floor
+        staticObjects.add(new staticObject(new PVector(0, height / 2), new PVector(width * 2000, height), style, false));
       } else if (type.equals("style")) {
         style = values[0].replace((char)'"',' ').trim();
         background = loadImage("world/background" + style + ".png");
@@ -55,22 +58,20 @@ class level {
         wind = new PVector(float(values[0]), float(values[1]));
       }
     }
-    //Add "infinite" floor
-    staticObjects.add(new staticObject(new PVector(0, height / 2), new PVector(width * 2000, height), style, false));
     //Count animals
     total = animals.size();
   }
 }
 
 void editorSetup() {
-  currentLevel = new level("test");
+  currentLevel = new level("1");
   camLocation = new PVector(player.location.x - width / 2, player.location.y - height / 2);
   coordinateFont = createFont("Arial", 30, true);
   loadBtn = new Button(new PVector(100, height - 50), new PVector(200,50), color(0,0,200), "Load level", () -> {
     println("Loaded level");
     staticObjects = new ArrayList<staticObject>();
     animals = new ArrayList<Animal>();
-    currentLevel = new level("test");
+    currentLevel = new level("1");
   });
 }
 Button loadBtn;

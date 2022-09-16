@@ -1,7 +1,7 @@
 class staticObject {
   //Object definitions
   PVector size;
-  float frictionC = 0.085;
+  float frictionC = 0.12;
   boolean kill = false;
   //Loction vector
   PVector location = new PVector(0, 0);
