@@ -9,8 +9,8 @@ class Player extends dynamicObject {
 
   //Constructor
   Player() {
-    mass = 5;
-    maxVelocity.x = 8;
+    mass = 10;
+    maxVelocity.x = 7;
     airConstant = 0;
     size = new PVector(60, 97);
     playerTexture = loadImage("player/player_stand.png");

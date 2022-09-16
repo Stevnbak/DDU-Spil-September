@@ -32,7 +32,6 @@ void setup() {
   //Spawn player
   player = new Player();
   
-  
   //Set state
   setState("zo1");
   //setState("editor");
@@ -57,7 +56,7 @@ void updateCamLocation() {
 
 void death() {
   println("Dead!");
-  setState("" + currentLevel.name);
+  setState("zo" + currentLevel.name);
 }
 
 // Inputs
@@ -122,10 +121,8 @@ void mouseReleased() {
 
 //Draw
 void draw() {
+  if(getInput("e")) setState("editor");
   //Inputs to change state
-  if(getInput("b")) setState("designing");
-  if(getInput("n")) setState("playing");
-  if(getInput("m")) setState("menu");
   if(getInput("i")){
     t=0;
     setState("intro1");
@@ -217,6 +214,7 @@ void frameBackground() {
 }
 
 void playingDraw() {
+  if(getInput("ESC")) setState("menu");
   //Update dynamic object physics
   for (int i = 0; i < dynamicObjects.size(); i++) {
     dynamicObjects.get(i).physics();
