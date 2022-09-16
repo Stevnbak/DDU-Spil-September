@@ -67,6 +67,12 @@ class Player extends dynamicObject {
     isTouchingWall = false;
   }
 
+  void physics() {
+    resetAccel();
+    gravity();
+  }
+
+
   //Animations
   int frameTime = 0, anim = 2;
   void animations() {
