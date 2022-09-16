@@ -31,7 +31,7 @@ class staticObject {
     }
     boolean playerCollision = isInside(this, player);
     if(playerCollision && kill) {
-      death();
+      setState("deathDrowned");
     }
     checkCollision(this, player);
   }

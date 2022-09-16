@@ -146,6 +146,7 @@ void draw() {
   }
   if (getInput("1")&&state=="intro5"){
     t=0;
+    ongoing=true;
     setState("intro6");
   }
   if (getInput("2")&&state=="intro3"){
@@ -173,6 +174,8 @@ void draw() {
     case "intro7":{intro7Draw();break;}
     case "intro8":{intro8Draw();break;}
     case "zo1":{zo1Draw();break;}
+    case "deathSuicide":{deathSuicideDraw();break;}
+    case "deathDrowned":{deathDrownedDraw();break;}
   }
 }
 

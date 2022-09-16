@@ -199,19 +199,11 @@ public void intro8Draw() {
     zoomButtons.get(i).draw();
   }
 
-  String[] te11={"\nVores algoritmer har fundet frem\ntil lokationer beasat af invasive\narter.\n\nDe er markeret med røde felter\npå dit Danmarkskort.\n\nNår du har bekæmpet dem alle\nskal du indberette dit fund og\nantal artsfæller på nettet.", "\nwww.arter.dk", "\nDet gør at eksperter kan\nkortlægge deres spredning og\npopulationer"};
-  int[] l11={11, 2, 4};
-  PFont[] f11={dejaBold, dejaBoldItalic, dejaBold};
-  color[] c11={white, yellow, white};
+  String[] te11={"\nVores algoritmer har fundet frem\ntil lokationer beasat af invasive\narter.\n\nDe er markeret med røde felter\npå dit Danmarkskort.\n\nNår du har bekæmpet dem alle\nskal du indberette dit fund og\nantal artsfæller på nettet.", "\nwww.arter.dk", "\nDet gør at eksperter kan\nkortlægge deres spredning og\npopulationer","\n// Tryk på det øverste røde felt."};
+  int[] l11={11, 2, 4,2};
+  PFont[] f11={dejaBold, dejaBoldItalic, dejaBold,dejaBoldItalic};
+  color[] c11={white, yellow, white,orange};
   gradualTerminal(true, te11, c11, l11, f11, co, si, t, 0, 1);
-  
-  if (!ongoing){
-    String[] te12={"<] Tryk på det røde felt."};
-    int[] l12={1};
-    PFont[] f12={dejaBoldItalic};
-    color[] c12={white};
-    textTerminal(te12, c12, l12, f12, new PVector(10.23, 4.01), si,0);
-  }
 }
 
 
@@ -222,15 +214,29 @@ public void zo1Draw() {
   le1.update();
   le1.draw();
   
-  String[] te13={"\n--------------------------------\n\nAntal elimineret:\n0/x\n\nAntal mistet:\n0/x\n\n--------------------------------"};
-  int[] l13={10};
-  PFont[] f13={dejaBold};
-  color[] c13={green};
+  String[] te13={"\n--------------------------------\nAntal elimineret:\n0/x\n\nAntal mistet:\n0/x\n--------------------------------","\nDen galiziske sumpkrebs\nfortrænger hjemmehørende krebs\nog overfører skadelig krebsepest.\n\nDen blev importeret fra Tyrkiet\ntil konsum i efterkrigstiden,\nog har etableret sig i en del\nsmåvande."};
+  int[] l13={8,10};
+  PFont[] f13={dejaBold,dejaBoldItalic};
+  color[] c13={green,white};
   textTerminal(te13, c13, l13, f13, co, si,0);
   
-  String[] te14={"Lokation: Dronninglund\n(57.1949073,10.3166804)\n\nArtsnavn: Jærv"};
-  int[] l14={5};
+  String[] te14={"Lokation: Dronninglund\n(57.1949073,10.3166804)\n\nArtsnavn: Galizisk sumpkrebs\nMiljø: Skovmose\nSkalering: 0.08"};
+  int[] l14={7};
   PFont[] f14={dejaBold};
   color[] c14={white};
   gradualTerminal(false,te14, c14, l14, f14, new PVector(8.85,13.45), si,t,0,1);
+}
+
+public void deathSuicideDraw(){
+  mapBackground(lastFrame);
+  t++;
+  println(currentLevel.name);
+  
+  
+}
+
+public void deathDrownedDraw(){
+  mapBackground(lastFrame);
+  t++;
+  println(currentLevel.name);
 }
