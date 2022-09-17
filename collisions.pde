@@ -1,4 +1,3 @@
-
 public int bottom = 0, top = 1, left = 2, right = 3, nothing = -1;
 //Check collision between 2 dynamic objects
 public void checkCollision(dynamicObject object1, dynamicObject object2) {

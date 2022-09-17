@@ -23,6 +23,8 @@ void completion() {
 
     for (int i=0; i<scoreE.length; i++) {
       if (scoreE[i]>0&&scoreM[i]==0) {
+        levelButtons.get(0).alter();
+        zoomButtons.get(0).alter();
         sum++;
       }
     }

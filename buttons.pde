@@ -5,6 +5,7 @@ class Button {
   String text;
   PFont font;
   boolean hover = false;
+  boolean finished=false;
   Runnable action;
 
   Button(PVector location, PVector size, color colorValue, String text, Runnable run) {
@@ -14,6 +15,10 @@ class Button {
     this.text = text;
     this.action = run;
     this.font = createFont("Arial", size.y / 4 * 3, true);
+  }
+  
+  void alter(){
+    finished=!finished;
   }
 
   void update() {
@@ -74,7 +79,7 @@ class LocationButton extends Button {
   LocationButton(PVector newLocation, float radius, Runnable run) {
     super(new PVector(newLocation.x / w * width, newLocation.y / h * height), new PVector(radius/h*height * 2, radius/h*height * 2), color(221, 0, 0), "", run);
   }
-  
+
   void update() {
     hover();
     if (getInput("MLeft")) {
@@ -85,21 +90,26 @@ class LocationButton extends Button {
       }
     }
   }
-  
+
   void draw() {
-    float radius = size.x;
+    float diameter = size.x;
+    int maximum=210;
     if (hover) {
-      radius += 10;
+      diameter += 20;
+    }
+    
+    noFill();
+    strokeWeight(diameter/maximum);
+
+    for (int i=0; i<maximum; i++) {
+      if (!finished) {
+        stroke(192, 0, 0, i);
+      } else {
+        stroke(146,208,123, i);
+      }
+
+      ellipse(location.x, location.y, diameter-diameter*i/maximum, diameter-diameter*i/maximum);
     }
     noStroke();
-    float h = 0;
-    for (int r = (int)radius; r > 0; --r) {
-      fill(221, 0, 0, h);
-      ellipse(location.x, location.y, r, r);
-      h += radius / (255);
-    }
-    fill(0);
-    //textFont(font);
-    text(text, location.x - textWidth(text) / 2, location.y + (textHeight(text) / 2));
   }
 }

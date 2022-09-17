@@ -41,36 +41,6 @@ void introSetup() {
     setState("playing");
   }
   ));
-
-
-
-  /*
-   interfaceButtons.add(new LocationButton(new PVector(250, 400), 50, () -> {
-   println("Location");
-   currentLevel = new level("1");
-   setState("playing");
-   dynamicObjects.remove(this);
-   }
-   ));
-   */
-
-  /*
-  intu=new LocationButton(new PVector(8.02/w*width,3.44/h*height),2/h*height,() -> {
-   setState("level1");
-   }
-   );
-   
-  /*
-   interfaceButtons.add(new LocationButton(new PVector(250, 400), 50, () -> {
-   println("Location");
-   currentLevel = new level("1");
-   setState("playing");
-   dynamicObjects.remove(this);
-   }
-   ));
-   */
-
-  //LocationButton(PVector location, float radius, Runnable run) {
 }
 
 public PVector co=new PVector(21.69, 0.9);
@@ -206,7 +176,6 @@ public void intro8Draw() {
 
   for (int i=0; i<zoomButtons.size(); i++) {
     zoomButtons.get(i).draw();
-    zoomButtons.get(i).update();
   }
 
   String[] te11={"\nVores algoritmer har fundet frem\ntil lokationer beasat af invasive\narter.\n\nDe er markeret med røde felter\npå dit Danmarkskort.\n\nNår du har bekæmpet dem alle\nskal du indberette dit fund og\nantal artsfæller på nettet.", "\nwww.arter.dk", "\nDet gør at eksperter kan\nkortlægge deres spredning og\npopulationer", "\n// Tryk på det øverste røde felt."};
@@ -289,15 +258,14 @@ public void menuDraw() {
     zoomButtons.get(i).update();
     zoomButtons.get(i).draw();
   }
-  
-  String[] te11={"\nBorger [#314159]\nDette er din navigationsmenu.\n\nHer kan du vælge mellem dine\nudryddelsesmissioner.\n\nNår du fuldfører en vil dets\nfelt skifte farve til grøn.\n\nKlar dem alle og indkasser din\nbelønning.","\n// Liste over kommandoer\n   [esc] Åbner menuen\n   [p] Pauser missioner"};
-  int[] l11={12,4};
-  PFont[] f11={dejaBold,dejaBoldItalic};
+
+  String[] te11={"\nBorger [#314159]\nDette er din navigationsmenu.\n\nHer kan du vælge mellem dine\nudryddelsesmissioner.\n\nNår du fuldfører en vil dets\nfelt skifte farve til grøn.\n\nKlar dem alle og indkasser din\nbelønning.", "\n// Liste over kommandoer\n   [esc] Åbner menuen\n   [p] Pauser missioner"};
+  int[] l11={12, 4};
+  PFont[] f11={dejaBold, dejaBoldItalic};
   color[] c11={white, orange};
   textTerminal(te11, c11, l11, f11, co, si, 0);
 }
 
 public void pauseDraw() {
   frameBackground();
-  
 }
