@@ -30,6 +30,7 @@ void completion() {
     }
     intro=false;
     if (sum==scoreE.length) {
+      t=0;
       setState("complete");
     } else {
       setState("menu");
