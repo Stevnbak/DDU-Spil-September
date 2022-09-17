@@ -1,5 +1,6 @@
 public LocationButton zo1;
 public LocationButton le1;
+public boolean intro=true;
 
 public ArrayList<Button> zoomButtons = new ArrayList<Button>();
 public ArrayList<Button> levelButtons = new ArrayList<Button>();
@@ -22,26 +23,26 @@ void introSetup() {
     t=0;
   }
   ));
-  
+
   levelButtons.add(new LocationButton(new PVector(11.52, 10.46), 3, () -> {
     currentLevel = new level("1");
     setState("playing");
   }
   ));
-  
+
   levelButtons.add(new LocationButton(new PVector(11.96, 9.71), 3, () -> {
     currentLevel = new level("2");
     setState("playing");
   }
   ));
-  
-  levelButtons.add(new LocationButton(new PVector(11.40,6.28), 3, () -> {
-  currentLevel = new level("3");
-  setState("playing");
+
+  levelButtons.add(new LocationButton(new PVector(11.40, 6.28), 3, () -> {
+    currentLevel = new level("3");
+    setState("playing");
   }
   ));
-  
-  
+
+
 
   /*
    interfaceButtons.add(new LocationButton(new PVector(250, 400), 50, () -> {
@@ -208,10 +209,10 @@ public void intro8Draw() {
     zoomButtons.get(i).update();
   }
 
-  String[] te11={"\nVores algoritmer har fundet frem\ntil lokationer beasat af invasive\narter.\n\nDe er markeret med røde felter\npå dit Danmarkskort.\n\nNår du har bekæmpet dem alle\nskal du indberette dit fund og\nantal artsfæller på nettet.", "\nwww.arter.dk", "\nDet gør at eksperter kan\nkortlægge deres spredning og\npopulationer","\n// Tryk på det øverste røde felt."};
-  int[] l11={11, 2, 4,2};
-  PFont[] f11={dejaBold, dejaBoldItalic, dejaBold,dejaBoldItalic};
-  color[] c11={white, yellow, white,orange};
+  String[] te11={"\nVores algoritmer har fundet frem\ntil lokationer beasat af invasive\narter.\n\nDe er markeret med røde felter\npå dit Danmarkskort.\n\nNår du har bekæmpet dem alle\nskal du indberette dit fund og\nantal artsfæller på nettet.", "\nwww.arter.dk", "\nDet gør at eksperter kan\nkortlægge deres spredning og\npopulationer", "\n// Tryk på det øverste røde felt."};
+  int[] l11={11, 2, 4, 2};
+  PFont[] f11={dejaBold, dejaBoldItalic, dejaBold, dejaBoldItalic};
+  color[] c11={white, yellow, white, orange};
   gradualTerminal(true, te11, c11, l11, f11, co, si, t, 0, 1);
 }
 
@@ -223,17 +224,17 @@ public void zo1Draw() {
   levelButtons.get(0).update();
   levelButtons.get(0).draw();
 
-  String[] te13={"\n--------------------------------\nAntal elimineret:\n"+scoreE[0]+"/"+(scoreE[0]+scoreM[0])+"\n\nAntal mistet:\n"+scoreM[0]+"/"+(scoreE[0]+scoreM[0])+"\n--------------------------------","\nDen galiziske sumpkrebs\nfortrænger hjemmehørende krebs\nog overfører skadelig krebsepest.\n\nDen blev importeret fra Tyrkiet\ntil konsum i efterkrigstiden,\nog har etableret sig i en del\nsmåvande."};
-  int[] l13={8,10};
-  PFont[] f13={dejaBold,dejaBoldItalic};
-  color[] c13={green,white};
-  textTerminal(te13, c13, l13, f13, co, si,0);
-  
+  String[] te13={"\n--------------------------------\nAntal elimineret:\n"+scoreE[0]+"/"+(scoreE[0]+scoreM[0])+"\n\nAntal mistet:\n"+scoreM[0]+"/"+(scoreE[0]+scoreM[0])+"\n--------------------------------", "\nDen galiziske sumpkrebs\nfortrænger hjemmehørende krebs\nog overfører skadelig krebsepest.\n\nDen blev importeret fra Tyrkiet\ntil konsum i efterkrigstiden,\nog har etableret sig i en del\nsmåvande."};
+  int[] l13={8, 10};
+  PFont[] f13={dejaBold, dejaBoldItalic};
+  color[] c13={green, white};
+  textTerminal(te13, c13, l13, f13, co, si, 0);
+
   String[] te14={"Lokation: Dronninglund\n(57.1949073,10.3166804)\n\nArtsnavn: Galizisk sumpkrebs\nMiljø: Skovmose\nSkalering: 0.08"};
   int[] l14={7};
   PFont[] f14={dejaBold};
   color[] c14={white};
-  gradualTerminal(false,te14, c14, l14, f14, new PVector(8.85,13.45), si,t,0,1);
+  gradualTerminal(false, te14, c14, l14, f14, new PVector(8.85, 13.45), si, t, 0, 1);
 }
 
 public void zo2Draw() {
@@ -243,17 +244,17 @@ public void zo2Draw() {
   levelButtons.get(1).update();
   levelButtons.get(1).draw();
 
-  String[] te13={"\n--------------------------------\nAntal elimineret:\n0/x\n\nAntal mistet:\n0/x\n--------------------------------","\nDen galiziske sumpkrebs\nfortrænger hjemmehørende krebs\nog overfører skadelig krebsepest.\n\nDen blev importeret fra Tyrkiet\ntil konsum i efterkrigstiden,\nog har etableret sig i en del\nsmåvande."};
-  int[] l13={8,10};
-  PFont[] f13={dejaBold,dejaBoldItalic};
-  color[] c13={green,white};
-  textTerminal(te13, c13, l13, f13, co, si,0);
-  
-  String[] te14={"Lokation: Hørsholm\n(55.8835140,12.5049241)\n\nArtsnavn: Almindelig vaskebjørn\nMiljø: Løvskov\nSkalering: 0.40"};
+  String[] te13={"\n--------------------------------\nAntal elimineret:\n0/x\n\nAntal mistet:\n0/x\n--------------------------------", "\nVaskebjørnen truer diversiteten\nved at udkonkurrere mårdyr og\nplyndre fuglereder. Den kan også\noverføre rabies til ræve, hunde\nog mennesker.\n\nHvis der etableres en fast\nbestand, kan den være nær umulig\nat udrydde."};
+  int[] l13={8, 10};
+  PFont[] f13={dejaBold, dejaBoldItalic};
+  color[] c13={green, white};
+  textTerminal(te13, c13, l13, f13, co, si, 0);
+
+  String[] te14={"Lokation: Hørsholm\n(55.8835140,12.5049241)\n\nArtsnavn: Vaskebjørn\nMiljø: Løvskov\nSkalering: 0.40"};
   int[] l14={7};
   PFont[] f14={dejaBold};
   color[] c14={white};
-  gradualTerminal(false,te14, c14, l14, f14, new PVector(9.07,12.95), si,t,0,1);
+  gradualTerminal(false, te14, c14, l14, f14, new PVector(9.07, 12.95), si, t, 0, 1);
 }
 
 public void zo3Draw() {
@@ -263,19 +264,40 @@ public void zo3Draw() {
   levelButtons.get(2).update();
   levelButtons.get(2).draw();
 
-  String[] te13={"\n--------------------------------\nAntal elimineret:\n0/x\n\nAntal mistet:\n0/x\n--------------------------------","\nDen galiziske sumpkrebs\nfortrænger hjemmehørende krebs\nog overfører skadelig krebsepest.\n\nDen blev importeret fra Tyrkiet\ntil konsum i efterkrigstiden,\nog har etableret sig i en del\nsmåvande."};
-  int[] l13={8,10};
-  PFont[] f13={dejaBold,dejaBoldItalic};
-  color[] c13={green,white};
-  textTerminal(te13, c13, l13, f13, co, si,0);
-  
+  String[] te13={"\n--------------------------------\nAntal elimineret:\n0/x\n\nAntal mistet:\n0/x\n--------------------------------", "\nMinken er et effektivt rovdyr og\nkan have en betydelig negativ\neffekt på fugle og små pattedyr.\nDen reducerer også hjemmehørende\nrovdyrs fødegrundlag.\n\nDen er udbredt i hele Danmark,\nmen ved jagt og fældefangst kan\nden begræneses."};
+  int[] l13={8, 10};
+  PFont[] f13={dejaBold, dejaBoldItalic};
+  color[] c13={green, white};
+  textTerminal(te13, c13, l13, f13, co, si, 0);
+
   String[] te14={"Lokation: Padborg\n(54.8331230,9.3568590)\n\nArtsnavn: Mink\nMiljø: Løvskov\nSkalering: 0.32"};
   int[] l14={7};
   PFont[] f14={dejaBold};
   color[] c14={white};
-  gradualTerminal(false,te14, c14, l14, f14, new PVector(8.33,9.53), si,t,0,1);
+  gradualTerminal(false, te14, c14, l14, f14, new PVector(8.33, 9.53), si, t, 0, 1);
 }
 
-public void completeDraw(){
+public void completeDraw() {
   mapBackground(Danmarkskort2);
+}
+
+public void menuDraw() {
+  mapBackground(Danmarkskort1);
+  terminalBlack();
+
+  for (int i = 0; i < zoomButtons.size(); i++) {
+    zoomButtons.get(i).update();
+    zoomButtons.get(i).draw();
+  }
+  
+  String[] te11={"\nBorger [#314159]\nDette er din navigationsmenu.\n\nHer kan du vælge mellem dine\nudryddelsesmissioner.\n\nNår du fuldfører en vil dets\nfelt skifte farve til grøn.\n\nKlar dem alle og indkasser din\nbelønning.","\n// Liste over kommandoer\n   [esc] Åbner menuen\n   [p] Pauser missioner"};
+  int[] l11={12,4};
+  PFont[] f11={dejaBold,dejaBoldItalic};
+  color[] c11={white, orange};
+  textTerminal(te11, c11, l11, f11, co, si, 0);
+}
+
+public void pauseDraw() {
+  frameBackground();
+  
 }

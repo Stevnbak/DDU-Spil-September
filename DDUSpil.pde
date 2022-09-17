@@ -39,9 +39,6 @@ void setup() {
 
   //Cam location
   camLocation = new PVector(player.location.x - width / 2, player.location.y - height / 2);
-
-  //Setup menu...
-  menuSetup();
   
   //Setup intro...
   introSetup();
@@ -164,6 +161,10 @@ void draw() {
     setState(currentLevel.name);
   }
   
+  if(getInput("ESC")&&intro==false){
+    setState("menu");
+  }
+  
   switch (state) {
     case "playing":{ playingDraw(); break;}
     case "designing":{ designDraw(); break;}
@@ -216,7 +217,6 @@ void frameBackground() {
 }
 
 void playingDraw() {
-  if(getInput("ESC")) setState("menu");
   //Update dynamic object physics
   for (int i = 0; i < dynamicObjects.size(); i++) {
     dynamicObjects.get(i).physics();

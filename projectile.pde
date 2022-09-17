@@ -53,27 +53,11 @@ class Projectile extends dynamicObject {
       if (millis() > startTime + 500) {
         t=0;
         ongoing=true;
+        intro=false;
         killed=0;
         escaped=0;
         setState("deathSuicide");
       }
     }
   }
-
-
-  /*
-  void airResistance() {
-   PVector resistance=velocity.get();
-   float speed = resistance.mag();
-   
-   float magnitude = constant*speed*speed*drag*area;
-   resistance.mult(-1);
-   resistance.normalize();
-   resistance.mult(magnitude);
-   addForce(resistance);
-   }
-   
-   void wind() {
-   }
-   */
 }

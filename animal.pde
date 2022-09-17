@@ -26,6 +26,7 @@ void completion() {
         sum++;
       }
     }
+    intro=false;
     if (sum==scoreE.length) {
       setState("complete");
     } else {

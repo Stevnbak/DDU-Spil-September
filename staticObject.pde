@@ -35,6 +35,7 @@ class staticObject {
       killed=0;
       escaped=0;
       ongoing=true;
+      intro=false;
       setState("deathDrowned");
     }
     checkCollision(this, player);

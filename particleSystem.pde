@@ -28,7 +28,6 @@ class ParticleSystem {
       for (int i = 0; i < staticObjects.size(); i++) {
         checkCollision(staticObjects.get(i), p);
       }
-      
       p.update();
     }
   }
@@ -54,7 +53,7 @@ class Particle extends dynamicObject {
     velocity.mult(factor);
     size=new PVector(6, 6);
 
-    lifespan = 300;
+    lifespan = 255;
 
     nonreg=true;
   }
@@ -86,13 +85,13 @@ class Particle extends dynamicObject {
   void draw() {
     super.draw();
     noStroke();
-    fill(0, lifespan);
+    fill(34,42,53, lifespan);
 
     if (!nonreg) {
       colorMode(RGB);
-      fill(180, 0, 0, lifespan);
+      fill(142, 42, 53, lifespan);
     }
-    lifespan=lifespan-2;
+    lifespan=lifespan-1.8;
     ellipse(location.x, location.y, size.x, size.y);
   }
 

@@ -1,37 +1,3 @@
-public ArrayList<Button> menuButtons = new ArrayList<Button>();
-public void menuDraw() {
-  //Draw background
-  frameBackground();
-
-  //Text
-  fill(255);
-  textSize(128);
-  text("Menu", 40, 120);
-  //Display buttons
-  for (int i = 0; i < menuButtons.size(); i++) {
-    menuButtons.get(i).update();
-  }
-}
-public void menuSetup() {
-  //Create buttons
-  menuButtons.add(new Button(new PVector(250, 200), new PVector(150, 50), color(155, 0, 155), "Design", () -> {
-    println("Design...");
-    setState("designing");
-  }
-  ));
-  menuButtons.add(new Button(new PVector(250, 300), new PVector(150, 50), color(0, 155, 155), "Exit", () -> {
-    println("Exit...");
-    exit();
-  }
-  ));
-  menuButtons.add(new LocationButton(new PVector(250, 400), 50, () -> {
-    println("Location");
-    currentLevel = new level("1");
-    setState("playing");
-  }
-  ));
-}
-
 class Button {
   PVector location;
   PVector size;
