@@ -34,7 +34,7 @@ void setup() {
   player = new Player();
   
   //Set state
-  setState("complete");
+  setState("intro8");
   //setState("editor");
 
   //Cam location
