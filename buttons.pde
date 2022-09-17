@@ -105,7 +105,7 @@ class LocationButton extends Button {
       if (!finished) {
         stroke(192, 0, 0, i);
       } else {
-        stroke(146,208,123, i);
+        stroke(0,176,80,i);
       }
 
       ellipse(location.x, location.y, diameter-diameter*i/maximum, diameter-diameter*i/maximum);
