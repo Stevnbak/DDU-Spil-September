@@ -1,5 +1,5 @@
 public String state;
-String[] availableStates = {"playing", "designing", "loading", "menu", "complete", "editor","intro1","intro2","intro3","intro4","intro5","intro6","intro7","intro8","intro9","zo1","deathSuicide","deathDrowned"};
+String[] availableStates = {"playing", "designing", "loading", "menu", "complete", "editor","intro1","intro2","intro3","intro4","intro5","intro6","intro7","intro8","intro9","1","2","3","deathSuicide","deathDrowned"};
 
 boolean isAvailable(String[] arr, String val) {
   for (int i = 0; i < arr.length; i++) {
@@ -15,7 +15,9 @@ public void setState(String newState) {
     if (newState == state) return;
     Danmarkskort1 = loadImage("navigation/Danmarkskort1.png");
     Danmarkskort2 = loadImage("navigation/Danmarkskort2.jpeg");
-    zo1P = loadImage("navigation/inzo.png");
+    zo1P = loadImage("navigation/zo1.png");
+    zo2P=loadImage("navigation/zo2.png");
+    zo3P=loadImage("navigation/zo3.png");
 
     
     dejaRegular=createFont("fonts/dejaRegular.ttf", 16);
@@ -30,10 +32,12 @@ public void setState(String newState) {
     red=color(217,17,57);
     yellow=color(227,215,113);
     green=color(0,176,80);
+
     if (state == "playing") {
       saveFrame("data/game/frame.png");
       lastFrame = loadImage("game/frame.png");
     }
+    
     if (newState == "editor") editorSetup();
     state = newState;
   } else {

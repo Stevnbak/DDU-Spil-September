@@ -1,15 +1,15 @@
 class Projectile extends dynamicObject {
   float startTime = 0;
-  
+
   Design design;
-  
-  Projectile(PVector startLocation, float startPower, PVector startDirection,float si,int nu) {
-    size=new PVector(si,si);
-    design=new Design(si,nu);
-    
+
+  Projectile(PVector startLocation, float startPower, PVector startDirection, float si, int nu) {
+    size=new PVector(si, si);
+    design=new Design(si, nu);
+
     //mass=design.mass[nu];
     //airConstant=design.form[nu];
-    
+
     location = startLocation.get();
     velocity = startDirection.get().mult(startPower);
     startTime = millis();
@@ -23,45 +23,57 @@ class Projectile extends dynamicObject {
     //Collision?
     for (int i = 0; i < animals.size(); i++) {
       boolean inside = isInside(this, animals.get(i));
-      if(inside) {
+      if (inside) {
         //Hit animal
         animals.get(i).health -= 50;
         dynamicObjects.remove(this);
         continue;
       }
     }
-    if (isInside(this, player)) {
-      if(millis() > startTime + 500) {
-        t=0;
-        ongoing=true;
-        setState("deathSuicide");
-      }
-    }
+
     super.draw();
     //println("Velocity: " + velocity);
     float angle=velocity.heading();
-    
+
     pushMatrix();
-    translate(location.x,location.y);
+    translate(location.x, location.y);
     rotate(angle+PI/2);
     design.draw();
     noStroke();
     popMatrix();
   }
-  
+
+  void physics() {
+    resetAccel();
+    gravity();
+    wind();
+    airResistance();
+    
+    if (isInside(this, player)) {
+      if (millis() > startTime + 500) {
+        t=0;
+        ongoing=true;
+        killed=0;
+        escaped=0;
+        setState("deathSuicide");
+      }
+    }
+  }
+
+
   /*
   void airResistance() {
-    PVector resistance=velocity.get();
-    float speed = resistance.mag();
-    
-    float magnitude = constant*speed*speed*drag*area;
-    resistance.mult(-1);
-    resistance.normalize();
-    resistance.mult(magnitude);
-    addForce(resistance);
-  }
-  
-  void wind() {
-  }
-  */
+   PVector resistance=velocity.get();
+   float speed = resistance.mag();
+   
+   float magnitude = constant*speed*speed*drag*area;
+   resistance.mult(-1);
+   resistance.normalize();
+   resistance.mult(magnitude);
+   addForce(resistance);
+   }
+   
+   void wind() {
+   }
+   */
 }

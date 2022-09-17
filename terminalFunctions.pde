@@ -1,6 +1,9 @@
 PImage Danmarkskort1;
 PImage Danmarkskort2;
 PImage zo1P;
+PImage zo2P;
+PImage zo3P;
+
 PFont dejaRegular;
 PFont dejaItalic;
 PFont dejaBold;

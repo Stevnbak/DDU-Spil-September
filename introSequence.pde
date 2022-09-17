@@ -3,36 +3,45 @@ public LocationButton le1;
 
 public ArrayList<Button> zoomButtons = new ArrayList<Button>();
 public ArrayList<Button> levelButtons = new ArrayList<Button>();
-public ArrayList<PImage> zoomPictures = new ArrayList<PImage>();
 
 void introSetup() {
-  zo1=new LocationButton(new PVector(8.95, 4.44), 1.2, () -> {
-    setState("zo1");
+  zoomButtons.add(new LocationButton(new PVector(8.95, 4.44), 1.2, () -> {
+    setState("1");
     t=0;
   }
-  );
+  ));
 
-  le1=new LocationButton(new PVector(11.52, 10.46), 3, () -> {
+  zoomButtons.add(new LocationButton(new PVector(14.62, 10.84), 1.1, () -> {
+    setState("2");
+    t=0;
+  }
+  ));
+
+  zoomButtons.add(new LocationButton(new PVector(6.44, 15.63), 0.9, () -> {
+    setState("3");
+    t=0;
+  }
+  ));
+  
+  levelButtons.add(new LocationButton(new PVector(11.52, 10.46), 3, () -> {
     currentLevel = new level("1");
     setState("playing");
-    dynamicObjects.remove(this);
-  }
-  );
-
-  zoomButtons.add(new LocationButton(new PVector(14.82, 11.59), 1.1, () -> {
-    setState(availableStates[0]);
   }
   ));
-
-  zoomButtons.add(new LocationButton(new PVector(6.51, 16.93), 0.9, () -> {
-    setState(availableStates[1]);
+  
+  levelButtons.add(new LocationButton(new PVector(11.96, 9.71), 3, () -> {
+    currentLevel = new level("2");
+    setState("playing");
   }
   ));
-
-  zoomButtons.add(new LocationButton(new PVector(9.16, 8.77), 1.0, () -> {
-    setState(availableStates[2]);
+  
+  levelButtons.add(new LocationButton(new PVector(11.40,6.28), 3, () -> {
+  currentLevel = new level("3");
+  setState("playing");
   }
   ));
+  
+  
 
   /*
    interfaceButtons.add(new LocationButton(new PVector(250, 400), 50, () -> {
@@ -192,11 +201,11 @@ public void intro8Draw() {
   t++;
   mapBackground(Danmarkskort1);
   terminalBlack();
-  zo1.draw();
-  zo1.update();
+  zoomButtons.get(0).update();
 
   for (int i=0; i<zoomButtons.size(); i++) {
     zoomButtons.get(i).draw();
+    zoomButtons.get(i).update();
   }
 
   String[] te11={"\nVores algoritmer har fundet frem\ntil lokationer beasat af invasive\narter.\n\nDe er markeret med røde felter\npå dit Danmarkskort.\n\nNår du har bekæmpet dem alle\nskal du indberette dit fund og\nantal artsfæller på nettet.", "\nwww.arter.dk", "\nDet gør at eksperter kan\nkortlægge deres spredning og\npopulationer","\n// Tryk på det øverste røde felt."};
@@ -211,10 +220,10 @@ public void zo1Draw() {
   t++;
   mapBackground(zo1P);
   terminalBlack();
-  le1.update();
-  le1.draw();
-  
-  String[] te13={"\n--------------------------------\nAntal elimineret:\n0/x\n\nAntal mistet:\n0/x\n--------------------------------","\nDen galiziske sumpkrebs\nfortrænger hjemmehørende krebs\nog overfører skadelig krebsepest.\n\nDen blev importeret fra Tyrkiet\ntil konsum i efterkrigstiden,\nog har etableret sig i en del\nsmåvande."};
+  levelButtons.get(0).update();
+  levelButtons.get(0).draw();
+
+  String[] te13={"\n--------------------------------\nAntal elimineret:\n"+scoreE[0]+"/"+(scoreE[0]+scoreM[0])+"\n\nAntal mistet:\n"+scoreM[0]+"/"+(scoreE[0]+scoreM[0])+"\n--------------------------------","\nDen galiziske sumpkrebs\nfortrænger hjemmehørende krebs\nog overfører skadelig krebsepest.\n\nDen blev importeret fra Tyrkiet\ntil konsum i efterkrigstiden,\nog har etableret sig i en del\nsmåvande."};
   int[] l13={8,10};
   PFont[] f13={dejaBold,dejaBoldItalic};
   color[] c13={green,white};
@@ -227,55 +236,46 @@ public void zo1Draw() {
   gradualTerminal(false,te14, c14, l14, f14, new PVector(8.85,13.45), si,t,0,1);
 }
 
-public void deathSuicideDraw(){
+public void zo2Draw() {
   t++;
-  mapBackground(lastFrame);
-  filter(GRAY);
-  fill(0, 153, 204, 44);
-  rectMode(CORNER);
-  rect(0,0,width,height);
-  rectMode(CENTER);
-  
+  mapBackground(zo2P);
   terminalBlack();
+  levelButtons.get(1).update();
+  levelButtons.get(1).draw();
+
+  String[] te13={"\n--------------------------------\nAntal elimineret:\n0/x\n\nAntal mistet:\n0/x\n--------------------------------","\nDen galiziske sumpkrebs\nfortrænger hjemmehørende krebs\nog overfører skadelig krebsepest.\n\nDen blev importeret fra Tyrkiet\ntil konsum i efterkrigstiden,\nog har etableret sig i en del\nsmåvande."};
+  int[] l13={8,10};
+  PFont[] f13={dejaBold,dejaBoldItalic};
+  color[] c13={green,white};
+  textTerminal(te13, c13, l13, f13, co, si,0);
   
-  String[] te15={"\n","MISSION MISLYKKET"};
-  int[] l15={1,3};
-  PFont[] f15={dejaBold,dejaBoldLarge};
-  color[] c15={red,red};
-  textTerminal(te15, c15, l15, f15, co, si,0);
-  
-  String[] te16={"Du skød dig selv med en af dine\negne pile.\n\nDanmark står nu uden frelser","\n// [1] Genopstå fra dødsriget"};
-  int[] l16={4,2};
-  PFont[] f16={dejaBold,dejaBoldItalic};
-  color[] c16={white,orange};
-  gradualTerminal(false,te16, c16, l16, f16, co, si,t,4,1);
-  
-  t++;
-  println(currentLevel.name);
+  String[] te14={"Lokation: Hørsholm\n(55.8835140,12.5049241)\n\nArtsnavn: Almindelig vaskebjørn\nMiljø: Løvskov\nSkalering: 0.40"};
+  int[] l14={7};
+  PFont[] f14={dejaBold};
+  color[] c14={white};
+  gradualTerminal(false,te14, c14, l14, f14, new PVector(9.07,12.95), si,t,0,1);
 }
 
-public void deathDrownedDraw(){
+public void zo3Draw() {
   t++;
-  mapBackground(lastFrame);
-  filter(GRAY);
-  fill(0, 153, 204, 44);
-  rectMode(CORNER);
-  rect(0,0,width,height);
-  rectMode(CENTER);
-  
+  mapBackground(zo3P);
   terminalBlack();
+  levelButtons.get(2).update();
+  levelButtons.get(2).draw();
+
+  String[] te13={"\n--------------------------------\nAntal elimineret:\n0/x\n\nAntal mistet:\n0/x\n--------------------------------","\nDen galiziske sumpkrebs\nfortrænger hjemmehørende krebs\nog overfører skadelig krebsepest.\n\nDen blev importeret fra Tyrkiet\ntil konsum i efterkrigstiden,\nog har etableret sig i en del\nsmåvande."};
+  int[] l13={8,10};
+  PFont[] f13={dejaBold,dejaBoldItalic};
+  color[] c13={green,white};
+  textTerminal(te13, c13, l13, f13, co, si,0);
   
-  String[] te15={"\n","MISSION MISLYKKET"};
-  int[] l15={1,3};
-  PFont[] f15={dejaBold,dejaBoldLarge};
-  color[] c15={red,red};
-  textTerminal(te15, c15, l15, f15, co, si,0);
-  
-  String[] te16={"Du druknede da du hoppede i vandet\nuden redningsvest.\n\nDanmark står nu uden frelser","\n// [1] Genopstå fra dødsriget"};
-  int[] l16={4,2};
-  PFont[] f16={dejaBold,dejaBoldItalic};
-  color[] c16={white,orange};
-  gradualTerminal(false,te16, c16, l16, f16, co, si,t,4,1);
-  
-  println(currentLevel.name);
+  String[] te14={"Lokation: Padborg\n(54.8331230,9.3568590)\n\nArtsnavn: Mink\nMiljø: Løvskov\nSkalering: 0.32"};
+  int[] l14={7};
+  PFont[] f14={dejaBold};
+  color[] c14={white};
+  gradualTerminal(false,te14, c14, l14, f14, new PVector(8.33,9.53), si,t,0,1);
+}
+
+public void completeDraw(){
+  mapBackground(Danmarkskort2);
 }

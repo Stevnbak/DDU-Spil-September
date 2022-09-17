@@ -1,7 +1,11 @@
 public int escaped = 0;
 public int killed = 0;
 
+public int[] scoreE={0,0,0};
+public int[] scoreM={0,0,0};
+
 void completion() {
+    int sum=0;
     String escape = "Escaped: " + escaped + "/" + total;
     String kill = "Killed: " + killed + "/" + total;
     //Draw completion status
@@ -10,7 +14,24 @@ void completion() {
     text(kill, 0, 100);
 
     if(animals.size() == 0) {
-      setState("complete");
+      if (killed>scoreE[Integer.valueOf(currentLevel.name)-1]){
+        scoreE[Integer.valueOf(currentLevel.name)-1]=killed;
+        scoreM[Integer.valueOf(currentLevel.name)-1]=escaped;
+      }
+      killed=0;
+      escaped=0;
+      
+      for (int i=0;i<scoreE.length;i++){
+        if (scoreE[i]>0&&scoreM[i]==0){
+          sum++;
+        }
+      }
+      if (sum==scoreE.length){
+        setState("complete");
+      }
+      else{
+        setState("menu");
+      }
     }
   }
 

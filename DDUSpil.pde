@@ -34,7 +34,7 @@ void setup() {
   player = new Player();
   
   //Set state
-  setState("zo1");
+  setState("complete");
   //setState("editor");
 
   //Cam location
@@ -158,7 +158,12 @@ void draw() {
     t=0;
     setState("intro8");
   }
-
+  
+  if (getInput("1")&&(state=="deathDrowned"||state=="deathSuicide")){
+    t=0;
+    setState(currentLevel.name);
+  }
+  
   switch (state) {
     case "playing":{ playingDraw(); break;}
     case "designing":{ designDraw(); break;}
@@ -174,7 +179,9 @@ void draw() {
     case "intro6":{intro6Draw();break;}
     case "intro7":{intro7Draw();break;}
     case "intro8":{intro8Draw();break;}
-    case "zo1":{zo1Draw();break;}
+    case "1":{zo1Draw();break;}
+    case "2":{zo2Draw();break;}
+    case "3":{zo3Draw();break;}
     case "deathSuicide":{deathSuicideDraw();break;}
     case "deathDrowned":{deathDrownedDraw();break;}
   }
@@ -187,15 +194,6 @@ void loadingDraw() {
   fill(0);
   textSize(128);
   text("Loading", 40, 120); 
-}
-
-void completeDraw() {
-  //Draw background
-  frameBackground();
-  //Text
-  fill(0);
-  textSize(128);
-  text("Complete", 40, 120); 
 }
 
 PImage lastFrame;
