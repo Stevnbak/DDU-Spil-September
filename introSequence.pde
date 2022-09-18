@@ -4,6 +4,7 @@ public boolean intro=true;
 
 public ArrayList<Button> zoomButtons = new ArrayList<Button>();
 public ArrayList<Button> levelButtons = new ArrayList<Button>();
+public float cooldown;
 
 void introSetup() {
   zoomButtons.add(new LocationButton(new PVector(8.95, 4.44), 1.2, () -> {
@@ -265,7 +266,7 @@ public void menuDraw() {
     zoomButtons.get(i).draw();
   }
 
-  String[] te11={"\nBorger [#314159]\nDette er din navigationsmenu.\n\nHer kan du vælge mellem dine\nudryddelsesmissioner.\n\nNår du fuldfører en vil dets\nfelt skifte farve til grøn.\n\nKlar dem alle og indkasser din\nbelønning.", "\n// Liste over kommandoer\n   [esc] Åbner menuen\n   [p] Pauser missioner"};
+  String[] te11={"\nBorger [#314159]\nDette er din navigationsmenu.\n\nHer kan du vælge mellem dine\nudryddelsesmissioner.\n\nNår du fuldfører en vil dets\nfelt skifte farve til grøn.\n\nKlar dem alle og indkasser din\nbelønning.", "\n// Liste over kommandoer\n   [esc] åbner menuen\n   [p] pauser missionen"};
   int[] l11={12, 4};
   PFont[] f11={dejaBold, dejaBoldItalic};
   color[] c11={white, orange};
@@ -273,5 +274,18 @@ public void menuDraw() {
 }
 
 public void pauseDraw() {
-  frameBackground();
+  cooldown++;
+  mapBackground(lastFrame);
+  filter(GRAY);
+  fill(0, 153, 204, 44);
+  rectMode(CORNER);
+  rect(0,0,width,height);
+  rectMode(CENTER);
+  
+  terminalBlack();
+  String[] te15={"\n--------------------------------\nMissionen sat på pause\n--------------------------------","\n//Liste over kommandoer\n   [p] genoptager missionen\n   [r] genstarter missionen"};
+  int[] l15={4,4};
+  PFont[] f15={dejaBold,dejaBoldItalic};
+  color[] c15={white,orange};
+  textTerminal(te15, c15, l15, f15, co, si,0);
 }

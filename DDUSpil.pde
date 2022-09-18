@@ -34,7 +34,7 @@ void setup() {
   player = new Player();
   
   //Set state
-  setState("complete");
+  setState("intro8");
   //setState("editor");
 
   //Cam location
@@ -165,6 +165,24 @@ void draw() {
     setState("menu");
   }
   
+  if((getInput("p")||getInput("P"))&&state=="playing"){
+    setState("pause");
+    cooldown=0;
+  }
+  
+   if((getInput("p")||getInput("P"))&&state=="pause"&&cooldown>10){
+    setState("playing");
+  }
+  
+  if((getInput("r")||getInput("R"))&&state=="pause"){
+    currentLevel = new level(currentLevel.name);
+    killed=0;
+    escaped=0;
+    player.velocity=new PVector(0,0);
+    setState("playing");
+  }
+  
+  
   switch (state) {
     case "playing":{ playingDraw(); break;}
     case "designing":{ designDraw(); break;}
@@ -185,6 +203,7 @@ void draw() {
     case "3":{zo3Draw();break;}
     case "deathSuicide":{deathSuicideDraw();break;}
     case "deathDrowned":{deathDrownedDraw();break;}
+    case "pause":{pauseDraw();break;}
   }
 }
 
