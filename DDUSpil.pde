@@ -236,6 +236,7 @@ void frameBackground() {
 }
 
 void playingDraw() {
+  windupdate(currentLevel);
   //Update dynamic object physics
   for (int i = 0; i < dynamicObjects.size(); i++) {
     dynamicObjects.get(i).physics();
@@ -290,4 +291,6 @@ void playingDraw() {
   translate(camLocation.x, camLocation.y);
   //Draw completion counter
   completion();
+  windInfoDraw();
+  println((n%j)/j);
 }
