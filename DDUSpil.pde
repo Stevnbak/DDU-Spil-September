@@ -34,7 +34,7 @@ void setup() {
   player = new Player();
   
   //Set state
-  setState("intro8");
+  setState("intro1");
   //setState("editor");
 
   //Cam location
@@ -121,9 +121,10 @@ void mouseReleased() {
 void draw() {
   if(getInput("e")) setState("editor");
   //Inputs to change state
-  if(getInput("i")){
+  if(getInput("m")){
     t=0;
-    setState("intro1");
+    intro=false;
+    setState("menu");
   }
   if (getInput("1")&&state=="intro1"){
     t=0;
