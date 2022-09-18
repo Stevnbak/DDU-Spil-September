@@ -73,14 +73,14 @@ class level {
 }
 
 void editorSetup() {
-  currentLevel = new level("3");
+  currentLevel = new level("1");
   camLocation = new PVector(player.location.x - width / 2, player.location.y - height / 2);
   coordinateFont = createFont("Arial", 30, true);
   loadBtn = new Button(new PVector(100, height - 50), new PVector(200,50), color(0,0,200), "Load level", () -> {
     println("Loaded level");
     staticObjects = new ArrayList<staticObject>();
     animals = new ArrayList<Animal>();
-    currentLevel = new level("3");
+    currentLevel = new level("1");
   });
 }
 Button loadBtn;

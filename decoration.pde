@@ -7,12 +7,9 @@ class Decoration {
     this.location = location.get();
     w = texture.width;
     h = texture.height;
-    println("W: " + w + "H: " + h);
     float ratio = newWidth / w;
-    println("Ratio: " + ratio);
     w = (int) (w * ratio);
     h =(int) (h * ratio);
-    println("W: " + w + "H: " + h);
     texture.resize(w, h);
   }
 
