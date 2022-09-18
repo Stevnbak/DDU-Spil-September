@@ -33,13 +33,13 @@ public void deathDrownedDraw(){
   
   terminalBlack();
   
-  String[] te15={"\n","MISSION MISLYKKET"};
-  int[] l15={1,3};
-  PFont[] f15={dejaBold,dejaBoldLarge};
-  color[] c15={red,red};
+  String[] te15={"\n--------------------------------\nMission mislykket\n--------------------------------"};
+  int[] l15={4};
+  PFont[] f15={dejaBold};
+  color[] c15={red};
   textTerminal(te15, c15, l15, f15, co, si,0);
   
-  String[] te16={"Du druknede da du hoppede i vandet\nuden redningsvest.\n\nDanmark står nu uden frelser","\n// [1] Genopstå fra dødsriget"};
+  String[] te16={"\nDu druknede da du hoppede i vandet\nuden badevinger.\n\nDanmark står nu uden frelser","\n// [1] Genopstå fra dødsriget"};
   int[] l16={4,2};
   PFont[] f16={dejaBold,dejaBoldItalic};
   color[] c16={white,orange};

@@ -32,7 +32,7 @@ class staticObject {
     boolean playerCollision = isInside(this, player);
     if(playerCollision && kill) {
       t=0;
-      killed=0;
+      killed=0;  
       escaped=0;
       ongoing=true;
       intro=false;

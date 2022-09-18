@@ -292,5 +292,4 @@ void playingDraw() {
   //Draw completion counter
   completion();
   windInfoDraw();
-  println((n%j)/j);
 }
