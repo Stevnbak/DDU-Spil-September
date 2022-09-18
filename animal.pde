@@ -22,7 +22,7 @@ void completion() {
     escaped=0;
 
     for (int i=0; i<scoreE.length; i++) {
-      if (scoreE[i]>0&&scoreM[i]==0) {
+      if (scoreE[i]>0&&scoreM[i]<5) {
         levelButtons.get(0).alter();
         zoomButtons.get(0).alter();
         sum++;
