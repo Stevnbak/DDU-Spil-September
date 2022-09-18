@@ -41,7 +41,6 @@ class Projectile extends dynamicObject {
     super.draw();
     //println("Velocity: " + velocity);
     float angle=velocity.heading();
-
     pushMatrix();
     translate(location.x, location.y);
     rotate(angle+PI/2);

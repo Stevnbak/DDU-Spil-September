@@ -152,7 +152,7 @@ class Player extends dynamicObject {
     //println("Shooting... with power: " + power);
     PVector direction = new PVector(targetLocation.x - location.x, targetLocation.y - location.y);
     direction.normalize();
-    Projectile newProj = new Projectile(location.get(), power, direction.get(), 8, 2);
+    Projectile newProj = new Projectile(location.get(), power, direction.get(), 8, 1);
     dynamicObjects.add(newProj);
   }
   

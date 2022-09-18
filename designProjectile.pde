@@ -48,9 +48,13 @@ class Design {
 
   void draw() {
     shapeMode(CENTER);
-    shape(shapes[n], 0, 0);
-    stroke(55);
-    strokeWeight(s/3);
+    fill(0);
+    stroke(0);
+    
+    tr=createShape(TRIANGLE, -s/2, s/2, s/2, s/2, 0, -s/2);
+    tr.setFill(color(0));
+    tr.setStroke(false);
+    shape(tr,0,0);
     line(-s/2, 0, 0, s*4);
   }
 }
