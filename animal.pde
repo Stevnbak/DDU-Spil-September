@@ -12,7 +12,7 @@ void completion() {
   PFont[] f0={dejaBold};
   color[] c0={(0)};
   textTerminal(te0, c0, l0, f0, new PVector(0.65,0.97), si,0);
-
+  
   if (animals.size() == 0) {
     if (killed>scoreE[Integer.valueOf(currentLevel.name)-1]) {
       scoreE[Integer.valueOf(currentLevel.name)-1]=killed;

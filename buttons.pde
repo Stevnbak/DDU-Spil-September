@@ -18,7 +18,7 @@ class Button {
   }
   
   void alter(){
-    finished=!finished;
+    finished=true;
   }
 
   void update() {

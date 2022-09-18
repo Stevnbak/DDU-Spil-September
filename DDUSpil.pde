@@ -27,6 +27,7 @@ public ArrayList<Decoration> decorations = new ArrayList<Decoration>();
 void setup() {
   //Window...
   size(1280, 720, P2D);
+  
   surface.setTitle("Game Title");
   surface.setResizable(true);
 
@@ -183,6 +184,17 @@ void draw() {
     setState("playing");
   }
   
+  if (getInput("c")){
+    for (int i=0;i<3;i++){
+      zoomButtons.get(i).alter();
+      levelButtons.get(i).alter();
+    }
+    setState("menu");
+  }
+  
+  if (getInput("k")){
+    setState("complete");
+  }
   
   switch (state) {
     case "playing":{ playingDraw(); break;}
