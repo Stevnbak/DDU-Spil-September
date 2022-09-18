@@ -1,6 +1,6 @@
 class Projectile extends dynamicObject {
   float startTime = 0;
-
+  float area;
   Design design;
 
   Projectile(PVector startLocation, float startPower, PVector startDirection, float si, int nu) {
@@ -9,6 +9,13 @@ class Projectile extends dynamicObject {
 
     //mass=design.mass[nu];
     //airConstant=design.form[nu];
+    
+    //gotta fix
+    //up area, more airresistance,
+    area=1.5;
+    //more mass, less airresistance
+    mass=0.06;
+    airConstant = 0.0022;
 
     location = startLocation.get();
     velocity = startDirection.get().mult(startPower);
@@ -42,11 +49,27 @@ class Projectile extends dynamicObject {
     noStroke();
     popMatrix();
   }
+  
+   void airResistance() {
+    PVector wind=currentLevel.wind.get();
+    
+    PVector drag=velocity.get();
+    drag.mult(-1);
+    drag.add(wind.mult(100));
+    float magnitude=drag.mag()*drag.mag()*airConstant*area;
+    drag.normalize();
+    
+    addForce(drag.mult(magnitude));
+  }
+  
+  void gravity() {
+    PVector gravity = new PVector(0, 8);
+    addForce(gravity.mult(mass));
+  }
 
   void physics() {
     resetAccel();
     gravity();
-    wind();
     airResistance();
     
     if (isInside(this, player)) {
