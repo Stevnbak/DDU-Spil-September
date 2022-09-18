@@ -2,7 +2,7 @@ public float n=0;
 public float j=480;
 public float ang=0;
 public float val=0;
-public float k=0.1;
+public float k=0.06;
 public float[] prev=new float[2];
 
 void windupdate(level variant) {
@@ -12,6 +12,7 @@ void windupdate(level variant) {
     prev[0]=2*val;
     variant.wind=new PVector(k*cos(prev[0]), k*(-sin(prev[0])));
     val=random(0, PI);
+    
     prev[1]=(prev[0]%(2*PI))+PI/2+val;
   } else if (n%j==0) {
     prev[0]=prev[1];
@@ -52,6 +53,5 @@ void windInfoDraw() {
     line(cos(prev[1])*(i-1),-sin(prev[1])*(i-1),cos(prev[1])*i,-sin(prev[1])*i);
     popMatrix();
   }
-  
   noStroke();
 }

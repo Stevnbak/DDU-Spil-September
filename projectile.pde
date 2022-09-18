@@ -54,7 +54,7 @@ class Projectile extends dynamicObject {
     
     PVector drag=velocity.get();
     drag.mult(-1);
-    drag.add(wind.mult(100));
+    drag.add(wind.mult(120));
     float magnitude=drag.mag()*drag.mag()*airConstant*area;
     drag.normalize();
     
