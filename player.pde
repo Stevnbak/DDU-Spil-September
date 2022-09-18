@@ -17,7 +17,7 @@ class Player extends dynamicObject {
   }
 
   float currentPower = 0;
-  float maxPower = 30;
+  float maxPower = 36;
   int delta=1;
   //Update function
   void update() {
@@ -71,7 +71,6 @@ class Player extends dynamicObject {
     resetAccel();
     gravity();
   }
-
 
   //Animations
   int frameTime = 0, anim = 2;
