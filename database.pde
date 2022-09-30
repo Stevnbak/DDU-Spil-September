@@ -119,7 +119,7 @@ void createSave(String name, int difficulty) {
   db = new SQLite(this, "database.sqlite");
   if (db.connect()) {
     db.execute("INSERT INTO Saves (Name, Difficulty, IntroPlayed) VALUES ('" + name + "', '" + difficulty + "', 'false');");  
-    db.query("SELECT ID FROM Saves ORDER BY ID DESC");
+    db.query("SELECT ID FROM Saves ORDER BY ID DESC;");
     while (db.next()) {
         saveID = db.getInt("ID");
         break;
@@ -127,3 +127,14 @@ void createSave(String name, int difficulty) {
   }
   db.close();
 }
+ArrayList<int> getSaves () {
+  ArrayList<int> array = new ArrayList<int>();
+  db = new SQLite(this, "database.sqlite");
+  if (db.connect()) {
+    db.query("SELECT ID FROM Saves;");
+    while (db.next()) {
+      array.add(db.getInt("ID"));
+    }
+  }
+  db.close();
+  return array;
