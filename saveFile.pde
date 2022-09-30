@@ -1,5 +1,5 @@
 ArrayList<Integer> availableSaveIDs = new ArrayList<Integer>();
-ArrayList<SavesButton> saveButtons = new ArrayList<SavesButton>();
+ArrayList<Button> saveButtons = new ArrayList<Button>();
 
 Boolean overview = true;
 
@@ -10,21 +10,23 @@ int inputDifficulty = 1;
 
 void saveMenuSetup() {
   //Update avialableSaveIDs from database info
-  availableSaveIDs.add(1);
-  availableSaveIDs.add(2);//Remove for actual data...
+   availableSaveIDs = getSaves();
   //Create buttons
   for (int i = 0; i < availableSaveIDs.size(); i++) {
     int ID = availableSaveIDs.get(i);
+    //Delete button
+    saveButtons.add(new Button(new PVector((width / 2) + 25, (height / 3) + i * 60), new PVector(50, 50), 255, "X", () -> {
+      deleteSave(ID);
+    }));
+    //Load button
     saveButtons.add(new SavesButton(new PVector((width / 2) - 50, (height / 3) + i * 60), new PVector(100, 50), nameGet(ID), () -> {
       loadSave(ID);
-    }
-    ));
+    }));
   }
-  while (saveButtons.size() < 4) {
-    saveButtons.add(new SavesButton(new PVector((width / 2) - 50, (height / 3) + (saveButtons.size()) * 60), new PVector(100, 50), "No save", () -> {
+  while (saveButtons.size() < (4 + availableSaveIDs.size())) {
+    saveButtons.add(new SavesButton(new PVector((width / 2) - 50, (height / 3) + (saveButtons.size() - availableSaveIDs.size()) * 60), new PVector(100, 50), "No save", () -> {
       showSaveCreation();
-    }
-    ));
+    }));
   }
 }
 
@@ -37,12 +39,9 @@ void saveMenuDraw() {
     }
   } else {
     //Create new:
-    pushMatrix();
-    translate(-camLocation.x, -camLocation.y);
     for (int i = 0; i < newButtons.size(); i++) {
       newButtons.get(i).update();
     }
-    popMatrix();
     
     textSize(20);
     textAlign(CENTER);
@@ -52,6 +51,10 @@ void saveMenuDraw() {
     text("Navn: " + inputText, width / 2, 200);
     textAlign(LEFT);
   }
+}
+
+void deleteSave(int ID) {
+  println("ID to delete: " + ID);
 }
 
 void showSaveCreation() {

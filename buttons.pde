@@ -44,13 +44,13 @@ class Button {
     } else {
       noStroke();
     }
-    rect(location.x + camLocation.x, location.y + camLocation.y, size.x, size.y);
+    rect(location.x, location.y, size.x, size.y);
     fill(0);
     noStroke();
     //textFont(font);
     textSize(size.y / 4 * 3);
     textAlign(CENTER, CENTER);
-    text(text, location.x + camLocation.x, location.y + camLocation.y);
+    text(text, location.x , location.y );
     textAlign(LEFT);
   }
 

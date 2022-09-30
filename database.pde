@@ -127,8 +127,8 @@ void createSave(String name, int difficulty) {
   }
   db.close();
 }
-ArrayList<int> getSaves () {
-  ArrayList<int> array = new ArrayList<int>();
+ArrayList<Integer> getSaves() {
+  ArrayList<Integer> array = new ArrayList<Integer>();
   db = new SQLite(this, "database.sqlite");
   if (db.connect()) {
     db.query("SELECT ID FROM Saves;");
@@ -138,3 +138,4 @@ ArrayList<int> getSaves () {
   }
   db.close();
   return array;
+}
