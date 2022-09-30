@@ -3,12 +3,25 @@ SQLite db;
 
 //Levels
 int[] levelGet(int level, int saveID) {
-    int[] array = new int[4];
-    //Find level id
-
-    //Get level info
-    
-    return array;
+  int[] array = new int[4];
+  int levelID = 0;
+  db = new SQLite(this, "database.sqlite");
+  //Find level id
+  if (db.connect()) {
+    db.query("SELECT Level" + level + "ID FROM Save WHERE ID = " + saveID + ";");
+    while (db.next()) {
+      levelID = db.getInt("Level" + level + "ID");
+      db.query("SELECT Killed, Escaped, Time, Smell WHERE ID = " + levelID + ";");
+      while (db.next()) {
+        array[0] = db.getInt("Killed");
+        array[1] = db.getInt("Escaped");
+        array[2] = db.getInt("Time");
+        array[3] = db.getInt("Smell");
+      }
+    }
+  }
+  db.close();
+  return array;
 }
 void levelSet(int level, int saveID, int killed, int escaped, int time, int smell) {
   //Update level info
@@ -34,26 +47,72 @@ void levelSet(int level, int saveID, int killed, int escaped, int time, int smel
 }
 //Save info
 String nameGet(int saveID) {
-    //Get save name
-    return "";
+  //Get save name
+  String name = "";
+  db = new SQLite(this, "database.sqlite");
+  if (db.connect()) {
+    db.query("SELECT Name FROM Saves WHERE ID = " + saveID + ";");
+    while (db.next()) {
+      name = db.getString("Name");
+    }
+  }
+  db.close();
+  return name;
 }
 int difficultyGet(int saveID) {
-    //Get save difficulty
-    return 0;
+  //Get save difficulty
+  int difficulty = 0;
+  db = new SQLite(this, "database.sqlite");
+  if (db.connect()) {
+    db.query("SELECT Difficulty FROM Saves WHERE ID = " + saveID + ";");
+    while (db.next()) {
+      difficulty = db.getInt("Difficulty");
+    }
+  }
+  db.close();
+  return difficulty;
 }
 boolean introGet(int saveID) {
-    //Get save introPlayed
-    return false;
+  //Get save introPlayed
+  boolean introGrab = false;
+  db = new SQLite(this, "database.sqlite");
+  if (db.connect()) {
+    db.query("SELECT IntroPlayed FROM Saves WHERE ID = " + saveID + ";");
+    while (db.next()) {
+      introGrab = db.getBoolean("IntroPlayed");
+    }
+  }
+  db.close();
+  return introGrab;
 }
 void introSet(int saveID, boolean intro) {
-    //Set save introPlayed
+  //Set save introPlayed'
+  db = new SQLite(this, "database.sqlite");
+  if (db.connect()) {
+    db.execute("UPDATE Saves SET IntroPlayed = " + intro + " WHERE ID = " + saveID + ";");
+  }
+  db.close();
 }
 int deathGet(int saveID) {
-    //Get save deaths
-    return 0;
+  //Get save deaths
+  int death = 0;
+  db = new SQLite(this, "database.sqlite");
+  if (db.connect()) {
+    db.query("SELECT Deaths FROM Saves WHERE ID = " + saveID + ";");
+    while (db.next()) {
+      death = db.getInt("Deaths");
+    }
+  }
+  db.close();
+  return death;
 }
 void deathSet(int saveID, int deaths) {
-    //Set save deaths
+  //Set save deaths
+  db = new SQLite(this, "database.sqlite");
+  if (db.connect()) {
+    db.execute("UPDATE Saves SET Deaths = " + deaths + " WHERE ID = " + saveID + ";");
+  }
+  db.close();
 }
 //Create save
 void createSave(String name, int difficulty) {
