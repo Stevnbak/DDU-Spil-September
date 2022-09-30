@@ -3,7 +3,6 @@ SQLite db;
 
 //Levels
 int[] levelGet(int level) {
-int[] levelGet(int level, int saveID) {
   int[] array = new int[4];
   int levelID = 0;
   db = new SQLite(this, "database.sqlite");
