@@ -26,6 +26,7 @@ void introSetup() {
   ));
 
   levelButtons.add(new LocationButton(new PVector(11.52, 10.46), 3, () -> {
+    introSet(true);
     currentLevel = new level("1");
     setState("playing");
   }

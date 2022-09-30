@@ -2,7 +2,7 @@ import de.bezier.data.sql.*;
 SQLite db;
 
 //Levels
-int[] levelGet(int level, int saveID) {
+int[] levelGet(int level) {
     int[] array = new int[4];
     //Find level id
 
@@ -10,7 +10,7 @@ int[] levelGet(int level, int saveID) {
     
     return array;
 }
-void levelSet(int level, int saveID, int killed, int escaped, int time, int smell) {
+void levelSet(int level, int killed, int escaped, int time, int smell) {
   //Update level info
   db = new SQLite(this, "database.sqlite");
   if (db.connect()) {
@@ -41,18 +41,18 @@ int difficultyGet(int saveID) {
     //Get save difficulty
     return 0;
 }
-boolean introGet(int saveID) {
+boolean introGet() {
     //Get save introPlayed
     return false;
 }
-void introSet(int saveID, boolean intro) {
+void introSet(boolean intro) {
     //Set save introPlayed
 }
 int deathGet(int saveID) {
     //Get save deaths
     return 0;
 }
-void deathSet(int saveID, int deaths) {
+void deathSet(int deaths) {
     //Set save deaths
 }
 //Create save
@@ -60,6 +60,11 @@ void createSave(String name, int difficulty) {
   db = new SQLite(this, "database.sqlite");
   if (db.connect()) {
     db.execute("INSERT INTO Saves (Name, Difficulty, IntroPlayed) VALUES ('" + name + "', '" + difficulty + "', 'false');");  
+    db.query("SELECT ID FROM Saves ORDER BY ID DESC");
+    while (db.next()) {
+        saveID = db.getInt("ID");
+        break;
+    }
   }
   db.close();
 }

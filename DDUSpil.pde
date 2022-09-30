@@ -1,3 +1,6 @@
+//Current saveid
+int saveID;
+
 //Camera stuff
 PVector camLocation;
 float camSpeed = 20;
@@ -27,20 +30,21 @@ public ArrayList<Decoration> decorations = new ArrayList<Decoration>();
 void setup() {
   //Window...
   size(1280, 720, P2D);
-  
+
   surface.setTitle("Game Title");
   surface.setResizable(true);
 
   //Spawn player
   player = new Player();
-  
+
   //Set state
-  setState("intro1");
+  //setState("intro1");
+  setState("save");
   //setState("editor");
 
   //Cam location
   camLocation = new PVector(player.location.x - width / 2, player.location.y - height / 2);
-  
+
   //Setup intro...
   introSetup();
 }
@@ -70,6 +74,18 @@ void keyPressed() {
     return;
   }
   inputs.put(key + "", true);
+  if (state.equals("save")) {
+    if (!overview) {
+      if (key == BACKSPACE) {
+        if (inputText.length() > 0) {
+          inputText = inputText.substring(0, inputText.length()-1);
+        }
+      } else if (key == ENTER || key == RETURN || key == DELETE) {
+      } else {
+        inputText += key;
+      }
+    }
+  };
 }
 void keyReleased() {
   if (key == ESC) {
@@ -120,103 +136,176 @@ void mouseReleased() {
 
 //Draw
 void draw() {
-  if(getInput("e")) setState("editor");
-  //Inputs to change state
-  if(getInput("m")){
-    t=0;
-    intro=false;
+  rectMode(CENTER);
+  if (getInput("ESC")&&intro==false) {
     setState("menu");
   }
-  if (getInput("1")&&state=="intro1"){
-    t=0;
-    setState("intro2");
-  }
-  if ((!ongoing)&&state=="intro2"){
-    ongoing=true;
-    t=0;
-    setState("intro3");
-  }
-  if (getInput("1")&&state=="intro3"){
-    t=0;
-    setState("intro4");
-  }
-  if ((!ongoing)&&state=="intro4"){
-    t=0;
-    setState("intro5");
-  }
-  if (getInput("1")&&state=="intro5"){
-    t=0;
-    ongoing=true;
-    setState("intro6");
-  }
-  if (getInput("2")&&state=="intro3"){
-    t=0;
-    setState("intro7");
-  }
-  if ((!ongoing)&&(state=="intro7"||state=="intro6")){
-    t=0;
-    setState("intro8");
-  }
-  
-  if (getInput("1")&&(state=="deathDrowned"||state=="deathSuicide")){
-    t=0;
-    setState(currentLevel.name);
-  }
-  
-  if(getInput("ESC")&&intro==false){
-    setState("menu");
-  }
-  
-  if((getInput("p")||getInput("P"))&&state=="playing"){
+
+  if ((getInput("p")||getInput("P"))&&state=="playing") {
     setState("pause");
     cooldown=0;
   }
-  
-   if((getInput("p")||getInput("P"))&&state=="pause"&&cooldown>10){
+
+  if ((getInput("p")||getInput("P"))&&state=="pause"&&cooldown>10) {
     setState("playing");
   }
-  
-  if((getInput("r")||getInput("R"))&&state=="pause"){
+
+  if ((getInput("r")||getInput("R"))&&state=="pause") {
     currentLevel = new level(currentLevel.name);
     killed=0;
     escaped=0;
-    player.velocity=new PVector(0,0);
+    player.velocity=new PVector(0, 0);
     setState("playing");
   }
-  
-  if (getInput("c")){
-    for (int i=0;i<3;i++){
-      zoomButtons.get(i).alter();
-      levelButtons.get(i).alter();
-    }
-    setState("menu");
-  }
-  
-  if (getInput("k")){
-    setState("complete");
-  }
-  
+
   switch (state) {
-    case "playing":{ playingDraw(); break;}
-    case "designing":{ designDraw(); break;}
-    case "menu":{ menuDraw(); break;}
-    case "loading":{ loadingDraw(); break;}
-    case "complete":{ completeDraw(); break;}
-    case "editor":{ editorDraw(); break;}
-    case "intro1":{intro1Draw();break;}
-    case "intro2":{intro2Draw();break;}
-    case "intro3":{intro3Draw();break;}
-    case "intro4":{intro4Draw();break;}
-    case "intro5":{intro5Draw();break;}
-    case "intro6":{intro6Draw();break;}
-    case "intro7":{intro7Draw();break;}
-    case "intro8":{intro8Draw();break;}
-    case "1":{zo1Draw();break;}
-    case "2":{zo2Draw();break;}
-    case "3":{zo3Draw();break;}
-    case "deathSuicide":{deathSuicideDraw();break;}
-    case "deathDrowned":{deathDrownedDraw();break;}
-    case "pause":{pauseDraw();break;}
+  case "playing":
+    {
+      playingDraw();
+      break;
+    }
+  case "designing":
+    {
+      designDraw();
+      break;
+    }
+  case "menu":
+    {
+      menuDraw();
+      break;
+    }
+  case "save":
+    {
+      saveMenuDraw();
+      break;
+    }
+  case "loading":
+    {
+      loadingDraw();
+      break;
+    }
+  case "complete":
+    {
+      completeDraw();
+      break;
+    }
+  case "editor":
+    {
+      editorDraw();
+      break;
+    }
+  case "intro1":
+    {
+      if (getInput("1")) {
+        t=0;
+        setState("intro2");
+      }
+      intro1Draw();
+      break;
+    }
+  case "intro2":
+    {
+      if (!ongoing) {
+        ongoing=true;
+        t=0;
+        setState("intro3");
+      }
+      intro2Draw();
+      break;
+    }
+  case "intro3":
+    {
+      if (getInput("1")) {
+        t=0;
+        setState("intro4");
+      }
+      if (getInput("2")) {
+        t=0;
+        setState("intro7");
+      }
+      intro3Draw();
+      break;
+    }
+  case "intro4":
+    {
+      if (!ongoing) {
+        t=0;
+        setState("intro5");
+      }
+      intro4Draw();
+      break;
+    }
+  case "intro5":
+    {
+      if (getInput("1")) {
+        t=0;
+        ongoing=true;
+        setState("intro6");
+      }
+      intro5Draw();
+      break;
+    }
+  case "intro6":
+    {
+      if (!ongoing) {
+        t=0;
+        setState("intro8");
+      }
+      intro6Draw();
+      break;
+    }
+  case "intro7":
+    {
+      if (!ongoing) {
+        t=0;
+        setState("intro8");
+      }
+      intro7Draw();
+      break;
+    }
+  case "intro8":
+    {
+      intro8Draw();
+      break;
+    }
+  case "1":
+    {
+      zo1Draw();
+      break;
+    }
+  case "2":
+    {
+      zo2Draw();
+      break;
+    }
+  case "3":
+    {
+      zo3Draw();
+      break;
+    }
+  case "deathSuicide":
+    {
+      if (getInput("1")) {
+        t=0;
+        setState(currentLevel.name);
+      }
+      deathSuicideDraw();
+      break;
+    }
+  case "deathDrowned":
+    {
+      if (getInput("1")) {
+        t=0;
+        setState(currentLevel.name);
+      }
+      deathDrownedDraw();
+      break;
+    }
+  case "pause":
+    {
+      pauseDraw();
+      break;
+    }
   }
 }
 
@@ -226,13 +315,13 @@ void loadingDraw() {
   //Text
   fill(0);
   textSize(128);
-  text("Loading", 40, 120); 
+  text("Loading", 40, 120);
 }
 
 PImage lastFrame;
 void frameBackground() {
-  camLocation = new PVector (0,0);
-    background(255);
+  camLocation = new PVector (0, 0);
+  background(255);
   //Background image
   textureMode(NORMAL);
   textureWrap(REPEAT);
@@ -244,7 +333,7 @@ void frameBackground() {
   vertex(0, height, 0, 1);
   endShape();
   //Add gradient
-  fill(255,255,255,50);
+  fill(255, 255, 255, 50);
   rect(width / 2, height / 2, width, height);
 }
 
@@ -292,7 +381,7 @@ void playingDraw() {
   //Particle stuff...
   odor.addParticle(player.location.get(), player.size.get().y, 4);
   odor.update();
-  
+
   //Draw animals
   for (int i = 0; i < animals.size(); i++) {
     animals.get(i).draw();

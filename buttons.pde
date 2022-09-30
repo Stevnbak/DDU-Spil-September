@@ -48,7 +48,10 @@ class Button {
     fill(0);
     noStroke();
     //textFont(font);
-    text(text, location.x + camLocation.x - textWidth(text) / 2, location.y + camLocation.y + (textHeight(text) / 2));
+    textSize(size.y / 4 * 3);
+    textAlign(CENTER, CENTER);
+    text(text, location.x + camLocation.x, location.y + camLocation.y);
+    textAlign(LEFT);
   }
 
   void hover() {
@@ -57,21 +60,6 @@ class Button {
     } else {
       hover = false;
     }
-  }
-
-
-  float textHeight(String txt) {
-    float minY = Float.MAX_VALUE;
-    float maxY = Float.NEGATIVE_INFINITY;
-    for (Character c : txt.toCharArray()) {
-      PShape character = font.getShape(c);
-      for (int i = 0; i < character.getVertexCount(); i++) {
-        minY = min(character.getVertex(i).y, minY);
-        maxY = max(character.getVertex(i).y, maxY);
-      }
-    }
-    final float textHeight = maxY - minY;
-    return textHeight;
   }
 }
 
@@ -111,5 +99,27 @@ class LocationButton extends Button {
       ellipse(location.x, location.y, diameter-diameter*i/maximum, diameter-diameter*i/maximum);
     }
     noStroke();
+  }
+}
+
+class SavesButton extends Button {
+  SavesButton(PVector location, PVector size, String text, Runnable run) {
+    super(location, size, 155, text, run);
+  }
+  void draw() {
+    fill(colorValue);
+    if (hover) {
+      stroke(0);
+    } else {
+      noStroke();
+    }
+    rect(location.x, location.y, size.x, size.y);
+    fill(0);
+    noStroke();
+    //textFont(font);
+    textSize(size.y / 4 * 3);
+    textAlign(CENTER, CENTER);
+    text(text, location.x, location.y);
+    textAlign(LEFT);
   }
 }
