@@ -139,3 +139,10 @@ ArrayList<Integer> getSaves() {
   db.close();
   return array;
 }
+void removeSave(int saveID) {
+  db = new SQLite(this, "database.sqlite");
+  if (db.connect()) {
+    db.execute("DELETE FROM Saves WHERE ID = " + saveID + ";");
+  }
+  db.close();
+}
