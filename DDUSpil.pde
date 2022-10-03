@@ -80,7 +80,7 @@ void keyPressed() {
         if (inputText.length() > 0) {
           inputText = inputText.substring(0, inputText.length()-1);
         }
-      } else if (key == ENTER || key == RETURN || key == DELETE) {
+      } else if (key == ENTER || key == RETURN || key == DELETE || key == CODED) {
       } else {
         inputText += key;
       }
