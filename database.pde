@@ -8,10 +8,10 @@ int[] levelGet(int level) {
   db = new SQLite(this, "database.sqlite");
   //Find level id
   if (db.connect()) {
-    db.query("SELECT Level" + level + "ID FROM Save WHERE ID = " + saveID + ";");
+    db.query("SELECT Level" + level + "ID FROM Saves WHERE ID = " + saveID + ";");
     while (db.next()) {
       levelID = db.getInt("Level" + level + "ID");
-      db.query("SELECT Killed, Escaped, Time, Smell WHERE ID = " + levelID + ";");
+      db.query("SELECT Killed, Escaped, Time, Smell FROM LevelInfo WHERE ID = " + levelID + ";");
       while (db.next()) {
         array[0] = db.getInt("Killed");
         array[1] = db.getInt("Escaped");
@@ -33,13 +33,13 @@ void levelSet(int level, int killed, int escaped, int time, int smell) {
       db.query("SELECT ID FROM LevelInfo WHERE Time=0;");
       while (db.next()) {
         int levelID = db.getInt("ID");
-        db.execute("UPDATE Saves SET Level" + level + "ID = " + levelID + "WHERE ID = " + saveID + ";");
+        db.execute("UPDATE Saves SET Level" + level + "ID = " + levelID + " WHERE ID = " + saveID + ";");
       }
     }
-    db.query("SELECT Level" + level + "ID FROM Save WHERE ID = " + saveID + ";");
+    db.query("SELECT Level" + level + "ID FROM Saves WHERE ID = " + saveID + ";");
     while (db.next()) {
       int levelID = db.getInt("Level" + level + "ID");
-      db.execute("UPDATE LevelInfo SET Killed = " + killed + ", Escaped = " + escaped + ", Time = " + time + ", Smell = " + smell + " WHERE ID = " + levelID + ";");
+      db.execute("UPDATE LevelInfo SET Level = " + level + ", Killed = " + killed + ", Escaped = " + escaped + ", Time = " + time + ", Smell = " + smell + " WHERE ID = " + levelID + ";");
     }
   }
   db.close();
@@ -79,17 +79,19 @@ boolean introGet() {
   if (db.connect()) {
     db.query("SELECT IntroPlayed FROM Saves WHERE ID = " + saveID + ";");
     while (db.next()) {
-      introGrab = db.getBoolean("IntroPlayed");
+      introGrab = db.getInt("IntroPlayed") == 1 ? true : false;
     }
   }
   db.close();
+  println("Intro gotten as " + introGrab);
   return introGrab;
 }
 void introSet(boolean intro) {
   //Set save introPlayed'
+  println("Intro set to " + intro);
   db = new SQLite(this, "database.sqlite");
   if (db.connect()) {
-    db.execute("UPDATE Saves SET IntroPlayed = " + intro + " WHERE ID = " + saveID + ";");
+    db.execute("UPDATE Saves SET IntroPlayed = " + (intro ? 1 : 0) + " WHERE ID = " + saveID + ";");
   }
   db.close();
 }

@@ -5,7 +5,7 @@ size:[3000,2000]
 animalType:raccoon
 //Left wall
 object:[-1500,275,100,650]
-object:[-1475,775,150,550]
+object:[-1475,825,150,550]
 object:[-1431,250,40,10]
 //Left tunnel
 object:[-1200,40,300,180]

@@ -1,8 +1,6 @@
 public int escaped = 0;
 public int killed = 0;
-
-public int[] scoreE={0, 0, 0};
-public int[] scoreM={0, 0, 0};
+public int smell = 0;
 
 void completion() {
   int sum=0;
@@ -13,26 +11,35 @@ void completion() {
   color[] c0={(0)};
   textTerminal(te0, c0, l0, f0, new PVector(0.65,0.97), si,0);
   
-  if (animals.size() == 0) {
-    if (killed>scoreE[Integer.valueOf(currentLevel.name)-1]) {
-      scoreE[Integer.valueOf(currentLevel.name)-1]=killed;
-      scoreM[Integer.valueOf(currentLevel.name)-1]=escaped;
+  //Game completed?
+  if (animals.size() == 6) {
+    //New personal best?
+    int levelID = Integer.valueOf(currentLevel.name);
+    int[] levelInfo = levelGet(levelID);
+    if (killed > levelInfo[0]) {
+      //Update values
+      levelSet(levelID, killed, escaped, millis() - startTime, smell);
     }
-    killed=0;
-    escaped=0;
-
-    for (int i=0; i<scoreE.length; i++) {
-      if (scoreE[i]>0&&scoreM[i]<5) {
-        levelButtons.get(0).alter();
-        zoomButtons.get(0).alter();
-        sum++;
+    if (killed == levelInfo[0] && millis() - startTime < levelInfo[2]) {
+      levelSet(levelID, killed, escaped, millis() - startTime, smell);
+    }
+    //Reset
+    killed = 0;
+    escaped = 0;
+    //All levels completed:
+    int completed = 0;
+    for(int i = 0; i < 3; i++) {
+      int[] levelData = levelGet(i + 1);
+      if (levelData[0] > 0 && levelData[1] < 5) {
+        completed++;
       }
     }
-    intro=false;
-    if (sum==scoreE.length) {
-      t=0;
+    if(completed == 3) {
       setState("complete");
     } else {
+      //Go to menu
+      intro = false;
+      println("level complete");
       setState("menu");
     }
   }
@@ -55,6 +62,7 @@ class Animal extends dynamicObject {
   void detection() {
     for (int i = 0; i < animals.size(); i++) {
       if (threat >= 255 && animals.get(i) == this) {
+        smell += threat;
         //animal escaped
         animals.remove(i);
         escaped++;
@@ -65,6 +73,7 @@ class Animal extends dynamicObject {
   void damageCalc() {
     for (int i = 0; i < animals.size(); i++) {
       if (health <= 0 && animals.get(i) == this) {
+        smell += threat;
         //animal killed
         animals.remove(i);
         killed++;
