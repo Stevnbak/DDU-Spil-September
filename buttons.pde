@@ -106,23 +106,42 @@ class LocationButton extends Button {
 }
 
 class SavesButton extends Button {
-  SavesButton(PVector location, PVector size, String text, Runnable run) {
-    super(location, size, 155, text, run);
+  SavesButton(PVector newLocation, PVector newSize, String text, Runnable run) {
+    super(new PVector(newLocation.x/w*width,newLocation.y/h*height), new PVector(newSize.x/w*width,newSize.y/h*height), 15, text, run);
   }
   void draw() {
     fill(colorValue);
     if (hover) {
-      stroke(0);
+      size.x+=6;
+      size.y+=6;
+      rect(location.x, location.y, size.x, size.y);
+      size.x-=6;
+      size.y-=6;
     } else {
-      noStroke();
+      rect(location.x, location.y, size.x, size.y);
     }
-    rect(location.x, location.y, size.x, size.y);
-    fill(0);
+    
+    String[] text={"Filip\n33%"};
+    int[] lines={2};
+    PFont[] fonts={dejaBold10};
+    color[] colors={white};
+    
+    textTerminala(text, colors, lines, fonts, new PVector(location.x-(size.x/2)+size.y/6,location.y-(size.y/3)), size, 0);
+    
+     String[] text1={"|||"};
+    int[] lines1={1};
+    PFont[] fonts1={dejaBold};
+    color[] colors1={red };
+    
+    textTerminala(text1, colors1, lines1, fonts1, new PVector(location.x+(size.x/2)+size.y/6,location.y-(size.y/3)), size, 0);
+    
+    /*
     noStroke();
     //textFont(font);
     textSize(size.y / 4 * 3);
     textAlign(CENTER, CENTER);
     text(text, location.x, location.y);
     textAlign(LEFT);
+    */
   }
 }

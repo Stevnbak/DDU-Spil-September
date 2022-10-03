@@ -19,19 +19,20 @@ void saveMenuSetup() {
       deleteSave(ID);
     }));
     //Load button
-    saveButtons.add(new SavesButton(new PVector((width / 2) - 50, (height / 3) + i * 60), new PVector(100, 50), nameGet(ID), () -> {
+    saveButtons.add(new SavesButton(new PVector(w/2,6.77+i*2.76+1.75/2), new PVector(8.74,1.75), nameGet(ID), () -> {
       loadSave(ID);
     }));
   }
   while (saveButtons.size() < (4 + availableSaveIDs.size())) {
-    saveButtons.add(new SavesButton(new PVector((width / 2) - 50, (height / 3) + (saveButtons.size() - availableSaveIDs.size()) * 60), new PVector(100, 50), "No save", () -> {
+    saveButtons.add(new SavesButton(new PVector(w/2,6.77 + (saveButtons.size() - availableSaveIDs.size()) * 2.76+1.75/2), new PVector(8.74,1.75), "No save", () -> {
       showSaveCreation();
     }));
   }
 }
 
 void saveMenuDraw() {
-  background(255);
+  mapBackground(global);
+  
   if (overview) {
     //Show available...
     for (int i = 0; i < saveButtons.size(); i++) {
@@ -43,7 +44,7 @@ void saveMenuDraw() {
       newButtons.get(i).update();
     }
     
-    textSize(20);
+    textSize(50);
     textAlign(CENTER);
     if (inputText.length() >= 16) {
       inputText = inputText.substring(0, 16);

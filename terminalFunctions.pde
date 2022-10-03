@@ -91,3 +91,24 @@ void textTerminal(String[] texts,color[] colours,int[] lines,PFont[] fonts,PVect
     rectMode(CENTER);
   }
 }
+
+void textTerminala(String[] texts,color[] colours,int[] lines,PFont[] fonts,PVector corner,PVector size,int d){
+  
+  for (int i=0;i<texts.length;i++){
+    textFont(fonts[i]);
+    colorMode(RGB);
+    fill(colours[i]);
+        
+    float offset=d;
+    for (int n=0;n<=i;n++){
+      if (n!=i){
+        offset=offset+lines[n];
+      }
+    }
+    offset=offset*24;
+    
+    rectMode(CORNER);
+    text(texts[i],corner.x,corner.y+offset,size.x,lines[i]*24);
+    rectMode(CENTER);
+  }
+}
