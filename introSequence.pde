@@ -192,7 +192,7 @@ int[][] levelInfo = new int[4][3];
 public void refreshLevelInfo() {
   for(int i = 0; i < 3; i++) {
     int[] levelData = levelGet(i + 1);
-    if (levelData[0] > 0 && levelData[1] < 5) {
+    if (levelData[0] > 0 && levelData[1] < 5 - difficultyGet(saveID)) {
       levelButtons.get(i).alter();
       zoomButtons.get(i).alter();
     }
