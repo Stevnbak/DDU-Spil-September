@@ -1,22 +1,3 @@
-PImage Danmarkskort1;
-PImage Danmarkskort2;
-PImage zo1P;
-PImage zo2P;
-PImage zo3P;
-
-PFont dejaRegular;
-PFont dejaItalic;
-PFont dejaBold;
-PFont dejaBoldItalic;
-PFont dejaBoldLarge;
-
-color white;
-color orange;
-color blue;
-color red;
-color yellow;
-color green;
-
 public float w=33.87;
 public float h=19.05;
 

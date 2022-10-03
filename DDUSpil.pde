@@ -47,6 +47,9 @@ void setup() {
 
   //Setup intro...
   introSetup();
+  
+  //Setup layout
+  layoutSetup();
 }
 
 void updateCamLocation() {
