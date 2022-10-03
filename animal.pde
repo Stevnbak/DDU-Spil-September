@@ -12,7 +12,7 @@ void completion() {
   textTerminal(te0, c0, l0, f0, new PVector(0.65,0.97), si,0);
   
   //Game completed?
-  if (animals.size() == 6) {
+  if (animals.size() == 0) {
     //New personal best?
     int levelID = Integer.valueOf(currentLevel.name);
     int[] levelInfo = levelGet(levelID);
