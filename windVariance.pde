@@ -1,5 +1,5 @@
 public float n=0;
-public float j=480 - 120 * difficultyGet(saveID);
+public float j=480;
 public float ang=0;
 public float val=0;
 public float k=0.06;

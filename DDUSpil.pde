@@ -8,6 +8,7 @@ int total;
 
 //Player stuff
 public Player player;
+public int difficulty;
 
 //Level stuff
 public level currentLevel;

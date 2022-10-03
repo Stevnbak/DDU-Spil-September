@@ -87,6 +87,8 @@ void showSaveCreation() {
 
 void loadSave(int newID) {
   saveID = newID;
+  //Update difficulty
+  difficulty = difficultyGet(saveID);
   println("Loaded save with ID: " + saveID);
   if (introGet()) {
     setState("menu");
@@ -94,4 +96,6 @@ void loadSave(int newID) {
   } else {
     setState("intro1");
   }
+  //Wind variance thing:
+  j = 480 - 120 * difficulty;
 }

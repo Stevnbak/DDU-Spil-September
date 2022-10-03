@@ -30,7 +30,7 @@ void completion() {
     int completed = 0;
     for(int i = 0; i < 3; i++) {
       int[] levelData = levelGet(i + 1);
-      if (levelData[0] > 0 && levelData[1] < 5 - difficultyGet(saveID)) {
+      if (levelData[0] > 0 && levelData[1] < 5 - difficulty) {
         completed++;
       }
     }
@@ -61,7 +61,7 @@ class Animal extends dynamicObject {
 
   void detection() {
     for (int i = 0; i < animals.size(); i++) {
-      if (threat >= 255/(1 + difficultyGet(saveID)) && animals.get(i) == this) {
+      if (threat >= 255/(1 + difficulty) && animals.get(i) == this) {
         smell += threat;
         //animal escaped
         animals.remove(i);
@@ -86,7 +86,7 @@ class Animal extends dynamicObject {
     damageCalc();
     super.draw();
     textureMode(NORMAL);
-    tint(255, 255 - threat * (1 + difficultyGet(saveID)));
+    tint(255, 255 - threat * (1 + difficulty));
     beginShape();
     texture(animalTexture);
     vertex(location.x - size.x/2, location.y - size.y/2, 0, 0);
