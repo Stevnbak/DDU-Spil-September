@@ -61,7 +61,7 @@ class Animal extends dynamicObject {
 
   void detection() {
     for (int i = 0; i < animals.size(); i++) {
-      if (threat >= 255 && animals.get(i) == this) {
+      if (threat >= 255/(1 + difficultyGet(saveID)) && animals.get(i) == this) {
         smell += threat;
         //animal escaped
         animals.remove(i);
@@ -86,7 +86,7 @@ class Animal extends dynamicObject {
     damageCalc();
     super.draw();
     textureMode(NORMAL);
-    tint(255, 255 - threat);
+    tint(255, 255 - threat * (1 + difficultyGet(saveID)));
     beginShape();
     texture(animalTexture);
     vertex(location.x - size.x/2, location.y - size.y/2, 0, 0);
