@@ -18,10 +18,13 @@ public void setState(String newState) {
       saveFrame("data/game/frame.png");
       lastFrame = loadImage("game/frame.png");
     }
-    
-    if (newState == "editor") editorSetup();
-    if(newState == "save") saveMenuSetup();
+
+    println("State (" + state +") changed to " + newState);
     state = newState;
+
+    if (newState == "menu" || newState == "1" || newState == "2" || newState == "3") refreshLevelInfo();
+    if (newState == "editor") editorSetup();
+    if (newState == "save") saveMenuSetup();
   } else {
     println("State (" + newState + ") is not allowed as a state...");
   }

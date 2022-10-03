@@ -2,8 +2,8 @@ public LocationButton zo1;
 public LocationButton le1;
 public boolean intro=true;
 
-public ArrayList<Button> zoomButtons = new ArrayList<Button>();
-public ArrayList<Button> levelButtons = new ArrayList<Button>();
+public ArrayList<LocationButton> zoomButtons = new ArrayList<LocationButton>();
+public ArrayList<LocationButton> levelButtons = new ArrayList<LocationButton>();
 public float cooldown;
 
 void introSetup() {
@@ -187,6 +187,18 @@ public void intro8Draw() {
   gradualTerminal(true, te11, c11, l11, f11, co, si, t, 0, 1);
 }
 
+int[][] levelInfo = new int[4][3];
+
+public void refreshLevelInfo() {
+  for(int i = 0; i < 3; i++) {
+    int[] levelData = levelGet(i + 1);
+    if (levelData[0] > 0 && levelData[1] < 5 - difficultyGet(saveID)) {
+      levelButtons.get(i).alter();
+      zoomButtons.get(i).alter();
+    }
+    levelInfo[i] = levelData;
+  }
+}
 
 public void zo1Draw() {
   t++;
@@ -195,7 +207,7 @@ public void zo1Draw() {
   levelButtons.get(0).update();
   levelButtons.get(0).draw();
 
-  String[] te13={"\n--------------------------------\nAntal elimineret:\n"+scoreE[0]+"/"+(scoreE[0]+scoreM[0])+"\n\nAntal mistet:\n"+scoreM[0]+"/"+(scoreE[0]+scoreM[0])+"\n--------------------------------", "\nDen galiziske sumpkrebs\nfortrænger hjemmehørende krebs\nog overfører skadelig krebsepest.\n\nDen blev importeret fra Tyrkiet\ntil konsum i efterkrigstiden,\nog har etableret sig i en del\nsmåvande."};
+  String[] te13={"\n--------------------------------\nAntal elimineret:\n"+levelInfo[0][0]+"/"+(levelInfo[0][0]+levelInfo[0][1])+"\n\nAntal mistet:\n"+levelInfo[0][1]+"/"+(levelInfo[0][0]+levelInfo[0][1])+"\n--------------------------------", "\nDen galiziske sumpkrebs\nfortrænger hjemmehørende krebs\nog overfører skadelig krebsepest.\n\nDen blev importeret fra Tyrkiet\ntil konsum i efterkrigstiden,\nog har etableret sig i en del\nsmåvande."};
   int[] l13={8, 10};
   PFont[] f13={dejaBold, dejaBoldItalic};
   color[] c13={green, white};
@@ -215,7 +227,7 @@ public void zo2Draw() {
   levelButtons.get(1).update();
   levelButtons.get(1).draw();
 
-  String[] te13={"\n--------------------------------\nAntal elimineret:\n0/x\n\nAntal mistet:\n0/x\n--------------------------------", "\nVaskebjørnen truer diversiteten\nved at udkonkurrere mårdyr og\nplyndre fuglereder. Den kan også\noverføre rabies til ræve, hunde\nog mennesker.\n\nHvis der etableres en fast\nbestand, kan den være nær umulig\nat udrydde."};
+  String[] te13={"\n--------------------------------\nAntal elimineret:\n"+levelInfo[1][0]+"/"+(levelInfo[1][0]+levelInfo[1][1])+"\n\nAntal mistet:\n"+levelInfo[1][1]+"/"+(levelInfo[1][0]+levelInfo[1][1])+"\n--------------------------------", "\nVaskebjørnen truer diversiteten\nved at udkonkurrere mårdyr og\nplyndre fuglereder. Den kan også\noverføre rabies til ræve, hunde\nog mennesker.\n\nHvis der etableres en fast\nbestand, kan den være nær umulig\nat udrydde."};
   int[] l13={8, 10};
   PFont[] f13={dejaBold, dejaBoldItalic};
   color[] c13={green, white};
@@ -235,7 +247,7 @@ public void zo3Draw() {
   levelButtons.get(2).update();
   levelButtons.get(2).draw();
 
-  String[] te13={"\n--------------------------------\nAntal elimineret:\n0/x\n\nAntal mistet:\n0/x\n--------------------------------", "\nMinken er et effektivt rovdyr og\nkan have en betydelig negativ\neffekt på fugle og små pattedyr.\nDen reducerer også hjemmehørende\nrovdyrs fødegrundlag.\n\nDen er udbredt i hele Danmark,\nmen ved jagt og fældefangst kan\nden begræneses."};
+  String[] te13={"\n--------------------------------\nAntal elimineret:\n"+levelInfo[2][0]+"/"+(levelInfo[2][0]+levelInfo[2][1])+"\n\nAntal mistet:\n"+levelInfo[2][1]+"/"+(levelInfo[2][0]+levelInfo[2][1])+"\n--------------------------------", "\nMinken er et effektivt rovdyr og\nkan have en betydelig negativ\neffekt på fugle og små pattedyr.\nDen reducerer også hjemmehørende\nrovdyrs fødegrundlag.\n\nDen er udbredt i hele Danmark,\nmen ved jagt og fældefangst kan\nden begræneses."};
   int[] l13={8, 10};
   PFont[] f13={dejaBold, dejaBoldItalic};
   color[] c13={green, white};
@@ -249,19 +261,18 @@ public void zo3Draw() {
 }
 
 public void completeDraw() {
-    mapBackground(Danmarkskort2);
-    t++;
-    String[] te11={"\nEfter at have frelst Danmark\nindkaldes du til Amalienborg for\nat modtage din hæder.\n\nDu bliver der mødt af en\nstorsmilende regent", "\nI Guds åsyn udnævnes de til\nridder af Elefantordenen som tak\nfor deres afgørende indsats mod\ninvasive arter og indberetning\npå arter.dk.", "\n-H.M. Dronning Margrethe II"};
-    int[] l11={7, 6, 2};
-    PFont[] f11={dejaBold, dejaBoldItalic, dejaBold};
-    color[] c11={(0), (0), (0)};
-    gradualTerminal(false, te11, c11, l11, f11, co.get().sub(new PVector(0,-0.3)), si, t, 0, 1);
+  mapBackground(Danmarkskort2);
+  t++;
+  String[] te11={"\nEfter at have frelst Danmark\nindkaldes du til Amalienborg for\nat modtage din hæder.\n\nDu bliver der mødt af en\nstorsmilende regent", "\nI Guds åsyn udnævnes de til\nridder af Elefantordenen som tak\nfor deres afgørende indsats mod\ninvasive arter og indberetning\npå arter.dk.", "\n-H.M. Dronning Margrethe II"};
+  int[] l11={7, 6, 2};
+  PFont[] f11={dejaBold, dejaBoldItalic, dejaBold};
+  color[] c11={(0), (0), (0)};
+  gradualTerminal(false, te11, c11, l11, f11, co.get().sub(new PVector(0,-0.3)), si, t, 0, 1);
 }
 
 public void menuDraw() {
   mapBackground(Danmarkskort1);
   terminalBlack();
-
   for (int i = 0; i < zoomButtons.size(); i++) {
     zoomButtons.get(i).update();
     zoomButtons.get(i).draw();

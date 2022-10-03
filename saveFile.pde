@@ -90,6 +90,7 @@ void loadSave(int newID) {
   println("Loaded save with ID: " + saveID);
   if (introGet()) {
     setState("menu");
+    intro = false;
   } else {
     setState("intro1");
   }

@@ -140,11 +140,11 @@ void mouseReleased() {
 //Draw
 void draw() {
   rectMode(CENTER);
-  if (getInput("ESC")&&intro==false) {
+  if (getInput("ESC") && intro == false) {
     setState("menu");
   }
 
-  if ((getInput("p")||getInput("P"))&&state=="playing") {
+  if ((getInput("p")|| getInput("P")) && state == "playing") {
     setState("pause");
     cooldown=0;
   }

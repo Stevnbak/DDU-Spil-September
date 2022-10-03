@@ -5,7 +5,6 @@ class Button {
   String text;
   PFont font;
   boolean hover = false;
-  boolean finished=false;
   Runnable action;
 
   Button(PVector location, PVector size, color colorValue, String text, Runnable run) {
@@ -15,10 +14,6 @@ class Button {
     this.text = text;
     this.action = run;
     this.font = createFont("Arial", size.y / 4 * 3, true);
-  }
-  
-  void alter(){
-    finished=true;
   }
 
   void update() {
@@ -64,8 +59,16 @@ class Button {
 }
 
 class LocationButton extends Button {
+
+  boolean finished=false;
+
   LocationButton(PVector newLocation, float radius, Runnable run) {
     super(new PVector(newLocation.x / w * width, newLocation.y / h * height), new PVector(radius/h*height * 2, radius/h*height * 2), color(221, 0, 0), "", run);
+  }
+
+
+  void alter(){
+    finished=true;
   }
 
   void update() {
