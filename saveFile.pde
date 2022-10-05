@@ -90,6 +90,7 @@ void loadSave(int newID) {
   saveID = newID;
   //Update difficulty
   difficulty = difficultyGet(saveID);
+  playerCharacter = characterGet();
   println("Loaded save with ID: " + saveID);
   if (introGet()) {
     setState("menu");

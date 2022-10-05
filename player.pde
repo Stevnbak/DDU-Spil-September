@@ -1,3 +1,5 @@
+String playerCharacter = "default";
+
 class Player extends dynamicObject {
   //Object definitions
   float standardAccel = 0.25, jumpPower = 15;
@@ -13,7 +15,7 @@ class Player extends dynamicObject {
     maxVelocity.x = 7;
     airConstant = 0;
     size = new PVector(60, 97);
-    playerTexture = loadImage("player/player_stand.png");
+    playerTexture = loadImage("player/" + playerCharacter + "/stand.png");
   }
 
   float currentPower = 0;
@@ -77,21 +79,21 @@ class Player extends dynamicObject {
   void animations() {
     if (isTouchingGround == false) {
       if (velocity.y < 0) {
-        playerTexture = loadImage("player/player_jump.png");
+        playerTexture = loadImage("player/" + playerCharacter + "/jump.png");
       } else {
-        playerTexture = loadImage("player/player_fall.png");
+        playerTexture = loadImage("player/" + playerCharacter + "/fall.png");
       }
     } else if (getInput("d") || getInput("a")) {
       if (frameTime < millis()) {
         if (anim == 1) anim = 2;
         else if (anim == 2) anim =1;
-        playerTexture = loadImage("player/player_walk" + anim+ ".png");
+        playerTexture = loadImage("player/" + playerCharacter + "/walk" + anim+ ".png");
         frameTime = millis() + 100;
       }
     } else if (velocity.x < -0.5 || velocity.x > 0.5) {
-      playerTexture = loadImage("player/player_slide.png");
+      playerTexture = loadImage("player/" + playerCharacter + "/slide.png");
     } else {
-      playerTexture = loadImage("player/player_stand.png");
+      playerTexture = loadImage("player/" + playerCharacter + "/stand.png");
     }
   }
 

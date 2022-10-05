@@ -72,6 +72,20 @@ int difficultyGet(int saveID) {
   db.close();
   return difficulty;
 }
+String characterGet() {
+  //Get save character
+  String character = "";
+  db = new SQLite(this, "database.sqlite");
+  if (db.connect()) {
+    db.query("SELECT PlayerCharacter FROM Saves WHERE ID = " + saveID + ";");
+    while (db.next()) {
+      character = db.getString("PlayerCharacter");
+    }
+  }
+  db.close();
+  println(character);
+  return character;
+}
 boolean introGet() {
   //Get save introPlayed
   boolean introGrab = false;
