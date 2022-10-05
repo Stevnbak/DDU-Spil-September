@@ -6,6 +6,7 @@ Boolean overview = true;
 ArrayList<Button> newButtons = new ArrayList<Button>();
 String inputText = "";
 int inputDifficulty = 1;
+String inputCharacter = "";
 
 
 void saveMenuSetup() {
@@ -61,8 +62,8 @@ void deleteSave(int ID) {
 void showSaveCreation() {
   overview = false;
   //Create save button
-  newButtons.add(new Button(new PVector(width /2, height /2), new PVector(250, 50), 155, "Create new save", () -> {
-    createSave(inputText, inputDifficulty);
+  newButtons.add(new Button(new PVector(width /2, height /2 - 125), new PVector(250, 50), 155, "Create new save", () -> {
+    createSave(inputText, inputDifficulty, inputCharacter);
     loadSave(saveID);
   }));
   //Create difficulty buttons
@@ -83,6 +84,9 @@ void showSaveCreation() {
     newButtons.get(3).colorValue = color(0,255,0);
     newButtons.get(2).colorValue = 155;
     newButtons.get(1).colorValue = 155;
+  }));
+  newButtons.add(new Button(new PVector(width / 2, height / 2), new PVector(100, 50), 155, "Default", () -> {
+    inputCharacter = "default";
   }));
 }
 
