@@ -4,6 +4,7 @@ ArrayList<Button> saveButtons = new ArrayList<Button>();
 Boolean overview = true;
 
 ArrayList<Button> newButtons = new ArrayList<Button>();
+ArrayList<CharacterButton> charButtons = new ArrayList<CharacterButton>();
 String inputText = "";
 int inputDifficulty = 1;
 String inputCharacter = "";
@@ -44,12 +45,17 @@ void saveMenuDraw() {
     for (int i = 0; i < newButtons.size(); i++) {
       newButtons.get(i).update();
     }
+    for (int i = 0; i < charButtons.size(); i++) {
+      charButtons.get(i).update();
+    }
     
     textSize(50);
     textAlign(CENTER);
     if (inputText.length() >= 16) {
       inputText = inputText.substring(0, 16);
     }
+    noStroke();
+    fill(0);
     text("Navn: " + inputText, width / 2, 200);
     textAlign(LEFT);
   }
@@ -85,19 +91,20 @@ void showSaveCreation() {
     newButtons.get(2).colorValue = 155;
     newButtons.get(1).colorValue = 155;
   }));
-  newButtons.add(new Button(new PVector(width / 2, height / 2), new PVector(100, 50), 155, "Default", () -> {
+  //Ad character butttons
+  charButtons.add(new CharacterButton(new PVector(width / 2, height / 2), 60, "default", () -> {
     inputCharacter = "default";
   }));
-  newButtons.add(new Button(new PVector(width / 2 + 200, height / 2), new PVector(100, 50), 155, "Female", () -> {
+  charButtons.add(new CharacterButton(new PVector(width / 2 + 200, height / 2), 60, "female", () -> {
     inputCharacter = "female";
   }));
-  newButtons.add(new Button(new PVector(width / 2 - 200, height / 2), new PVector(100, 50), 155, "Adventurer", () -> {
+  charButtons.add(new CharacterButton(new PVector(width / 2 - 200, height / 2), 60, "adventurer", () -> {
     inputCharacter = "adventurer";
   }));
-  newButtons.add(new Button(new PVector(width / 2 + 400, height / 2), new PVector(100, 50), 155, "Zombie", () -> {
+  charButtons.add(new CharacterButton(new PVector(width / 2 + 400, height / 2), 60, "zombie", () -> {
     inputCharacter = "zombie";
   }));
-  newButtons.add(new Button(new PVector(width / 2 - 400, height / 2), new PVector(100, 50), 155, "Soldier", () -> {
+  charButtons.add(new CharacterButton(new PVector(width / 2 - 400, height / 2), 60, "soldier", () -> {
     inputCharacter = "soldier";
   }));
 }

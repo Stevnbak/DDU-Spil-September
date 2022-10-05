@@ -23,6 +23,7 @@ class Button {
     //Click?
     if (getInput("MLeft")) {
       if (hover) {
+        ownAction();
         action.run();
         inputs.put("MLeft", false);
       }
@@ -30,6 +31,10 @@ class Button {
 
     //Draw button
     draw();
+  }
+
+  void ownAction() {
+
   }
 
   void draw() {
@@ -101,6 +106,47 @@ class LocationButton extends Button {
 
       ellipse(location.x, location.y, diameter-diameter*i/maximum, diameter-diameter*i/maximum);
     }
+    noStroke();
+  }
+}
+
+class CharacterButton extends Button {
+
+  boolean selected = false;
+  PImage characterImg;
+
+  CharacterButton(PVector newLocation, float w, String text, Runnable run) {
+    super(new PVector(newLocation.x,newLocation.y), new PVector(w, w * 1.6), 15, text, run);
+    characterImg = loadImage("/player/"+text+"/stand.png");
+  }
+
+  void ownAction() {
+    for (int i = 0; i < charButtons.size(); i++) {
+      charButtons.get(i).selected = false;
+    }
+    selected = true;
+  }
+
+  void draw() {
+    colorMode(RGB);
+    if (hover) {
+      stroke(0);
+    }
+    if (selected) {
+      stroke(0,200,50);
+    }
+    textureMode(NORMAL);
+    fill(0,0,0,0);
+    rect(location.x, location.y, size.x, size.y);
+    
+    noStroke();
+    beginShape();
+      texture(characterImg);
+      vertex(location.x - size.x/2, location.y - size.y/2, 0, 0);
+      vertex(location.x + size.x/2, location.y - size.y/2, 1, 0);
+      vertex(location.x + size.x/2, location.y + size.y/2, 1, 1);
+      vertex(location.x - size.x/2, location.y + size.y/2, 0, 1);
+    endShape();
     noStroke();
   }
 }
