@@ -62,7 +62,7 @@ void deleteSave(int ID) {
 void showSaveCreation() {
   overview = false;
   //Create save button
-  newButtons.add(new Button(new PVector(width /2, height /2 - 125), new PVector(250, 50), 155, "Create new save", () -> {
+  newButtons.add(new Button(new PVector(width /2, height /2 + 200), new PVector(250, 50), 155, "Create new save", () -> {
     createSave(inputText, inputDifficulty, inputCharacter);
     loadSave(saveID);
   }));
@@ -87,6 +87,18 @@ void showSaveCreation() {
   }));
   newButtons.add(new Button(new PVector(width / 2, height / 2), new PVector(100, 50), 155, "Default", () -> {
     inputCharacter = "default";
+  }));
+  newButtons.add(new Button(new PVector(width / 2 + 200, height / 2), new PVector(100, 50), 155, "Female", () -> {
+    inputCharacter = "female";
+  }));
+  newButtons.add(new Button(new PVector(width / 2 - 200, height / 2), new PVector(100, 50), 155, "Adventurer", () -> {
+    inputCharacter = "adventurer";
+  }));
+  newButtons.add(new Button(new PVector(width / 2 + 400, height / 2), new PVector(100, 50), 155, "Zombie", () -> {
+    inputCharacter = "zombie";
+  }));
+  newButtons.add(new Button(new PVector(width / 2 - 400, height / 2), new PVector(100, 50), 155, "Soldier", () -> {
+    inputCharacter = "soldier";
   }));
 }
 

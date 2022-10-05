@@ -131,10 +131,10 @@ void deathSet(int deaths) {
   db.close();
 }
 //Create save
-void createSave(String name, int difficulty) {
+void createSave(String name, int difficulty, String character) {
   db = new SQLite(this, "database.sqlite");
   if (db.connect()) {
-    db.execute("INSERT INTO Saves (Name, Difficulty, IntroPlayed) VALUES ('" + name + "', '" + difficulty + "', 'false');");  
+    db.execute("INSERT INTO Saves (Name, Difficulty, PlayerCharacter, IntroPlayed) VALUES ('" + name + "', '" + difficulty + "', '" + character + "', 'false');");  
     db.query("SELECT ID FROM Saves ORDER BY ID DESC;");
     while (db.next()) {
         saveID = db.getInt("ID");
