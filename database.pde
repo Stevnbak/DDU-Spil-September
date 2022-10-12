@@ -23,6 +23,27 @@ int[] levelGet(int level) {
   db.close();
   return array;
 }
+int[] specLevelGet(int save, int level) {
+  int[] array = new int[4];
+  int levelID = 0;
+  db = new SQLite(this, "database.sqlite");
+  //Find level id
+  if (db.connect()) {
+    db.query("SELECT Level" + level + "ID FROM Saves WHERE ID = " + save + ";");
+    while (db.next()) {
+      levelID = db.getInt("Level" + level + "ID");
+      db.query("SELECT Killed, Escaped, Time, Smell FROM LevelInfo WHERE ID = " + levelID + ";");
+      while (db.next()) {
+        array[0] = db.getInt("Killed");
+        array[1] = db.getInt("Escaped");
+        array[2] = db.getInt("Time");
+        array[3] = db.getInt("Smell");
+      }
+    }
+  }
+  db.close();
+  return array;
+}
 void levelSet(int level, int killed, int escaped, int time, int smell) {
   //Update level info
   db = new SQLite(this, "database.sqlite");

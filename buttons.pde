@@ -152,8 +152,10 @@ class CharacterButton extends Button {
 }
 
 class SavesButton extends Button {
-  SavesButton(PVector newLocation, PVector newSize, String text, Runnable run) {
+  int difficulty;
+  SavesButton(PVector newLocation, PVector newSize, String text, int difficulty, Runnable run) {
     super(new PVector(newLocation.x/w*width,newLocation.y/h*height), new PVector(newSize.x/w*width,newSize.y/h*height), 15, text, run);
+    this.difficulty = difficulty;
   }
   void draw() {
     fill(colorValue);
@@ -166,20 +168,25 @@ class SavesButton extends Button {
     } else {
       rect(location.x, location.y, size.x, size.y);
     }
-    
-    String[] text={"Filip\n33%"};
+    String[] textArr = {text};
     int[] lines={2};
     PFont[] fonts={dejaBold10};
     color[] colors={white};
     
-    textTerminala(text, colors, lines, fonts, new PVector(location.x-(size.x/2)+size.y/6,location.y-(size.y/3)), size, 0);
+    textTerminala(textArr, colors, lines, fonts, new PVector(location.x-(size.x/2)+size.y/6,location.y-(size.y/3)), size, 0);
     
-     String[] text1={"|||"};
+    String[] text1={"|||"};
     int[] lines1={1};
     PFont[] fonts1={dejaBold};
-    color[] colors1={red };
+    color colour = white;
+    if(difficulty == 0) {colour = green;}
+    if(difficulty == 1) {colour = yellow;}
+    if(difficulty == 2) {colour = red;}
     
-    textTerminala(text1, colors1, lines1, fonts1, new PVector(location.x+(size.x/2)+size.y/6,location.y-(size.y/3)), size, 0);
+    color[] colors1 = {colour};
+
+    
+    textTerminala(text1, colors1, lines1, fonts1, new PVector(location.x + (size.x/2) - textWidth("||| "),location.y - size.y / 5), size, 0);
     
     /*
     noStroke();
