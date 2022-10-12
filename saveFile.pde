@@ -38,6 +38,7 @@ void saveMenuSetup() {
     if(percent == 99) percent = 100;
     saveButtons.add(new SavesButton(new PVector(w/2,6.77+i*2.76+1.75/2), new PVector(8.74,1.75), nameGet(ID) + "\n" + percent + "%   Døde: " + deathGet(ID), difficultyGet(ID), () -> {
       loadSave(ID);
+      nameID=nameGet(saveID);
     }));
   }
   while (saveButtons.size() < (4 + availableSaveIDs.size())) {
@@ -88,6 +89,7 @@ void showSaveCreation() {
   newButtons.add(new Button(new PVector(width /2, height /2 + 200), new PVector(350, 50), 155, "Create new save", () -> {
     createSave(inputText, inputDifficulty, inputCharacter);
     loadSave(saveID);
+    nameID=nameGet(saveID);
   }));
   //Create difficulty buttons
   newButtons.add(new Button(new PVector(width /2 - 175, height /3), new PVector(140, 50), 155, "Easy", () -> {
