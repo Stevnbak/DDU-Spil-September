@@ -207,8 +207,15 @@ public void zo1Draw() {
   levelButtons.get(0).update();
   levelButtons.get(0).draw();
 
-  String[] te13={"\n--------------------------------\nAntal elimineret:\n"+levelInfo[0][0]+"/"+(levelInfo[0][0]+levelInfo[0][1])+"\n\nAntal mistet:\n"+levelInfo[0][1]+"/"+(levelInfo[0][0]+levelInfo[0][1])+"\n--------------------------------", "\nDen galiziske sumpkrebs\nfortrænger hjemmehørende krebs\nog overfører skadelig krebsepest.\n\nDen blev importeret fra Tyrkiet\ntil konsum i efterkrigstiden,\nog har etableret sig i en del\nsmåvande."};
-  int[] l13={8, 10};
+  String[] te13 = {"\n--------------------------------" +
+  "\nAntal elimineret:\n"+ levelInfo[0][0]+"/"+(levelInfo[0][0]+levelInfo[0][1]) +
+  "\nAntal mistet:\n"+levelInfo[0][1]+"/"+(levelInfo[0][0]+levelInfo[0][1]) +
+  "\nLugtpartikler opfanget:\n"+ levelInfo[0][3]+ " mmol" +
+  "\nTid brugt:\n" + (levelInfo[0][2] / 1000) + " sek." +
+  "\n--------------------------------", 
+  "\nDen galiziske sumpkrebs\nfortrænger hjemmehørende krebs\nog overfører skadelig krebsepest.\n\nDen blev importeret fra Tyrkiet\ntil konsum i efterkrigstiden,\nog har etableret sig i en del\nsmåvande."
+  };
+  int[] l13={11, 10};
   PFont[] f13={dejaBold, dejaBoldItalic};
   color[] c13={green, white};
   textTerminal(te13, c13, l13, f13, co, si, 0);
@@ -227,8 +234,15 @@ public void zo2Draw() {
   levelButtons.get(1).update();
   levelButtons.get(1).draw();
 
-  String[] te13={"\n--------------------------------\nAntal elimineret:\n"+levelInfo[1][0]+"/"+(levelInfo[1][0]+levelInfo[1][1])+"\n\nAntal mistet:\n"+levelInfo[1][1]+"/"+(levelInfo[1][0]+levelInfo[1][1])+"\n--------------------------------", "\nVaskebjørnen truer diversiteten\nved at udkonkurrere mårdyr og\nplyndre fuglereder. Den kan også\noverføre rabies til ræve, hunde\nog mennesker.\n\nHvis der etableres en fast\nbestand, kan den være nær umulig\nat udrydde."};
-  int[] l13={8, 10};
+  String[] te13={"\n--------------------------------" +
+  "\nAntal elimineret:\n"+ levelInfo[1][0]+"/"+(levelInfo[1][0]+levelInfo[1][1]) +
+  "\nAntal mistet:\n"+levelInfo[1][1]+"/"+(levelInfo[1][0]+levelInfo[1][1]) +
+  "\nLugtpartikler opfanget:\n"+ levelInfo[1][3]+ " mmol" +
+  "\nTid brugt:\n" + (levelInfo[1][2] / 1000) + " sek." +
+  "\n--------------------------------", 
+  "\nVaskebjørnen truer diversiteten\nved at udkonkurrere mårdyr og\nplyndre fuglereder. Den kan også\noverføre rabies til ræve, hunde\nog mennesker.\n\nHvis der etableres en fast\nbestand, kan den være nær umulig\nat udrydde."
+  };
+  int[] l13={11, 10};
   PFont[] f13={dejaBold, dejaBoldItalic};
   color[] c13={green, white};
   textTerminal(te13, c13, l13, f13, co, si, 0);
@@ -247,8 +261,15 @@ public void zo3Draw() {
   levelButtons.get(2).update();
   levelButtons.get(2).draw();
 
-  String[] te13={"\n--------------------------------\nAntal elimineret:\n"+levelInfo[2][0]+"/"+(levelInfo[2][0]+levelInfo[2][1])+"\n\nAntal mistet:\n"+levelInfo[2][1]+"/"+(levelInfo[2][0]+levelInfo[2][1])+"\n--------------------------------", "\nMinken er et effektivt rovdyr og\nkan have en betydelig negativ\neffekt på fugle og små pattedyr.\nDen reducerer også hjemmehørende\nrovdyrs fødegrundlag.\n\nDen er udbredt i hele Danmark,\nmen ved jagt og fældefangst kan\nden begræneses."};
-  int[] l13={8, 10};
+  String[] te13={"\n--------------------------------" +
+  "\nAntal elimineret:\n"+ levelInfo[2][0]+"/"+(levelInfo[2][0]+levelInfo[2][1]) +
+  "\nAntal mistet:\n"+levelInfo[2][1]+"/"+(levelInfo[2][0]+levelInfo[2][1]) +
+  "\nLugtpartikler opfanget:\n"+ levelInfo[2][3]+ " mmol" +
+  "\nTid brugt:\n" + (levelInfo[2][2] / 1000) + " sek." +
+  "\n--------------------------------", 
+  "\nMinken er et effektivt rovdyr og\nkan have en betydelig negativ\neffekt på fugle og små pattedyr.\nDen reducerer også hjemmehørende\nrovdyrs fødegrundlag.\n\nDen er udbredt i hele Danmark,\nmen ved jagt og fældefangst kan\nden begræneses."
+  };
+  int[] l13={11, 10};
   PFont[] f13={dejaBold, dejaBoldItalic};
   color[] c13={green, white};
   textTerminal(te13, c13, l13, f13, co, si, 0);
