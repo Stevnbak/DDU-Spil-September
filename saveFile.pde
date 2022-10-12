@@ -68,24 +68,24 @@ void deleteSave(int ID) {
 void showSaveCreation() {
   overview = false;
   //Create save button
-  newButtons.add(new Button(new PVector(width /2, height /2 + 200), new PVector(250, 50), 155, "Create new save", () -> {
+  newButtons.add(new Button(new PVector(width /2, height /2 + 200), new PVector(350, 50), 155, "Create new save", () -> {
     createSave(inputText, inputDifficulty, inputCharacter);
     loadSave(saveID);
   }));
   //Create difficulty buttons
-  newButtons.add(new Button(new PVector(width /2 - 125, height /3), new PVector(100, 50), 155, "Easy", () -> {
+  newButtons.add(new Button(new PVector(width /2 - 175, height /3), new PVector(140, 50), 155, "Easy", () -> {
     inputDifficulty = 0;
     newButtons.get(1).colorValue = color(0,255,0);
     newButtons.get(2).colorValue = 155;
     newButtons.get(3).colorValue = 155;
   }));
-  newButtons.add(new Button(new PVector(width /2, height /3), new PVector(100, 50), color(0,255,0), "Medium", () -> {
+  newButtons.add(new Button(new PVector(width /2, height /3), new PVector(140, 50), color(0,255,0), "Medium", () -> {
     inputDifficulty = 1;
     newButtons.get(2).colorValue = color(0,255,0);
     newButtons.get(1).colorValue = 155;
     newButtons.get(3).colorValue = 155;
   }));
-  newButtons.add(new Button(new PVector(width /2 + 125, height /3), new PVector(100, 50), 155, "Hard", () -> {
+  newButtons.add(new Button(new PVector(width /2 + 175, height /3), new PVector(140, 50), 155, "Hard", () -> {
     inputDifficulty = 2;
     newButtons.get(3).colorValue = color(0,255,0);
     newButtons.get(2).colorValue = 155;
