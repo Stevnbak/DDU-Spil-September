@@ -56,7 +56,7 @@ public void intro1Draw() {
   mapBackground(Danmarkskort1);
   terminalBlack();
 
-  String[] te0={"\nBorger #3141592\nDer forlyder nyt om en krise og\nkongeriget Danmark har brug for\ndin hjælp.", "\n// Vælg dit svar\n   [1] Til tjeneste"};
+  String[] te0={"\n"+nameID+"\nDer forlyder nyt om en krise og\nkongeriget Danmark har brug for\ndin hjælp.", "\n// Vælg dit svar\n   [1] Til tjeneste"};
   int[] l0={5, 3};
   PFont[] f0={dejaBold, dejaBoldItalic};
   color[] c0={white, orange};
@@ -69,7 +69,7 @@ public void intro2Draw() {
   mapBackground(Danmarkskort1);
   terminalBlack();
 
-  String[] te1={"\nBorger #3141592\nDer forlyder nyt om en krise og\nkongeriget Danmark har brug for\ndin hjælp.\n", "\n// Vælg dit svar\n   [1] Til tjeneste"};
+  String[] te1={"\n"+nameID+"\nDer forlyder nyt om en krise og\nkongeriget Danmark har brug for\ndin hjælp.\n", "\n// Vælg dit svar\n   [1] Til tjeneste"};
   int[] l1={5, 3};
   PFont[] f1={dejaBold, dejaBoldItalic};
   color[] c1={white, orange};
@@ -189,6 +189,9 @@ public void intro8Draw() {
 
 int[][] levelInfo = new int[4][3];
 
+public String nameID;
+public int deathCountID;
+
 public void refreshLevelInfo() {
   for(int i = 0; i < 3; i++) {
     int[] levelData = levelGet(i + 1);
@@ -198,6 +201,9 @@ public void refreshLevelInfo() {
     }
     levelInfo[i] = levelData;
   }
+  
+  nameID=nameGet(saveID);
+  deathCountID=deathGet(saveID);
 }
 
 public void zo1Draw() {
@@ -284,7 +290,7 @@ public void zo3Draw() {
 public void completeDraw() {
   mapBackground(Danmarkskort2);
   t++;
-  String[] te11={"\nEfter at have frelst Danmark\nindkaldes du til Amalienborg for\nat modtage din hæder.\n\nDu bliver der mødt af en\nstorsmilende regent", "\nI Guds åsyn udnævnes de til\nridder af Elefantordenen som tak\nfor deres afgørende indsats mod\ninvasive arter og indberetning\npå arter.dk.", "\n-H.M. Dronning Margrethe II"};
+  String[] te11={"\nEfter at have frelst Danmark\nindkaldes du til Amalienborg for\nat modtage din hæder.\n\nDu bliver der mødt af en\nstorsmilende regent", "\nI Guds åsyn udnævnes de,"+nameID+", til\nridder af Elefantordenen som tak\nfor deres afgørende indsats mod\ninvasive arter og indberetning\npå arter.dk.", "\n-H.M. Dronning Margrethe II"};
   int[] l11={7, 6, 2};
   PFont[] f11={dejaBold, dejaBoldItalic, dejaBold};
   color[] c11={(0), (0), (0)};
@@ -299,10 +305,10 @@ public void menuDraw() {
     zoomButtons.get(i).draw();
   }
 
-  String[] te11={"\nBorger [#314159]\nDette er din navigationsmenu.\n\nHer kan du vælge mellem dine\nudryddelsesmissioner.\n\nNår du fuldfører en vil dets\nfelt skifte farve til grøn.\n\nKlar dem alle og indkasser din\nbelønning.", "\n// Liste over kommandoer\n   [esc] åbner menuen\n   [p] pauser missionen"};
-  int[] l11={12, 4};
-  PFont[] f11={dejaBold, dejaBoldItalic};
-  color[] c11={white, orange};
+  String[] te11={"\n"+nameID+"\nDette er din navigationsmenu.\n\nHer kan du vælge mellem dine\nudryddelsesmissioner.\n\nNår du fuldfører en vil dets\nfelt skifte farve til grøn.\n\nKlar dem alle og indkasser din\nbelønning.", "\n// Liste over kommandoer\n   [esc] åbner menuen\n   [p] pauser missionen","\nAntal dødsfald:"+"\n"+deathCountID+"/∞"};
+  int[] l11={12, 4,3};
+  PFont[] f11={dejaBold, dejaBoldItalic,dejaBold};
+  color[] c11={white, orange,red};
   textTerminal(te11, c11, l11, f11, co, si, 0);
 }
 
