@@ -290,7 +290,7 @@ public void zo3Draw() {
 public void completeDraw() {
   mapBackground(Danmarkskort2);
   t++;
-  String[] te11={"\nEfter at have frelst Danmark\nindkaldes du til Amalienborg for\nat modtage din hæder.\n\nDu bliver der mødt af en\nstorsmilende regent", "\nI Guds åsyn udnævnes de til\nridder af Elefantordenen som tak\nfor deres afgørende indsats mod\ninvasive arter og indberetning\npå arter.dk.", "\n-H.M. Dronning Margrethe II"};
+  String[] te11={"\nEfter at have frelst Danmark\nindkaldes du til Amalienborg for\nat modtage din hæder.\n\nDu bliver der mødt af en\nstorsmilende regent", "\nI Guds åsyn udnævnes de,"+nameID+", til\nridder af Elefantordenen som tak\nfor deres afgørende indsats mod\ninvasive arter og indberetning\npå arter.dk.", "\n-H.M. Dronning Margrethe II"};
   int[] l11={7, 6, 2};
   PFont[] f11={dejaBold, dejaBoldItalic, dejaBold};
   color[] c11={(0), (0), (0)};
