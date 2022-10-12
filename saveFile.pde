@@ -12,21 +12,36 @@ String inputCharacter = "";
 
 void saveMenuSetup() {
   //Update avialableSaveIDs from database info
-   availableSaveIDs = getSaves();
+  availableSaveIDs = getSaves();
+  //Reset buttons
+  saveButtons = new ArrayList<Button>();
+  newButtons = new ArrayList<Button>();
+  charButtons = new ArrayList<CharacterButton>();
+  inputText = "";
+  inputDifficulty = 1;
+  inputCharacter = "";
   //Create buttons
   for (int i = 0; i < availableSaveIDs.size(); i++) {
     int ID = availableSaveIDs.get(i);
     //Delete button
-    saveButtons.add(new Button(new PVector((width / 2) + 25, (height / 3) + i * 60), new PVector(50, 50), 255, "X", () -> {
+    saveButtons.add(new Button(new PVector((w/2+5)/w*width,(6.77+i*2.76+1.75/2)/h*height), new PVector(50,1.75/h*height), 255, "X", () -> {
       deleteSave(ID);
     }));
     //Load button
-    saveButtons.add(new SavesButton(new PVector(w/2,6.77+i*2.76+1.75/2), new PVector(8.74,1.75), nameGet(ID), () -> {
+    int percent = 0;
+    for(int l = 1; l <= 3; l++) {
+      int[] data = specLevelGet(ID, l);
+      if (data[0] > 0 && data[1] < 5 - difficulty) {
+        percent += 33;
+      }
+    }
+    if(percent == 99) percent = 100;
+    saveButtons.add(new SavesButton(new PVector(w/2,6.77+i*2.76+1.75/2), new PVector(8.74,1.75), nameGet(ID) + "\n" + percent + "%   Døde: " + deathGet(ID), difficultyGet(ID), () -> {
       loadSave(ID);
     }));
   }
   while (saveButtons.size() < (4 + availableSaveIDs.size())) {
-    saveButtons.add(new SavesButton(new PVector(w/2,6.77 + (saveButtons.size() - availableSaveIDs.size()) * 2.76+1.75/2), new PVector(8.74,1.75), "No save", () -> {
+    saveButtons.add(new SavesButton(new PVector(w/2,6.77 + (saveButtons.size() - availableSaveIDs.size()) * 2.76+1.75/2), new PVector(8.74,1.75), "No save", 4, () -> {
       showSaveCreation();
     }));
   }
@@ -63,6 +78,8 @@ void saveMenuDraw() {
 
 void deleteSave(int ID) {
   println("ID to delete: " + ID);
+  removeSave(ID);
+  saveMenuSetup();
 }
 
 void showSaveCreation() {
