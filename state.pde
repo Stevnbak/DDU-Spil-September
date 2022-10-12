@@ -22,7 +22,7 @@ public void setState(String newState) {
     println("State (" + state +") changed to " + newState);
     state = newState;
 
-    if( newState == "deathSuicide" || newState == "deathDrowned") deathSet(deathGet(saveID) + 1);
+    if( newState == "deathSuicide" || newState == "deathDrowned") deathSet(deathGet(saveID) + 1);deathCountID=deathGet(saveID);
     println(deathGet(saveID) + 1);
 
     if (newState == "menu" || newState == "1" || newState == "2" || newState == "3") refreshLevelInfo();
