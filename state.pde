@@ -22,6 +22,9 @@ public void setState(String newState) {
     println("State (" + state +") changed to " + newState);
     state = newState;
 
+    if( newState == "deathSuicide" || newState == "deathDrowned") deathSet(deathGet(saveID) + 1);
+    println(deathGet(saveID) + 1);
+
     if (newState == "menu" || newState == "1" || newState == "2" || newState == "3") refreshLevelInfo();
     if (newState == "editor") editorSetup();
     if (newState == "save") saveMenuSetup();
