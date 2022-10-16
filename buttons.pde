@@ -13,7 +13,7 @@ class Button {
     this.colorValue = colorValue;
     this.text = text;
     this.action = run;
-    this.font = createFont("Arial", size.y / 4 * 3, true);
+    this.font = createFont("fonts/dejaRegular.ttf", size.y / 4 * 3, true);
   }
 
   void update() {
@@ -47,7 +47,7 @@ class Button {
     rect(location.x, location.y, size.x, size.y);
     fill(0);
     noStroke();
-    //textFont(font);
+    textFont(font);
     textSize(size.y / 4 * 3);
     textAlign(CENTER, CENTER);
     text(text, location.x , location.y );
@@ -158,35 +158,50 @@ class SavesButton extends Button {
     this.difficulty = difficulty;
   }
   void draw() {
-    fill(colorValue);
+    fill(colorValue,245);
+    
     if (hover) {
-      size.x+=6;
-      size.y+=6;
+      size.x=size.x*1.02;
+      size.y=size.y*1.02;
       rect(location.x, location.y, size.x, size.y);
-      size.x-=6;
-      size.y-=6;
+      size.x=size.x/1.02;
+      size.y=size.y/1.02;
     } else {
       rect(location.x, location.y, size.x, size.y);
     }
-    String[] textArr = {text};
+    
+    String[] textArr=new String[1];
+    color[] colors=new color[1];;
+    if (difficulty==0||difficulty==1||difficulty==2){
+      textArr[0] = text;
+      colors[0]=white;
+    }
+    else{
+      textArr[0]="xxxxx\n---%";
+      colors[0]=gray;
+    }
     int[] lines={2};
     PFont[] fonts={dejaBold10};
-    color[] colors={white};
     
     textTerminala(textArr, colors, lines, fonts, new PVector(location.x-(size.x/2)+size.y/6,location.y-(size.y/3)), size, 0);
     
-    String[] text1={"|||"};
     int[] lines1={1};
     PFont[] fonts1={dejaBold};
-    color colour = white;
-    if(difficulty == 0) {colour = green;}
-    if(difficulty == 1) {colour = yellow;}
-    if(difficulty == 2) {colour = red;}
+    color colour = gray;
+    String tixt="|||  ";
     
-    color[] colors1 = {colour};
+    if(difficulty == 0) {colour = dgreen;tixt="|    ";}
+    if(difficulty == 1) {colour = dyellow;tixt="||   ";}
+    if(difficulty == 2) {colour = dred;tixt="|||  ";}
+    
+    color[] colors1 = {white};
+    String[] text1={"|||  "};
+    textTerminala(text1, colors1, lines1, fonts1, new PVector(location.x + (size.x/2) - textWidth(text1[0])-5,location.y - size.y / 5), size, 0);
 
+    colors1[0] = colour;
+    text1[0]=tixt;
     
-    textTerminala(text1, colors1, lines1, fonts1, new PVector(location.x + (size.x/2) - textWidth("||| "),location.y - size.y / 5), size, 0);
+    textTerminala(text1, colors1, lines1, fonts1, new PVector(location.x + (size.x/2) - textWidth(text1[0]),location.y - size.y / 5), size, 0);
     
     /*
     noStroke();

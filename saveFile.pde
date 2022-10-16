@@ -24,19 +24,21 @@ void saveMenuSetup() {
   for (int i = 0; i < availableSaveIDs.size(); i++) {
     int ID = availableSaveIDs.get(i);
     //Delete button
-    saveButtons.add(new Button(new PVector((w/2+5)/w*width,(6.77+i*2.76+1.75/2)/h*height), new PVector(50,1.75/h*height), 255, "X", () -> {
+    saveButtons.add(new Button(new PVector((w/2+5)/w*width,(6.77+i*2.76+1.75/2-0.15)/h*height), new PVector(50,1.75/h*height), 255, "x", () -> {
       deleteSave(ID);
     }));
     //Load button
     int percent = 0;
+    int time=0;
     for(int l = 1; l <= 3; l++) {
       int[] data = specLevelGet(ID, l);
       if (data[0] > 0 && data[1] < 5 - difficulty) {
         percent += 33;
       }
+      time=time+data[2]/1000;
     }
-    if(percent == 99) percent = 100;
-    saveButtons.add(new SavesButton(new PVector(w/2,6.77+i*2.76+1.75/2), new PVector(8.74,1.75), nameGet(ID) + "\n" + percent + "%   Døde: " + deathGet(ID), difficultyGet(ID), () -> {
+
+    saveButtons.add(new SavesButton(new PVector(w/2,6.77+i*2.76+1.75/2), new PVector(8.74,1.75), nameGet(ID) + "\n" + percent + "%   " + deathGet(ID)+"†   "+time+"s", difficultyGet(ID), () -> {
       loadSave(ID);
       nameID=nameGet(saveID);
     }));

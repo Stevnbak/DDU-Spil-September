@@ -25,6 +25,11 @@ void layoutSetup(){
     red = color(217,17,57);
     yellow = color(227,215,113);
     green = color(0,176,80);
+    gray=color(206,206,206);
+    
+    dred = color(255,0,0);
+    dyellow = color(255,192,0);
+    dgreen = color(0,176,80);
 }
 
 PImage Danmarkskort1;
@@ -53,3 +58,7 @@ color blue;
 color red;
 color yellow;
 color green;
+color gray;
+color dred;
+color dyellow;
+color dgreen;
