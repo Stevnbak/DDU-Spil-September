@@ -4,6 +4,7 @@ class Button {
   color colorValue;
   String text;
   PFont font;
+  float textsize;
   boolean hover = false;
   Runnable action;
 
@@ -34,23 +35,18 @@ class Button {
   }
 
   void ownAction() {
-
   }
 
   void draw() {
     fill(colorValue);
-    if (hover) {
-      stroke(0);
-    } else {
-      noStroke();
-    }
+
     rect(location.x, location.y, size.x, size.y);
     fill(0);
     noStroke();
     textFont(font);
     textSize(size.y / 4 * 3);
     textAlign(CENTER, CENTER);
-    text(text, location.x , location.y );
+    text(text, location.x, location.y );
     textAlign(LEFT);
   }
 
@@ -72,7 +68,7 @@ class LocationButton extends Button {
   }
 
 
-  void alter(){
+  void alter() {
     finished=true;
   }
 
@@ -93,7 +89,7 @@ class LocationButton extends Button {
     if (hover) {
       diameter += 20;
     }
-    
+
     noFill();
     strokeWeight(diameter/maximum);
 
@@ -101,7 +97,7 @@ class LocationButton extends Button {
       if (!finished) {
         stroke(192, 0, 0, i);
       } else {
-        stroke(0,176,80,i);
+        stroke(0, 176, 80, i);
       }
 
       ellipse(location.x, location.y, diameter-diameter*i/maximum, diameter-diameter*i/maximum);
@@ -116,8 +112,8 @@ class CharacterButton extends Button {
   PImage characterImg;
 
   CharacterButton(PVector newLocation, float w, String text, Runnable run) {
-    super(new PVector(newLocation.x,newLocation.y), new PVector(w, w * 1.6), 15, text, run);
-    characterImg = loadImage("/player/"+text+"/stand.png");
+    super(new PVector(newLocation.x, newLocation.y), new PVector(w, w * 1.6), 15, text, run);
+    characterImg = loadImage("player/"+text+"/standg.png");
   }
 
   void ownAction() {
@@ -129,23 +125,18 @@ class CharacterButton extends Button {
 
   void draw() {
     colorMode(RGB);
-    if (hover) {
-      stroke(0);
-    }
-    if (selected) {
-      stroke(0,200,50);
-    }
+
     textureMode(NORMAL);
-    fill(0,0,0,0);
+    fill(0, 0, 0, 0);
     rect(location.x, location.y, size.x, size.y);
-    
+
     noStroke();
     beginShape();
-      texture(characterImg);
-      vertex(location.x - size.x/2, location.y - size.y/2, 0, 0);
-      vertex(location.x + size.x/2, location.y - size.y/2, 1, 0);
-      vertex(location.x + size.x/2, location.y + size.y/2, 1, 1);
-      vertex(location.x - size.x/2, location.y + size.y/2, 0, 1);
+    texture(characterImg);
+    vertex(location.x - size.x/2, location.y - size.y/2, 0, 0);
+    vertex(location.x + size.x/2, location.y - size.y/2, 1, 0);
+    vertex(location.x + size.x/2, location.y + size.y/2, 1, 1);
+    vertex(location.x - size.x/2, location.y + size.y/2, 0, 1);
     endShape();
     noStroke();
   }
@@ -154,12 +145,12 @@ class CharacterButton extends Button {
 class SavesButton extends Button {
   int difficulty;
   SavesButton(PVector newLocation, PVector newSize, String text, int difficulty, Runnable run) {
-    super(new PVector(newLocation.x/w*width,newLocation.y/h*height), new PVector(newSize.x/w*width,newSize.y/h*height), 15, text, run);
+    super(new PVector(newLocation.x/w*width, newLocation.y/h*height), new PVector(newSize.x/w*width, newSize.y/h*height), 15, text, run);
     this.difficulty = difficulty;
   }
   void draw() {
-    fill(colorValue,245);
-    
+    fill(colorValue, 245);
+
     if (hover) {
       size.x=size.x*1.02;
       size.y=size.y*1.02;
@@ -169,47 +160,50 @@ class SavesButton extends Button {
     } else {
       rect(location.x, location.y, size.x, size.y);
     }
-    
-    String[] textArr=new String[1];
-    color[] colors=new color[1];;
-    if (difficulty==0||difficulty==1||difficulty==2){
-      textArr[0] = text;
-      colors[0]=white;
-    }
-    else{
-      textArr[0]="xxxxx\n---%";
-      colors[0]=gray;
-    }
-    int[] lines={2};
-    PFont[] fonts={dejaBold10};
-    
-    textTerminala(textArr, colors, lines, fonts, new PVector(location.x-(size.x/2)+size.y/6,location.y-(size.y/3)), size, 0);
-    
-    int[] lines1={1};
-    PFont[] fonts1={dejaBold};
-    color colour = gray;
-    String tixt="|||  ";
-    
-    if(difficulty == 0) {colour = dgreen;tixt="|    ";}
-    if(difficulty == 1) {colour = dyellow;tixt="||   ";}
-    if(difficulty == 2) {colour = dred;tixt="|||  ";}
-    
-    color[] colors1 = {white};
-    String[] text1={"|||  "};
-    textTerminala(text1, colors1, lines1, fonts1, new PVector(location.x + (size.x/2) - textWidth(text1[0])-5,location.y - size.y / 5), size, 0);
 
-    colors1[0] = colour;
-    text1[0]=tixt;
-    
-    textTerminala(text1, colors1, lines1, fonts1, new PVector(location.x + (size.x/2) - textWidth(text1[0]),location.y - size.y / 5), size, 0);
-    
-    /*
-    noStroke();
-    //textFont(font);
-    textSize(size.y / 4 * 3);
-    textAlign(CENTER, CENTER);
-    text(text, location.x, location.y);
-    textAlign(LEFT);
-    */
+    if (difficulty!=-1) {
+
+      String[] textArr=new String[1];
+      color[] colors=new color[1];
+      ;
+      if (difficulty==0||difficulty==1||difficulty==2) {
+        textArr[0] = text;
+        colors[0]=white;
+      } else {
+        textArr[0]="xxxxx\n--%   --†   ----s";
+        colors[0]=gray;
+      }
+      int[] lines={2};
+      PFont[] fonts={dejaBold10};
+
+      textTerminala(textArr, colors, lines, fonts, new PVector(location.x-(size.x/2)+size.y/6, location.y-(size.y/3)), size, 0);
+
+      int[] lines1={1};
+      PFont[] fonts1={dejaBold};
+      color colour = gray;
+      String tixt="|||  ";
+
+      if (difficulty == 0) {
+        colour = dgreen;
+        tixt="|    ";
+      }
+      if (difficulty == 1) {
+        colour = dyellow;
+        tixt="||   ";
+      }
+      if (difficulty == 2) {
+        colour = dred;
+        tixt="|||  ";
+      }
+
+      color[] colors1 = {white};
+      String[] text1={"|||  "};
+      textTerminala(text1, colors1, lines1, fonts1, new PVector(location.x + (size.x/2) - textWidth(text1[0])-5, location.y - size.y / 5), size, 0);
+
+      colors1[0] = colour;
+      text1[0]=tixt;
+
+      textTerminala(text1, colors1, lines1, fonts1, new PVector(location.x + (size.x/2) - textWidth(text1[0]), location.y - size.y / 5), size, 0);
+    }
   }
 }

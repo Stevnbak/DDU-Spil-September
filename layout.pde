@@ -6,6 +6,7 @@ void layoutSetup(){
     zo3P = loadImage("navigation/zo3.png");
     global=loadImage("navigation/global.png");
     cross=loadImage("navigation/cross.png");
+    global2=loadImage("navigation/global2.png");
        
     dejaRegular=createFont("fonts/dejaRegular.ttf", 16);
     dejaItalic=createFont("fonts/dejaItalic.ttf", 16);
@@ -39,6 +40,7 @@ PImage zo2P;
 PImage zo3P;
 PImage global;
 PImage cross;
+PImage global2;
 
 PFont dejaRegular;
 PFont dejaItalic;
